@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Clock;
 import java.util.Comparator;
@@ -25,6 +26,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.function.Function;
 
 import static java.util.function.Function.identity;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
 @RequestMapping ("/scale")
@@ -56,16 +58,24 @@ public class ScaleRules {
 
   @PatchMapping ("/{id}")
   public ScaleRule update (@PathVariable UUID id, @RequestBody Form<ScaleRule> form) {
+    Set<ScaleRuleAction> actions = store.get (id);
+    if (actions == null) {
+      throw new ResponseStatusException (NOT_FOUND);
+    }
+
     BaseAction ba = new BaseAction (clock, form.getComment ());
     ScaleRuleEdition edition = new ScaleRuleEdition (ba, form.getObject ().withId (id));
-    Set<ScaleRuleAction> actions = store.get (id);
     actions.add (edition);
     return get (actions);
   }
 
   @GetMapping ("/{id}")
   public ScaleRule get (@PathVariable UUID id) {
-    return get (store.get (id));
+    Set<ScaleRuleAction> actions = store.get (id);
+    if (actions == null) {
+      throw new ResponseStatusException (NOT_FOUND);
+    }
+    return get (actions);
   }
 
   private ScaleRule get (Set<ScaleRuleAction> actions) {
