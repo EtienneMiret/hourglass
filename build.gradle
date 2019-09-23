@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'fr.elimerl.hourglass'
+version '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
