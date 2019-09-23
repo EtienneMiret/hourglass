@@ -3,15 +3,19 @@ package fr.elimerl.hourglass.data.mongo;
 import fr.elimerl.hourglass.data.core.BaseAction;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
+@Document
 @NoArgsConstructor (access = PROTECTED)
 public abstract class Action<T> implements Comparable<Action> {
 
+  @Id
   private String id;
 
   private Instant timestamp;
