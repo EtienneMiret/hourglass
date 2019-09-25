@@ -12,4 +12,6 @@ public interface ScaleRuleActionRepository extends MongoRepository<ScaleRuleActi
 
   Set<ScaleRuleAction> findByScaleRuleId (UUID id);
 
+  Set<ScaleRuleAction> findByScaleRuleIdIn (Set<UUID> ids);
+
 }
