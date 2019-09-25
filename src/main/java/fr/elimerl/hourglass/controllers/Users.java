@@ -41,7 +41,7 @@ public class Users {
   private final ActionComposer composer;
 
   @GetMapping
-  public Set<UUID> find (@RequestParam String email) {
+  public Set<UUID> find (@RequestParam (required = false) String email) {
     if (email == null) {
       return repository.findAll ()
           .stream ()
