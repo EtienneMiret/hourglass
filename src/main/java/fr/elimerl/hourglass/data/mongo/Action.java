@@ -7,13 +7,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
+import java.util.function.Function;
 
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @Document
 @NoArgsConstructor (access = PROTECTED)
-public abstract class Action<T> implements Comparable<Action> {
+public abstract class Action<T> implements Comparable<Action>, Function<T, T> {
 
   @Id
   private String id;
