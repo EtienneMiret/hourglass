@@ -19,6 +19,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testImplementation 'org.assertj:assertj-core:3.14.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:3.1.0'
+    testImplementation 'org.hamcrest:hamcrest:2.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 
     compileOnly 'org.projectlombok:lombok:1.18.10'
