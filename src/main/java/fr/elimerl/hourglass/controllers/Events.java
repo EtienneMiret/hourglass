@@ -51,29 +51,23 @@ public class Events {
 
   @GetMapping
   public Set<Event> find (@RequestParam (required = false) UUID userId) {
+    Collection<EventAction> actions;
     if (userId == null) {
-      Set<Event> events = repository.findAll ()
-          .stream ()
-          .collect (groupingBy (EventAction::getEventId))
-          .values ()
-          .stream ()
-          .map (composer::compose)
-          .collect (toSet ());
-      return addPoints (events);
+      actions = repository.findAll ();
     } else {
       Set<UUID> potentialIds = repository.findByUserIdsContaining (userId)
           .stream ()
           .map (EventAction::getEventId)
           .collect (toSet ());
-      Set<Event> events = repository.findByEventIdIn (potentialIds)
-          .stream ()
-          .collect (groupingBy (EventAction::getEventId))
-          .values ()
-          .stream ()
-          .map (composer::compose)
-          .collect (toSet ());
-      return addPoints (events);
+      actions = repository.findByEventIdIn (potentialIds);
     }
+    Set <Event> events = actions.stream ()
+        .collect (groupingBy (EventAction::getEventId))
+        .values ()
+        .stream ()
+        .map (composer::compose)
+        .collect (toSet ());
+    return addPoints (events);
   }
 
   @PostMapping
