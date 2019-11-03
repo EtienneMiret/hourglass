@@ -28,7 +28,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @ExtendWith (MockitoExtension.class)
-class EventsTest {
+class EventsTest_find {
 
   @InjectMocks
   private Events controller;
