@@ -6,10 +6,6 @@ module.exports = {
 
     context: __dirname,
     entry: './src/main/ts/index',
-    output: {
-        path: path.resolve(__dirname, 'build', 'webpack'),
-        filename: 'bundle.js'
-    },
 
     resolve: {
         extensions: ['.ts', '.tsx', '.js']

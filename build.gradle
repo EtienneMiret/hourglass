@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.2.0.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'com.github.node-gradle.node' version '2.2.0'
 }
 
 group 'io.miret.etienne.hourglass'
@@ -27,6 +28,31 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.10'
 }
 
+node {
+    version = '13.0.1'
+    yarnVersion = '1.19.1'
+    download = true
+}
+
+task webpack (type: YarnTask) {
+    args = ['webpack', '-o', "${buildDir}/webpack/static/bundle.js"]
+    inputs.dir "${projectDir}/src/main/ts"
+    inputs.file "${projectDir}/yarn.lock"
+    inputs.file "${projectDir}/tsconfig.json"
+    inputs.file "${projectDir}/webpack.config.js"
+    outputs.dir "${buildDir}/webpack"
+    dependsOn yarn_install
+}
+
+processResources {
+    from "${buildDir}/webpack"
+    dependsOn webpack
+}
+
 test {
     useJUnitPlatform ()
+}
+
+clean {
+    delete 'node_modules'
 }
