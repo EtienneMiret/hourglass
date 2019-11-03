@@ -30,7 +30,7 @@ import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
-@RequestMapping ("/user")
+@RequestMapping ("/users")
 @AllArgsConstructor (access = PRIVATE)
 public class Users {
 

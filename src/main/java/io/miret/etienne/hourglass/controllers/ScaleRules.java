@@ -29,7 +29,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
 @AllArgsConstructor (access = PRIVATE)
-@RequestMapping ("/scale")
+@RequestMapping ("/scales")
 public class ScaleRules {
 
   private final Clock clock;
