@@ -41,11 +41,14 @@ public class Users {
   private final ActionComposer composer;
 
   @GetMapping
-  public Set<UUID> find (@RequestParam (required = false) String email) {
+  public Set<User> find (@RequestParam (required = false) String email) {
     if (email == null) {
       return repository.findAll ()
           .stream ()
-          .map (UserAction::getUserId)
+          .collect (groupingBy (UserAction::getUserId))
+          .values ()
+          .stream ()
+          .map (composer::compose)
           .collect (toSet ());
     } else {
       Set<UUID> potentialIds = repository.findByEmailsContaining (email)
@@ -59,7 +62,6 @@ public class Users {
           .stream ()
           .map (composer::compose)
           .filter (u -> u.getEmails ().contains (email))
-          .map (User::getId)
           .collect (toSet ());
     }
   }

@@ -23,6 +23,7 @@ import java.time.Clock;
 import java.util.Set;
 import java.util.UUID;
 
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -39,10 +40,13 @@ public class ScaleRules {
   private final ActionComposer composer;
 
   @GetMapping
-  public Set<UUID> list () {
+  public Set<ScaleRule> list () {
     return repository.findAll ()
         .stream ()
-        .map (ScaleRuleAction::getScaleRuleId)
+        .collect (groupingBy (ScaleRuleAction::getScaleRuleId))
+        .values ()
+        .stream ()
+        .map (composer::compose)
         .collect (toSet ());
   }
 
