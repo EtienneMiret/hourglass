@@ -1,9 +1,14 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { Hello } from './components/Hello';
+import { App } from './components/App';
+import { createStore } from 'redux';
+
+const store = createStore (() => {
+  return {};
+});
 
 ReactDOM.render(
-    <Hello compiler="TypeScript" framework="React"/>,
+    <App store={store}/>,
     document.getElementById('root')
 );
