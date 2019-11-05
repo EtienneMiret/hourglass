@@ -2,6 +2,7 @@ plugins {
     id 'war'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'com.github.node-gradle.node' version '2.2.0'
+    id 'com.github.salomonbrys.gradle.sass' version '1.2.0'
 }
 
 group 'io.miret.etienne.hourglass'
@@ -35,6 +36,12 @@ node {
     download = true
 }
 
+sass {
+    download {
+        version = '1.23.3'
+    }
+}
+
 task webpack (type: YarnTask) {
     args = ['webpack', '-o', "${buildDir}/webpack/bundle.js"]
     inputs.dir "${projectDir}/src/main/ts"
@@ -49,7 +56,10 @@ war {
     with copySpec {
         from "${buildDir}/webpack"
     }
-    dependsOn webpack
+    with copySpec {
+        from "${buildDir}/sass"
+    }
+    dependsOn (webpack, sassCompile)
 }
 
 test {

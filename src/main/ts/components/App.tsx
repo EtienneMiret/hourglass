@@ -5,12 +5,14 @@ import { Hello } from './Hello';
 import { GlobalState } from '../state';
 import { AnyAction, Store } from 'redux';
 import { UserListContainer } from '../containers/user-list';
+import { Loader } from './Loader';
 
 export const App = ({store}: {store: Store<GlobalState, AnyAction>}) => (
     <Provider store={store}>
       <Router>
         <Switch>
           <Route path="/users" component={UserListContainer}/>
+          <Route path="/load" component={Loader}/>
           <Route path="/">
             <Hello compiler="TypeScript" framework="Redux/React"/>
           </Route>

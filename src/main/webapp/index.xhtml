@@ -4,12 +4,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <link rel="manifest" href="manifest.json"/>
+  <link rel="stylesheet" href="style.css"/>
   <script async="" src="/bundle.js"/>
 </head>
 
-<body onload="document.body.removeChild (document.getElementById('noscript'));">
+<body onload="document.body.removeChild (document.getElementById('noscript')); document.getElementById('root').hidden=false">
 
-<div id="root"/>
+<div id="root" hidden="">
+  <div class="loader">
+    <div/>
+    <div/>
+    <div/>
+    <div/>
+    <div/>
+    <div/>
+    <div/>
+    <div/>
+    <div/>
+    <div/>
+    <div/>
+    <div/>
+  </div>
+</div>
 <p id="noscript">
   This application requires JavaScript to run.
 </p>
