@@ -19,8 +19,12 @@
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
+    "i18next": "^19.0.0",
+    "i18next-browser-languagedetector": "^4.0.1",
+    "i18next-fetch-backend": "^2.2.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-i18next": "^11.0.1",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.4",

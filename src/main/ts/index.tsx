@@ -8,6 +8,7 @@ import thunk, { ThunkMiddleware } from 'redux-thunk';
 import { fetchUsers } from './actions/users';
 import { GlobalState } from './state';
 
+import './i18n';
 
 const store = createStore (
     reducers,
