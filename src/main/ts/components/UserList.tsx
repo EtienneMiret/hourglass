@@ -2,6 +2,8 @@ import * as React from 'react';
 import { User } from '../state/user';
 import { HttpStatus } from '../state/status';
 import { UserItem } from './UserItem';
+import { Loader } from './Loader';
+import { useTranslation } from 'react-i18next';
 
 export interface UserListProps {
   users: User[],
@@ -9,17 +11,19 @@ export interface UserListProps {
 }
 
 export const UserList = (props: UserListProps) => {
+  const {t} = useTranslation ();
+
   switch (props.status) {
     case HttpStatus.None:
-      return <button>Load</button>;
+      return <button>{t('load')}</button>;
     case HttpStatus.Progressing:
-      return <div>Loading...</div>;
+      return <Loader/>;
     case HttpStatus.Success:
       if (props.users.length === 0) {
-        return <div>No user (yet).</div>
+        return <div>{t('users.none')}</div>
       }
       return <ol>{props.users.map (user => <UserItem user={user} key={user.id}/>)}</ol>;
     case HttpStatus.Failure:
-      return <div>Sorry, loading users failed.</div>
+      return <div>{t('users.loading-failed')}</div>
   }
 };

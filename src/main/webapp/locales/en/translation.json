@@ -1,3 +1,8 @@
 {
-  "hello": "Hello from {{compiler}} and {{framework}}!"
+  "hello": "Hello from {{compiler}} and {{framework}}!",
+  "load": "Load",
+  "users": {
+    "none": "No user (yet).",
+    "loading-failed": "Sorry, user loading failed."
+  }
 }
