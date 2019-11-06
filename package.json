@@ -5,6 +5,9 @@
   "author": "Etienne Miret <etienne.miret@ens-lyon.org>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "translate": "i18next 'src/main/ts/**/*.{ts,tsx}' -o 'src/main/webapp/locales/$LOCALE/$NAMESPACE.json'"
+  },
   "devDependencies": {
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.3",
@@ -12,6 +15,7 @@
     "@types/react-router-dom": "^5.1.2",
     "@types/redux": "^3.6.0",
     "@types/redux-thunk": "^2.1.0",
+    "i18next-parser": "^1.0.0-beta36",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.2.1",
     "typescript": "^3.6.4",
