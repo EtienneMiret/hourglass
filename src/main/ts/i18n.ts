@@ -8,6 +8,7 @@ i18n
     .use (Fetch)
     .use (initReactI18next)
     .init ({
+      whitelist: ['en', 'fr'],
       fallbackLng: 'fr',
       interpolation: {
         escapeValue: false
