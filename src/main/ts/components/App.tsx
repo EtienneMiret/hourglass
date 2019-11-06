@@ -10,7 +10,7 @@ import { Loader } from './Loader';
 
 export const App = ({store}: {store: Store<GlobalState, AnyAction>}) => (
     <Provider store={store}>
-      <Suspense fallback={Loader}>
+      <Suspense fallback={<Loader/>}>
         <Router>
           <Switch>
             <Route path="/users" component={UserListContainer}/>
