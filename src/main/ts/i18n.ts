@@ -8,7 +8,6 @@ i18n
     .use (Fetch)
     .use (initReactI18next)
     .init ({
-      debug: true,
       fallbackLng: 'fr',
       interpolation: {
         escapeValue: false
