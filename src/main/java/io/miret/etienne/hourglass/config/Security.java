@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -24,7 +25,13 @@ public class Security extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure (HttpSecurity http) throws Exception {
     http
-        .authorizeRequests ().anyRequest ().hasRole ("student").and ()
+        .authorizeRequests ()
+            .antMatchers (HttpMethod.POST).hasRole ("prefect")
+            .antMatchers (HttpMethod.PUT).hasRole ("prefect")
+            .antMatchers (HttpMethod.PATCH).hasRole ("prefect")
+            .antMatchers (HttpMethod.DELETE).hasRole ("prefect")
+            .anyRequest ().hasRole ("student")
+            .and ()
         .csrf ().disable ()
         .oauth2Login ();
   }
