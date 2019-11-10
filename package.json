@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "translate": "i18next 'src/main/ts/**/*.{ts,tsx}' -o 'src/main/webapp/locales/$LOCALE/$NAMESPACE.json'"
+    "translate": "i18next 'src/main/ts/**/*.{ts,tsx}' -o 'src/main/webapp/locales/$LOCALE/$NAMESPACE.json' --write-old false"
   },
   "devDependencies": {
     "@types/react": "^16.9.11",
