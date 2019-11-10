@@ -6,6 +6,7 @@ import { Loader } from './Loader';
 import { useTranslation } from 'react-i18next';
 
 export interface UserListProps {
+  fetchUsers: () => {},
   users: User[],
   status: HttpStatus
 }
@@ -15,7 +16,8 @@ export const UserList = (props: UserListProps) => {
 
   switch (props.status) {
     case HttpStatus.None:
-      return <button>{t('load')}</button>;
+      props.fetchUsers ();
+      return <div/>;
     case HttpStatus.Progressing:
       return <Loader/>;
     case HttpStatus.Success:

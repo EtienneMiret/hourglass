@@ -1,8 +1,9 @@
 import { connect } from 'react-redux';
 import { UserList, UserListProps } from '../components/UserList';
 import { GlobalState } from '../state';
+import { fetchUsers } from '../actions/users';
 
-function mapStateToProps (state: GlobalState): UserListProps {
+function mapStateToProps (state: GlobalState) {
   const users = Object.values (state.users.list);
   users.sort ((a, b) => a.name.localeCompare (b.name));
   return {
@@ -11,6 +12,11 @@ function mapStateToProps (state: GlobalState): UserListProps {
   };
 }
 
+const mapDispatchToProps = {
+  fetchUsers
+};
+
 export const UserListContainer = connect(
-  mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(UserList);

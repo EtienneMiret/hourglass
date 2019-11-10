@@ -15,8 +15,6 @@ const store = createStore (
     applyMiddleware (thunk as ThunkMiddleware<GlobalState, Action>)
 );
 
-store.dispatch (fetchUsers ());
-
 ReactDOM.render(
     <App store={store}/>,
     document.getElementById('root')
