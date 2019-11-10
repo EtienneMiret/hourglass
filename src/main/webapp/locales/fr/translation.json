@@ -1,8 +1,8 @@
 {
   "hello": "Bonjour de la part de {{compiler}} et {{framework}}!",
-  "load": "Charger",
   "users": {
     "none": "Pas (encore) d’utilisateurs.",
     "loading-failed": "Désolé, le chargement des utilisateurs a échoué."
-  }
+  },
+  "reload": "Recharger"
 }

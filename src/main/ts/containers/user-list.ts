@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import { UserList, UserListProps } from '../components/UserList';
 import { GlobalState } from '../state';
 import { fetchUsers } from '../actions/users';
+import { UserListBlock } from '../components/UserListBlock';
 
 function mapStateToProps (state: GlobalState) {
   const users = Object.values (state.users.list);
@@ -19,4 +19,4 @@ const mapDispatchToProps = {
 export const UserListContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(UserList);
+) (UserListBlock);
