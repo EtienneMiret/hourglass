@@ -1,8 +1,14 @@
 {
   "hello": "Bonjour de la part de {{compiler}} et {{framework}}!",
+  "user": {
+    "no-emails": "Cet utilisateur n’a pas d’email connu.",
+    "name": "Nom",
+    "emails": "Adresses emails",
+    "loading-failed": "Désolé, le chargement de cet utiliseur a échoué."
+  },
+  "reload": "Recharger",
   "users": {
     "none": "Pas (encore) d’utilisateurs.",
     "loading-failed": "Désolé, le chargement des utilisateurs a échoué."
-  },
-  "reload": "Recharger"
+  }
 }

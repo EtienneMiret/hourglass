@@ -1,8 +1,14 @@
 {
   "hello": "Hello from {{compiler}} and {{framework}}!",
+  "user": {
+    "no-emails": "This user has no known email.",
+    "name": "Name",
+    "emails": "Email addresses",
+    "loading-failed": "Sorry, user loading failed."
+  },
+  "reload": "Reload",
   "users": {
     "none": "No user (yet).",
     "loading-failed": "Sorry, user loading failed."
-  },
-  "reload": "Reload"
+  }
 }

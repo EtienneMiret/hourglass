@@ -1,8 +1,8 @@
-import { User } from './user';
+import { UserContainer } from './user';
 import { HttpStatus } from './status';
 
 export interface Users {
-  [key: string]: User
+  [key: string]: UserContainer
 }
 
 export interface UserListState {

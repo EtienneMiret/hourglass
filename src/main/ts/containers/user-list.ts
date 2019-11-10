@@ -4,7 +4,8 @@ import { fetchUsers } from '../actions/users';
 import { UserListBlock } from '../components/UserListBlock';
 
 function mapStateToProps (state: GlobalState) {
-  const users = Object.values (state.users.list);
+  const users = Object.values (state.users.list)
+      .map (u => u.user);
   users.sort ((a, b) => a.name.localeCompare (b.name));
   return {
     users,
