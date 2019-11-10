@@ -2,6 +2,7 @@ import { User } from '../state/user';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { GlobalState } from '../state';
+import { fetchJson } from '../http/fetch';
 
 export const FETCH_USER_REQUEST = 'FETCH_USER_REQUEST';
 export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
@@ -46,8 +47,7 @@ export function fetchUsers (): ThunkAction<Promise<FetchUserAction>, GlobalState
   return function (dispatch) {
     dispatch (fetchUserRequest ());
 
-    return fetch ('/users')
-        .then (response => response.json ())
+    return fetchJson ('/users')
         .then (
             json => dispatch (fetchUserSuccess (json)),
             () => dispatch (fetchUserFailure ())
