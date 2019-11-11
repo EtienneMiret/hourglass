@@ -55,6 +55,17 @@ task webpack (type: YarnTask) {
     dependsOn yarn_install
 }
 
+task jest (type: YarnTask) {
+    def report = "${buildDir}/test-results/jest/result.json"
+    args = ['jest', "--outputFile=${report}"]
+    inputs.dir "${projectDir}/src/main/ts"
+    inputs.dir "${projectDir}/src/test/ts"
+    inputs.file "${projectDir}/yarn.lock"
+    inputs.file "${projectDir}/tsconfig.json"
+    outputs.file report
+    dependsOn yarn_install
+}
+
 war {
     with copySpec {
         from "${buildDir}/webpack"
@@ -67,6 +78,7 @@ war {
 
 test {
     useJUnitPlatform ()
+    dependsOn jest
 }
 
 clean {
