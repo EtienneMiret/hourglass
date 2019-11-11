@@ -1,16 +1,17 @@
 import { UserListState, Users } from '../state/user-list';
 import { HttpStatus } from '../state/status';
-import { FETCH_USER_FAILURE, FETCH_USER_REQUEST, FETCH_USER_SUCCESS, FetchUserSuccessAction } from '../actions/users';
-import { Action } from 'redux';
+import {
+  FETCH_USER_FAILURE,
+  FETCH_USER_REQUEST,
+  FETCH_USER_SUCCESS
+} from '../actions/users';
 import {
   FETCH_SINGLE_USER_FAILURE,
   FETCH_SINGLE_USER_REQUEST,
-  FETCH_SINGLE_USER_SUCCESS,
-  FetchSingleUserFailureAction,
-  FetchSingleUserRequestAction,
-  FetchSingleUserSuccessAction
+  FETCH_SINGLE_USER_SUCCESS
 } from '../actions/user';
 import { UserContainer } from '../state/user';
+import { Action } from '../actions';
 
 export function users (
     state: UserListState = {status: HttpStatus.None, list: {}},
@@ -24,7 +25,7 @@ export function users (
     }
     case FETCH_USER_SUCCESS: {
       const list = {} as Users;
-      (action as FetchUserSuccessAction).response
+      action.response
           .forEach (u => list[u.id] = {user: u, status: HttpStatus.Success});
       return Object.assign ({}, state, {
         status: HttpStatus.Success,
@@ -38,7 +39,7 @@ export function users (
     }
 
     case FETCH_SINGLE_USER_REQUEST: {
-      const id = (action as FetchSingleUserRequestAction).id;
+      const id = action.id;
       const userContainer = Object.assign ({}, state.list[id], {
         status: HttpStatus.Progressing
       });
@@ -50,7 +51,7 @@ export function users (
       });
     }
     case FETCH_SINGLE_USER_SUCCESS: {
-      const user = (action as FetchSingleUserSuccessAction).response;
+      const user = action.response;
       const userContainer: UserContainer =
           Object.assign ({}, state.list[user.id], {
             user,
@@ -64,7 +65,7 @@ export function users (
       });
     }
     case FETCH_SINGLE_USER_FAILURE: {
-      const id = (action as FetchSingleUserFailureAction).id;
+      const id = action.id;
       const userContainer: UserContainer =
           Object.assign ({}, state.list[id], {
             status: HttpStatus.Failure
