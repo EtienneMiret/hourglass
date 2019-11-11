@@ -1,12 +1,16 @@
 import { HttpStatus } from './status';
 
-export interface User {
-  id: string,
+export interface NewUser {
   name: string,
   emails: string[]
 }
 
+export interface User extends NewUser {
+  id: string
+}
+
 export interface UserContainer {
+  edition: User | null,
   user: User,
   status: HttpStatus
 }
