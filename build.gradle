@@ -45,7 +45,7 @@ sass {
     }
 }
 
-task yarn_install {
+yarn_install {
     outputs.dir "${projectDir}/node_modules"
 }
 
