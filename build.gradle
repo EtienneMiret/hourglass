@@ -45,6 +45,10 @@ sass {
     }
 }
 
+task yarn_install {
+    outputs.dir "${projectDir}/node_modules"
+}
+
 task webpack (type: YarnTask) {
     args = ['webpack', '-o', "${buildDir}/webpack/bundle.js"]
     inputs.dir "${projectDir}/src/main/ts"
