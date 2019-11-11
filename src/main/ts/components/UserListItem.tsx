@@ -6,5 +6,5 @@ export interface UserItemProps {
   user: User
 }
 
-export const UserItem = (props: UserItemProps) =>
+export const UserListItem = (props: UserItemProps) =>
     <li><Link to={`/users/${props.user.id}`}>{props.user.name}</Link></li>;
