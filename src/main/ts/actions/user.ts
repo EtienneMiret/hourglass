@@ -1,7 +1,7 @@
 import { User } from '../state/user';
 import { ThunkAction } from 'redux-thunk';
 import { GlobalState } from '../state';
-import { fetchJson } from '../http/fetch';
+import { get } from '../http/fetch';
 
 export const FETCH_SINGLE_USER_REQUEST = 'FETCH_SINGLE_USER_REQUEST';
 export const FETCH_SINGLE_USER_SUCCESS = 'FETCH_SINGLE_USER_SUCCESS';
@@ -54,7 +54,7 @@ export function fetchUser (id: string)
   return function (dispatch) {
     dispatch (fetchSingleUserRequest (id));
 
-    return fetchJson (`/users/${encodeURIComponent (id)}`)
+    return get (`/users/${encodeURIComponent (id)}`)
         .then (
             json => dispatch (fetchSingleUserSuccess (json)),
             () => dispatch (fetchSingleUserFailure (id))

@@ -9,6 +9,10 @@
     "translate": "i18next 'src/main/ts/**/*.{ts,tsx}' -o 'src/main/webapp/locales/$LOCALE/$NAMESPACE.json' --write-old false"
   },
   "jest": {
+    "automock": false,
+    "setupFiles": [
+      "./src/test/ts/setup.ts"
+    ],
     "preset": "ts-jest"
   },
   "devDependencies": {
@@ -21,6 +25,7 @@
     "@types/redux-thunk": "^2.1.0",
     "i18next-parser": "^1.0.0-beta36",
     "jest": "^24.9.0",
+    "jest-fetch-mock": "^2.1.2",
     "source-map-loader": "^0.2.4",
     "ts-jest": "^24.1.0",
     "ts-loader": "^6.2.1",
