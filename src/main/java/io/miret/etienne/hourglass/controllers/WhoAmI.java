@@ -23,7 +23,7 @@ public class WhoAmI {
   @GetMapping
   public User get (@AuthenticationPrincipal AuthenticatedUser user) {
     boolean prefect = user.getAuthorities ().contains (PREFECT);
-    return new User (user.getId (), user.getName (), prefect);
+    return new User (user.getId (), user.getTeamId (), user.getName (), prefect);
   }
 
 }

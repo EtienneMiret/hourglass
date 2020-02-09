@@ -24,6 +24,8 @@ public class AuthenticatedUser implements OidcUser {
 
   private final UUID id;
 
+  private final UUID teamId;
+
   private final String name;
 
   private final Collection<? extends GrantedAuthority> authorities;
@@ -32,6 +34,10 @@ public class AuthenticatedUser implements OidcUser {
 
   public UUID getId () {
     return id;
+  }
+
+  public UUID getTeamId () {
+    return teamId;
   }
 
   @Override

@@ -17,7 +17,7 @@ public class UserCreation extends UserAction {
 
   @Override
   public User apply (User user) {
-    return new User (getUserId (), getName (), getEmails ());
+    return new User (getUserId (), getTeamId (), getName (), getEmails ());
   }
 
 }

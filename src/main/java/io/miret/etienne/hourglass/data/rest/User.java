@@ -11,6 +11,8 @@ public class User {
 
   private final UUID id;
 
+  private final UUID teamId;
+
   private final String name;
 
   private final boolean prefect;

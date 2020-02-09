@@ -16,6 +16,8 @@ public abstract class UserAction extends Action<User> {
 
   private UUID userId;
 
+  private UUID teamId;
+
   private String name;
 
   private Set<String> emails;
@@ -23,6 +25,7 @@ public abstract class UserAction extends Action<User> {
   public UserAction (BaseAction action, User user) {
     super (action);
     this.userId = user.getId ();
+    this.teamId = user.getTeamId ();
     this.name = user.getName ();
     this.emails = user.getEmails ();
   }

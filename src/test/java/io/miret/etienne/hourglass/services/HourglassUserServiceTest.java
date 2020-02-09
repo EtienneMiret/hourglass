@@ -49,6 +49,12 @@ class HourglassUserServiceTest {
   private static final UUID ADMIN_USER_ID =
       UUID.fromString ("B859853A-292E-498E-8018-142DBECC30FA");
 
+  private static final UUID REGULAR_USER_TEAM =
+      UUID.fromString ("74406FDC-9F5E-448B-BA73-F9E2728A2A21");
+
+  private static final UUID ADMIN_USER_TEAM =
+      UUID.fromString ("B8322C22-329E-4237-A29B-C2A5DBFD1AE4");
+
   private static final String REGULAR_USER_NAME = "User";
 
   private static final String ADMIN_USER_NAME = "Admin";
@@ -84,16 +90,19 @@ class HourglassUserServiceTest {
     var clock = Clock.fixed (Instant.EPOCH, ZoneOffset.UTC);
     var regularUser = new User (
         REGULAR_USER_ID,
+        REGULAR_USER_TEAM,
         REGULAR_USER_NAME,
         Set.of ("user@miret.io", "foo@miret.io", "bar@miret.io")
     );
     var adminUser = new User (
         ADMIN_USER_ID,
+        ADMIN_USER_TEAM,
         ADMIN_USER_NAME,
         Set.of ("admin@miret.io")
     );
     var fooUser = new User (
         UUID.fromString ("EC185693-AB4A-4846-B7D2-393361A545A0"),
+        UUID.fromString ("A5BCCF8C-7C57-40DB-94F0-093ED3377B2D"),
         "ZZZZ",
         Set.of ("foo@miret.io")
     );
@@ -206,8 +215,10 @@ class HourglassUserServiceTest {
     assertThat (userAction.getValue ().getEmails ())
         .containsOnly ("root@miret.io");
     assertThat (userAction.getValue ().getName ()).isEqualTo (UNKNOWN_PREFECT);
+    assertThat (userAction.getValue ().getTeamId ()).isNull ();
     assertThat (actual.getId ()).isEqualTo (userAction.getValue ().getUserId ());
     assertThat (actual.getName ()).isEqualTo (UNKNOWN_PREFECT);
+    assertThat (actual.getTeamId ()).isNull ();
   }
 
   private GrantedAuthority oidcUserAuthority (String email) {

@@ -99,11 +99,11 @@ public class HourglassUserService
       authorities = emptySet ();
     }
 
+    UUID id = user.map (User::getId).orElseGet (UUID::randomUUID);
+    UUID teamId = user.map (User::getTeamId).orElse (null);
     String name = user.map (User::getName).orElse ("Anonymous");
 
-    UUID id = user.map (User::getId).orElseGet (UUID::randomUUID);
-
-    return new AuthenticatedUser (id, name, authorities, oidcUser);
+    return new AuthenticatedUser (id, teamId, name, authorities, oidcUser);
   }
 
   private Optional<User> createIfPrefect (boolean prefect, Set<String> emails) {
@@ -111,7 +111,7 @@ public class HourglassUserService
       return Optional.empty ();
     }
 
-    var created = new User (null, UNKNOWN_PREFECT, emails);
+    var created = new User (null, null, UNKNOWN_PREFECT, emails);
     var creation = new UserCreation (
         new BaseAction (clock, "Auto-creating prefect."),
         created

@@ -18,6 +18,8 @@ public class User {
 
   private UUID id;
 
+  private UUID teamId;
+
   private String name;
 
   private Set<String> emails;

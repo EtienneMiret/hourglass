@@ -16,6 +16,9 @@ public class UserEdition extends UserAction {
   @Override
   public User apply (User user) {
     User result = user;
+    if (getTeamId () != null) {
+      result = result.withTeamId (getTeamId ());
+    }
     if (getName () != null) {
       result = result.withName (getName ());
     }
