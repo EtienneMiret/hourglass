@@ -2,6 +2,7 @@ package io.miret.etienne.hourglass.config;
 
 import io.miret.etienne.hourglass.data.config.AppConfiguration;
 import io.miret.etienne.hourglass.data.config.SecurityConfiguration;
+import io.miret.etienne.hourglass.services.HourglassUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,8 @@ public class Security extends WebSecurityConfigurerAdapter {
 
   private final AppConfiguration configuration;
 
+  private final HourglassUserService userService;
+
   @Override
   protected void configure (HttpSecurity http) throws Exception {
     http
@@ -33,7 +36,8 @@ public class Security extends WebSecurityConfigurerAdapter {
             .anyRequest ().hasRole ("student")
             .and ()
         .csrf ().disable ()
-        .oauth2Login ();
+        .oauth2Login ()
+            .userInfoEndpoint ().oidcUserService (userService);
   }
 
   @Bean

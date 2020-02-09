@@ -10,6 +10,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 
 import java.io.IOException;
 import java.time.Clock;
@@ -45,6 +46,11 @@ public class Main extends SpringBootServletInitializer {
   @Bean
   public ObjectMapper yamlJackson () {
     return new ObjectMapper (new YAMLFactory ());
+  }
+
+  @Bean
+  public OidcUserService oidcUserService () {
+    return new OidcUserService ();
   }
 
 }
