@@ -5,7 +5,6 @@ import { App } from './components/App';
 import { applyMiddleware, createStore, Action } from 'redux';
 import { reducers } from './reducers';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
-import { fetchUsers } from './actions/users';
 import { GlobalState } from './state';
 
 import './i18n';
