@@ -20,6 +20,8 @@ public class AuthenticatedUser implements OidcUser {
   public static final GrantedAuthority PREFECT =
       new SimpleGrantedAuthority ("ROLE_prefect");
 
+  public static final String UNKNOWN_PREFECT = "Prefect";
+
   private final UUID id;
 
   private final String name;

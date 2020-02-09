@@ -11,6 +11,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,9 +33,11 @@ import java.util.UUID;
 
 import static io.miret.etienne.hourglass.data.auth.AuthenticatedUser.PREFECT;
 import static io.miret.etienne.hourglass.data.auth.AuthenticatedUser.STUDENT;
+import static io.miret.etienne.hourglass.data.auth.AuthenticatedUser.UNKNOWN_PREFECT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith (MockitoExtension.class)
@@ -71,6 +75,9 @@ class HourglassUserServiceTest {
 
   @Mock
   private OidcUser oidcUser;
+
+  @Captor
+  private ArgumentCaptor<UserAction> userAction;
 
   @BeforeEach
   void setup () {
@@ -128,6 +135,7 @@ class HourglassUserServiceTest {
     });
 
     userService = new HourglassUserService (
+        clock,
         oidcUserService,
         userActionRepository,
         composer,
@@ -183,6 +191,23 @@ class HourglassUserServiceTest {
     var actual = userService.loadUser (request);
 
     assertThat (actual.getId ()).isEqualTo (REGULAR_USER_ID);
+  }
+
+  @Test
+  void should_create_admin_user () {
+    when (oidcUser.getAuthorities ()).then (i -> Set.of (
+        oidcUserAuthority ("root@miret.io")
+    ));
+
+    var actual = userService.loadUser (request);
+
+    verify (userActionRepository).save (userAction.capture ());
+    assertThat (userAction.getValue ()).isInstanceOf (UserCreation.class);
+    assertThat (userAction.getValue ().getEmails ())
+        .containsOnly ("root@miret.io");
+    assertThat (userAction.getValue ().getName ()).isEqualTo (UNKNOWN_PREFECT);
+    assertThat (actual.getId ()).isEqualTo (userAction.getValue ().getUserId ());
+    assertThat (actual.getName ()).isEqualTo (UNKNOWN_PREFECT);
   }
 
   private GrantedAuthority oidcUserAuthority (String email) {
