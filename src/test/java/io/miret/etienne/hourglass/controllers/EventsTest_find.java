@@ -59,31 +59,31 @@ class EventsTest_find {
   void createTestData () {
     event0Edit0 = new EventCreation (
         new BaseAction (clock, "foo"),
-        new Event (null, null, null, null, emptySet ())
+        new Event (null, null, null, null, null, emptySet ())
     );
     event0Edit1 = new EventEdition (
         new BaseAction (clock, "bar"),
-        new Event (event0Edit0.getEventId (), null, null, null, emptySet ())
+        new Event (event0Edit0.getEventId (), null, null, null, null, emptySet ())
     );
     event1Edit0 = new EventCreation (
         new BaseAction (clock, "foo"),
-        new Event (null, null, null, null, emptySet ())
+        new Event (null, null, null, null, null, emptySet ())
     );
     event2Edit0 = new EventCreation (
         new BaseAction (clock, "baz"),
-        new Event (null, null, null, null, emptySet ())
+        new Event (null, null, null, null, null, emptySet ())
     );
     event2Edit1 = new EventEdition (
         new BaseAction (clock, "bar"),
-        new Event (event2Edit0.getEventId (), null, null, null, emptySet ())
+        new Event (event2Edit0.getEventId (), null, null, null, null, emptySet ())
     );
     event2Edit2 = new EventEdition (
         new BaseAction (clock, "foo"),
-        new Event (event2Edit0.getEventId (), null, null, null, emptySet ())
+        new Event (event2Edit0.getEventId (), null, null, null, null, emptySet ())
     );
-    event0 = new Event (event0Edit0.getEventId (), "Hello World!", null, null, emptySet ());
-    event1 = new Event (event1Edit0.getEventId (), "How are you?", null, null, emptySet ());
-    event2 = new Event (event2Edit0.getEventId (), "I’m fine.", null, null, emptySet ());
+    event0 = new Event (event0Edit0.getEventId (), "Hello World!", null, null, null, emptySet ());
+    event1 = new Event (event1Edit0.getEventId (), "How are you?", null, null, null, emptySet ());
+    event2 = new Event (event2Edit0.getEventId (), "I’m fine.", null, null, null, emptySet ());
   }
 
   @Test

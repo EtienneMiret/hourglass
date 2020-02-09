@@ -22,10 +22,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Clock;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
 
+import static java.time.Month.FEBRUARY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.Matchers.any;
@@ -66,6 +68,7 @@ class EventsTest_create {
   private UUID gregory;
   private UUID steven;
   private String name;
+  private LocalDate date;
   private Form<Event> form;
 
   @BeforeEach
@@ -75,9 +78,11 @@ class EventsTest_create {
     gregory = UUID.fromString ("C9DA27E0-5F42-47B8-97B0-976ADA700B9F");
     steven = UUID.fromString ("7B4EF6D4-D7A2-4DB5-821A-62106149717E");
     name = "Spring break";
+    date = LocalDate.of (2020, FEBRUARY, 9);
     var event = new Event (
         null,
         name,
+        date,
         scaleRuleId,
         null,
         Set.of (gregory, steven)
@@ -105,6 +110,7 @@ class EventsTest_create {
         .thenReturn (new Event (
             eventId,
             name,
+            date,
             scaleRuleId,
             null,
             Set.of (gregory, steven)
@@ -123,6 +129,7 @@ class EventsTest_create {
         .isEqualTo ("Hello World!");
     assertThat (eventCaptor.getValue ().getEventId ()).isNotNull ();
     assertThat (eventCaptor.getValue ().getName ()).isEqualTo (name);
+    assertThat (eventCaptor.getValue ().getDate ()).isEqualTo (date);
     assertThat (eventCaptor.getValue ().getScaleRuleId ())
         .isEqualTo (scaleRuleId);
     assertThat (eventCaptor.getValue ().getUserIds ()).containsOnly (
@@ -130,6 +137,7 @@ class EventsTest_create {
     );
     assertThat (actual.getId ()).isEqualTo (eventId);
     assertThat (actual.getName ()).isEqualTo (name);
+    assertThat (actual.getDate ()).isEqualTo (date);
     assertThat (actual.getScaleRuleId ()).isEqualTo (scaleRuleId);
     assertThat (actual.getPoints ()).isEqualTo (2);
     assertThat (actual.getUserIds ()).containsOnly (gregory, steven);

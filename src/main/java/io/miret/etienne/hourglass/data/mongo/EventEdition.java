@@ -19,6 +19,9 @@ public class EventEdition extends EventAction {
     if (getName () != null) {
       result = result.withName (getName ());
     }
+    if (getDate () != null) {
+      result = result.withDate (getDate ());
+    }
     if (getScaleRuleId () != null) {
       result = result.withScaleRuleId (getScaleRuleId ());
     }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.With;
 
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.UUID;
 
@@ -19,6 +20,8 @@ public class Event {
   private UUID id;
 
   private String name;
+
+  private LocalDate date;
 
   private UUID scaleRuleId;
 

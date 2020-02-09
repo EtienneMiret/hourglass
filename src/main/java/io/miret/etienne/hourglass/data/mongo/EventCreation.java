@@ -17,7 +17,7 @@ public class EventCreation extends EventAction {
 
   @Override
   public Event apply (Event event) {
-    return new Event (getEventId (), getName (), getScaleRuleId (), null, getUserIds ());
+    return new Event (getEventId (), getName (), getDate (), getScaleRuleId (), null, getUserIds ());
   }
 
 }

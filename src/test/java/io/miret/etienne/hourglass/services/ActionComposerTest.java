@@ -11,6 +11,7 @@ import org.junit.jupiter.api.TestFactory;
 
 import java.time.Clock;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +20,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.google.common.collect.Collections2.permutations;
+import static java.time.Month.FEBRUARY;
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -57,6 +59,7 @@ class ActionComposerTest {
         new Event (
             null,
             "Hackathon",
+            LocalDate.of (2020, FEBRUARY, 9),
             SCALE_RULE_ID,
             null,
             emptySet ()
@@ -69,6 +72,7 @@ class ActionComposerTest {
         ),
         new Event (
             creation.getEventId (),
+            null,
             null,
             null,
             null,
@@ -85,6 +89,7 @@ class ActionComposerTest {
             null,
             null,
             null,
+            null,
             Set.of (CHRISTINA, CHRISTIAN)
         )
     );
@@ -95,6 +100,7 @@ class ActionComposerTest {
         ),
         new Event (
             creation.getEventId (),
+            null,
             null,
             null,
             null,
@@ -109,6 +115,7 @@ class ActionComposerTest {
         new Event (
             creation.getEventId (),
             "2019 Hackathon",
+            null,
             null,
             null,
             null
@@ -135,6 +142,8 @@ class ActionComposerTest {
 
       assertThat (actual.getId ()).isEqualTo (id);
       assertThat (actual.getName ()).isEqualTo ("2019 Hackathon");
+      assertThat (actual.getDate ())
+          .isEqualTo (LocalDate.of (2020, FEBRUARY, 9));
       assertThat (actual.getScaleRuleId ()).isEqualTo (SCALE_RULE_ID);
       assertThat (actual.getUserIds ()).containsOnly (CHRISTINA, STEVEN);
     });
