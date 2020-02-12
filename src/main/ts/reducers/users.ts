@@ -97,6 +97,7 @@ export function users (
       if (action.id === null) {
         const user: NewUser = {
           name: '',
+          teamId: '',
           emails: []
         };
         return Object.assign ({}, state, {

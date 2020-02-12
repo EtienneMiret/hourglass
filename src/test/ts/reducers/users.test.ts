@@ -20,12 +20,14 @@ import { User } from '../../../main/ts/state/user';
 const anthonyHead = Object.freeze ({
   id: '451',
   name: 'Anthony Head',
+  teamId: 'Gryffindor',
   emails: Object.freeze ([])
 }) as unknown as User;
 
 const bradleyJames = Object.freeze ({
   id: '723',
   name: 'Bradley James',
+  teamId: 'Gryffindor',
   emails: Object.freeze ([
     'bradley.james@example.org'
   ])
@@ -52,6 +54,7 @@ const creationInProgress = Object.freeze ({
   creation: Object.freeze ({
     user: Object.freeze ({
       name: 'Kathy McGrath',
+      teamId: 'Ravenclaw',
       emails: Object.freeze ([
         'kathy@example.com',
         'kathy.mcgrath@example.org'
@@ -109,6 +112,7 @@ describe ('User reducers', () => {
           creation: {
             user: {
               name: '',
+              teamId: '',
               emails: []
             },
             status: HttpStatus.None
@@ -196,6 +200,7 @@ describe ('User reducers', () => {
           creation: {
             user: {
               name: 'Morgana',
+              teamId: 'Ravenclaw',
               emails: [
                 'kathy@example.com',
                 'kathy.mcgrath@example.org'
@@ -241,6 +246,7 @@ describe ('User reducers', () => {
               edition: {
                 id: '723',
                 name: 'Arthur Pendragon',
+                teamId: 'Gryffindor',
                 emails: ['bradley.james@example.org']
               },
               user: bradleyJames,
@@ -267,6 +273,7 @@ describe ('User reducers', () => {
           creation: {
             user: {
               name: 'Kathy McGrath',
+              teamId: 'Ravenclaw',
               emails: [
                 'kathy@example.com',
                 'kathy.mcgrath@example.org',
@@ -308,6 +315,7 @@ describe ('User reducers', () => {
               edition: {
                 id: '451',
                 name: 'Anthony Head',
+                teamId: 'Gryffindor',
                 emails: [
                   'king@example.com'
                 ]
@@ -365,6 +373,7 @@ describe ('User reducers', () => {
           creation: {
             user: {
               name: 'Kathy McGrath',
+              teamId: 'Ravenclaw',
               emails: ['kathy.mcgrath@example.org']
             },
             status: HttpStatus.None
@@ -407,6 +416,7 @@ describe ('User reducers', () => {
               edition: {
                 id: '723',
                 name: 'Bradley James',
+                teamId: 'Gryffindor',
                 emails: []
               },
               user: bradleyJames,
@@ -432,6 +442,7 @@ describe ('User reducers', () => {
           creation: {
             user: {
               name: 'Kathy McGrath',
+              teamId: 'Ravenclaw',
               emails: [
                 'kathy@example.com',
                 'kathy.mcgrath@example.org'

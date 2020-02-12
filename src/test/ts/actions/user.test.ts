@@ -18,6 +18,7 @@ describe ('User actions', () => {
   test ('fetchSingleUserSuccess ()', () => {
     const user = {
       id: 'foo',
+      teamId: 'bar',
       name: 'Foo',
       emails: ['foo@example.com']
     };

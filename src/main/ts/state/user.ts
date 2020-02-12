@@ -2,6 +2,7 @@ import { HttpStatus } from './status';
 
 export interface NewUser {
   name: string,
+  teamId: string,
   emails: string[]
 }
 
