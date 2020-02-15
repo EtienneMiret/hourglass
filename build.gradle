@@ -1,7 +1,7 @@
 plugins {
     id 'war'
     id 'com.github.node-gradle.node' version '2.2.0'
-    id 'com.github.salomonbrys.gradle.sass' version '1.2.0'
+    id 'io.miret.etienne.sass' version '1.1.0'
 }
 
 group 'io.miret.etienne.hourglass'
@@ -38,12 +38,6 @@ node {
     download = true
 }
 
-sass {
-    download {
-        version = '1.23.3'
-    }
-}
-
 yarn_install {
     outputs.dir "${projectDir}/node_modules"
 }
@@ -76,7 +70,7 @@ war {
     with copySpec {
         from "${buildDir}/sass"
     }
-    dependsOn (webpack, sassCompile)
+    dependsOn webpack
 }
 
 test {
