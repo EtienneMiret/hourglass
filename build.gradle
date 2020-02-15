@@ -1,6 +1,5 @@
 plugins {
     id 'war'
-    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'com.github.node-gradle.node' version '2.2.0'
     id 'com.github.salomonbrys.gradle.sass' version '1.2.0'
 }
