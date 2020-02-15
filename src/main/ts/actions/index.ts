@@ -6,9 +6,11 @@ import { FetchEventAction } from './events';
 import { FetchWhoamiAction } from './who-am-i';
 import { FetchSingleTeamAction } from './team';
 import { EditTeamAction } from './team-edition';
+import { FetchSingleEventAction } from './event';
 
 export type Action = FetchSingleUserAction
     | EditUserAction
+    | FetchSingleEventAction
     | FetchEventAction
     | FetchSingleTeamAction
     | EditTeamAction
