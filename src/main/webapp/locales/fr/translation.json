@@ -1,5 +1,9 @@
 {
   "hello": "Bonjour de la part de {{compiler}} et {{framework}}!",
+  "teams": {
+    "none": "Pas (encore) d’équipes.",
+    "loading-failed": "Désolé, le chargement des équipes a échoué."
+  },
   "user": {
     "no-emails": "Cet utilisateur n’a pas d’email connu.",
     "name": "Nom",
