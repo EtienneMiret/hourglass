@@ -216,13 +216,13 @@ export function users (
         if (state.creation === null) {
           return state;
         }
-        const creation: UserCreation =
-            Object.assign ({}, state.creation, {
-              status: HttpStatus.Progressing
-            });
-        return Object.assign ({}, state, {creation});
+        return Object.assign ({}, state, {
+          creation: null,
+          status: HttpStatus.Progressing
+        });
       } else {
         const userContainer: UserContainer = Object.assign ({}, state.list[action.id], {
+          edition: null,
           status: HttpStatus.Progressing
         });
         const list: Users = Object.assign ({}, state.list, {

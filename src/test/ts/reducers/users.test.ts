@@ -438,32 +438,7 @@ describe ('User reducers', () => {
 
         const actual = users (creationInProgress, action);
 
-        expect (actual).toEqual ({
-          creation: {
-            user: {
-              name: 'Kathy McGrath',
-              teamId: 'Ravenclaw',
-              emails: [
-                'kathy@example.com',
-                'kathy.mcgrath@example.org'
-              ]
-            },
-            status: HttpStatus.Progressing
-          },
-          status: HttpStatus.Success,
-          list: {
-            '451': {
-              edition: null,
-              user: anthonyHead,
-              status: HttpStatus.Success
-            },
-            '723': {
-              edition: null,
-              user: bradleyJames,
-              status: HttpStatus.Success
-            }
-          }
-        } as UserListState);
+        expect (actual.status).toBe (HttpStatus.Progressing);
       });
 
       it ('should flag edited user as loading', () => {
@@ -474,22 +449,29 @@ describe ('User reducers', () => {
 
         const actual = users (editionInProgress, action);
 
-        expect (actual).toEqual ({
-          creation: null,
-          status: HttpStatus.Success,
-          list: {
-            '451': {
-              edition: anthonyHead,
-              user: anthonyHead,
-              status: HttpStatus.Progressing
-            },
-            '723': {
-              edition: bradleyJames,
-              user: bradleyJames,
-              status: HttpStatus.Success
-            }
-          }
-        } as UserListState);
+        expect (actual.list['451'].status).toBe (HttpStatus.Progressing);
+      });
+
+      it ('should clear created user', () => {
+        const action: EditUserSubmitAction = {
+          type: EDIT_USER_SUBMIT,
+          id: null
+        };
+
+        const actual = users (creationInProgress, action);
+
+        expect (actual.creation).toBeNull ();
+      });
+
+      it ('should clear edited user', () => {
+        const action: EditUserSubmitAction = {
+          type: EDIT_USER_SUBMIT,
+          id: '451'
+        };
+
+        const actual = users (editionInProgress, action);
+
+        expect (actual.list['451'].edition).toBe (null);
       });
 
     });
