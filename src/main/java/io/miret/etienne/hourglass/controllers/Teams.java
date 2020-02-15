@@ -71,4 +71,13 @@ public class Teams {
     return composer.compose (union (actions, Set.of (edition)));
   }
 
+  @GetMapping ("/{id}")
+  public Team get (@PathVariable UUID id) {
+    var actions = repository.findByTeamId (id);
+    if (actions.isEmpty ()) {
+      throw new ResponseStatusException (NOT_FOUND);
+    }
+    return composer.compose (actions);
+  }
+
 }
