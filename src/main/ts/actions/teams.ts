@@ -24,20 +24,20 @@ export interface FetchTeamFailureAction extends Action {
 export type FetchTeamAction =
   FetchTeamRequestAction | FetchTeamSuccessAction | FetchTeamFailureAction;
 
-function fetchTeamRequest (): FetchTeamRequestAction {
+export function fetchTeamRequest (): FetchTeamRequestAction {
   return {
     type: FETCH_TEAM_REQUEST
   };
 }
 
-function fetchTeamSuccess (response: Team[]): FetchTeamSuccessAction {
+export function fetchTeamSuccess (response: Team[]): FetchTeamSuccessAction {
   return {
     type: FETCH_TEAM_SUCCESS,
     response
   };
 }
 
-function fetchTeamFailure (): FetchTeamFailureAction {
+export function fetchTeamFailure (): FetchTeamFailureAction {
   return {
     type: FETCH_TEAM_FAILURE
   };
