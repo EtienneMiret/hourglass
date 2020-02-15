@@ -67,9 +67,6 @@ war {
     with copySpec {
         from "${buildDir}/webpack"
     }
-    with copySpec {
-        from "${buildDir}/sass"
-    }
     dependsOn webpack
 }
 
