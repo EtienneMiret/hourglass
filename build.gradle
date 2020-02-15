@@ -12,24 +12,24 @@ repositories {
 }
 
 dependencies {
-    implementation platform('org.springframework.boot:spring-boot-dependencies:2.2.0.RELEASE')
+    implementation platform('org.springframework.boot:spring-boot-dependencies:2.2.4.RELEASE')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
-    implementation 'com.google.guava:guava:28.1-jre'
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.0'
+    implementation 'com.google.guava:guava:28.2-jre'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.2'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-api'
-    testImplementation 'org.assertj:assertj-core:3.14.0'
-    testImplementation 'org.mockito:mockito-junit-jupiter:3.1.0'
+    testImplementation 'org.assertj:assertj-core:3.15.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:3.2.4'
     testImplementation 'org.hamcrest:hamcrest:2.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 
-    compileOnly 'org.projectlombok:lombok:1.18.10'
-    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
 }
 
 node {
