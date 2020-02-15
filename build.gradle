@@ -35,7 +35,7 @@ dependencies {
 
 node {
     version = '13.0.1'
-    yarnVersion = '1.19.1'
+    yarnVersion = '1.22.0'
     download = true
 }
 
