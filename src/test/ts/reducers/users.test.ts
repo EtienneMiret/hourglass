@@ -1,11 +1,13 @@
 import {
   EDIT_USER_ADD_EMAIL,
+  EDIT_USER_CREATION_SUCCESS,
   EDIT_USER_FINISH,
   EDIT_USER_REMOVE_EMAIL,
   EDIT_USER_SET_NAME,
   EDIT_USER_START,
   EDIT_USER_SUBMIT,
   EditUserAddEmailAction,
+  EditUserCreationSuccess,
   EditUserFinishAction,
   EditUserRemoveEmailAction,
   EditUserSetNameAction,
@@ -472,6 +474,26 @@ describe ('User reducers', () => {
         const actual = users (editionInProgress, action);
 
         expect (actual.list['451'].edition).toBe (null);
+      });
+
+    });
+
+    describe (EDIT_USER_CREATION_SUCCESS, () => {
+
+      it ('should set status to Success', () => {
+
+        const action: EditUserCreationSuccess = {
+          type: EDIT_USER_CREATION_SUCCESS
+        };
+        const state: UserListState = {
+          creation: null,
+          list: {},
+          status: HttpStatus.Progressing
+        };
+
+        const actual = users (state, action);
+
+        expect (actual.status).toBe (HttpStatus.Success);
       });
 
     });

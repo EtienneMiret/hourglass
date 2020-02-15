@@ -24,20 +24,20 @@ export interface FetchUserFailureAction extends Action {
 export type FetchUserAction =
   FetchUserRequestAction | FetchUserSuccessAction | FetchUserFailureAction;
 
-function fetchUserRequest (): FetchUserRequestAction {
+export function fetchUserRequest (): FetchUserRequestAction {
   return {
     type: FETCH_USER_REQUEST
   };
 }
 
-function fetchUserSuccess (response: User[]): FetchUserSuccessAction {
+export function fetchUserSuccess (response: User[]): FetchUserSuccessAction {
   return {
     type: FETCH_USER_SUCCESS,
     response
   };
 }
 
-function fetchUserFailure (): FetchUserFailureAction {
+export function fetchUserFailure (): FetchUserFailureAction {
   return {
     type: FETCH_USER_FAILURE
   };

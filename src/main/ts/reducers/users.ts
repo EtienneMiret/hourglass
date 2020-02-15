@@ -14,6 +14,7 @@ import { NewUser, User, UserContainer } from '../state/user';
 import { Action } from '../actions';
 import {
   EDIT_USER_ADD_EMAIL,
+  EDIT_USER_CREATION_SUCCESS,
   EDIT_USER_FINISH,
   EDIT_USER_REMOVE_EMAIL,
   EDIT_USER_SET_NAME,
@@ -230,6 +231,9 @@ export function users (
         });
         return Object.assign ({}, state, {list});
       }
+    }
+    case EDIT_USER_CREATION_SUCCESS: {
+      return Object.assign ({}, state, {status: HttpStatus.Success});
     }
     case EDIT_USER_FINISH: {
       if (action.id === null) {
