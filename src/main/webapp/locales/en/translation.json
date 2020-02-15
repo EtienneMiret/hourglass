@@ -2,7 +2,21 @@
   "hello": "Hello from {{compiler}} and {{framework}}!",
   "team": {
     "name": "Name",
-    "color": "Color"
+    "color": "Color",
+    "loading-failed": "Sorry, team loading failed."
+  },
+  "actions": {
+    "reload": "Reload",
+    "edit": "Edit",
+    "add": "Add"
+  },
+  "edit": {
+    "comment": "Comment:",
+    "cancel": "Cancel",
+    "save": "Save",
+    "user": {
+      "new-email": "Add email address:"
+    }
   },
   "teams": {
     "none": "No team (yet).",
@@ -13,19 +27,6 @@
     "name": "Name",
     "emails": "Email addresses",
     "loading-failed": "Sorry, user loading failed."
-  },
-  "actions": {
-    "reload": "Reload",
-    "edit": "Edit",
-    "add": "Add"
-  },
-  "edit": {
-    "user": {
-      "new-email": "Add email address:"
-    },
-    "comment": "Comment:",
-    "cancel": "Cancel",
-    "save": "Save"
   },
   "users": {
     "none": "No user (yet).",

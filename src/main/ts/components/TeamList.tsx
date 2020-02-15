@@ -4,6 +4,7 @@ import { NewTeam, Team } from '../state/team';
 import { HttpStatus } from '../state/status';
 import { Loader } from './Loader';
 import { TeamEditContainer } from '../containers/team-edit';
+import { Link } from 'react-router-dom';
 
 export interface TeamListStateProps {
   prefect: boolean;
@@ -33,7 +34,8 @@ export const TeamList = (props: TeamListProps) => {
         if (props.teams.length === 0) {
           return <div>{t ('teams.none')}</div>;
         }
-        return <ol>{props.teams.map (team => <li key={team.id}>{team.name}</li>)}</ol>
+        return <ol>{props.teams.map (team =>
+            <li key={team.id}><Link to={`/teams/${team.id}`}>{team.name}</Link></li>)}</ol>
       case HttpStatus.Failure:
         return <div>{t ('teams.loading-failed')}</div>;
     }

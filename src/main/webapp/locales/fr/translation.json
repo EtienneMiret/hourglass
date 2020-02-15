@@ -2,7 +2,21 @@
   "hello": "Bonjour de la part de {{compiler}} et {{framework}}!",
   "team": {
     "name": "Nom",
-    "color": "Couleur"
+    "color": "Couleur",
+    "loading-failed": "Désolé, le chargement de cette équipe a échoué."
+  },
+  "actions": {
+    "reload": "Recharger",
+    "edit": "Modifier",
+    "add": "Ajouter"
+  },
+  "edit": {
+    "comment": "Commentaire :",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "user": {
+      "new-email": "Ajouter une addresse email :"
+    }
   },
   "teams": {
     "none": "Pas (encore) d’équipes.",
@@ -13,19 +27,6 @@
     "name": "Nom",
     "emails": "Adresses emails",
     "loading-failed": "Désolé, le chargement de cet utiliseur a échoué."
-  },
-  "actions": {
-    "reload": "Recharger",
-    "edit": "Modifier",
-    "add": "Ajouter"
-  },
-  "edit": {
-    "user": {
-      "new-email": "Ajouter une addresse email :"
-    },
-    "comment": "Commentaire :",
-    "cancel": "Annuler",
-    "save": "Enregistrer"
   },
   "users": {
     "none": "Pas (encore) d’utilisateurs.",
