@@ -54,7 +54,11 @@ describe ('HTTP fetch', () => {
       const response = {
         message: 'Hello World!'
       };
-      fetchMock.mockResponse (JSON.stringify (response));
+      fetchMock.mockResponse (JSON.stringify (response), {
+        headers: {
+          'Content-Type': ''
+        }
+      });
 
       return get ('/hello-world').then (
           () => expect ('success handler').toBe ('never-called'),
@@ -164,7 +168,11 @@ describe ('HTTP fetch', () => {
       const response = {
         message: 'I’m fine, thank you!'
       };
-      fetchMock.mockResponse (JSON.stringify (response));
+      fetchMock.mockResponse (JSON.stringify (response), {
+        headers: {
+          'Content-Type': ''
+        }
+      });
 
       return post ('/hello-world', request).then (
           () => expect ('success handler').toBe ('never-called'),
@@ -277,7 +285,11 @@ describe ('HTTP fetch', () => {
       const response = {
         message: 'Hello World!'
       };
-      fetchMock.mockResponse (JSON.stringify (response));
+      fetchMock.mockResponse (JSON.stringify (response), {
+        headers: {
+          'Content-Type': ''
+        }
+      });
 
       return patch ('/hello-world', request).then (
           () => expect ('success handler').toBe ('never-called'),
