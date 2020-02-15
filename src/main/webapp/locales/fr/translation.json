@@ -8,7 +8,8 @@
   },
   "actions": {
     "reload": "Recharger",
-    "edit": "Modifier"
+    "edit": "Modifier",
+    "add": "Ajouter"
   },
   "edit": {
     "user": {
