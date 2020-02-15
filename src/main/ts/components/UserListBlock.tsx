@@ -10,6 +10,6 @@ export const UserListBlock = (props: UserListProps) => {
         fetchUsers={props.fetchUsers}
         status={props.status}
         users={props.users}/>
-    <button onClick={props.fetchUsers}>{t('reload')}</button>
+    <button onClick={props.fetchUsers}>{t('actions.reload')}</button>
   </div>;
 };

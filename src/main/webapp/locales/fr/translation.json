@@ -6,7 +6,10 @@
     "emails": "Adresses emails",
     "loading-failed": "Désolé, le chargement de cet utiliseur a échoué."
   },
-  "reload": "Recharger",
+  "actions": {
+    "reload": "Recharger",
+    "edit": "Modifier"
+  },
   "edit": {
     "user": {
       "new-email": "Ajouter une addresse email :"

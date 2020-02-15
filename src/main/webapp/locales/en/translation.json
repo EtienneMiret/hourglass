@@ -6,7 +6,10 @@
     "emails": "Email addresses",
     "loading-failed": "Sorry, user loading failed."
   },
-  "reload": "Reload",
+  "actions": {
+    "reload": "Reload",
+    "edit": "Edit"
+  },
   "edit": {
     "user": {
       "new-email": "Add email address:"

@@ -56,10 +56,10 @@ export const UserDetails = (props: UserDetailsProps) => {
 
   function actions () {
     const actions: JSX.Element[] = [];
-    actions.push (<button onClick={props.fetchUser} key="reload">{t ("reload")}</button>);
+    actions.push (<button onClick={props.fetchUser} key="reload">{t ('actions.reload')}</button>);
 
     if (props.prefect && props.status == HttpStatus.Success) {
-      actions.push (<button onClick={props.editUser} key="edit">{t ('edit')}</button>);
+      actions.push (<button onClick={props.editUser} key="edit">{t ('actions.edit')}</button>);
     }
 
     return <div className="actions">
