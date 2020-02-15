@@ -9,10 +9,12 @@ import { EditTeamAction } from './team-edition';
 import { FetchSingleEventAction } from './event';
 import { FetchRuleAction } from './rules';
 import { FetchSingleRuleAction } from './rule';
+import { EditRuleAction } from './rule-edition';
 
 export type Action = FetchSingleUserAction
     | EditUserAction
     | FetchSingleRuleAction
+    | EditRuleAction
     | FetchRuleAction
     | FetchSingleEventAction
     | FetchEventAction
