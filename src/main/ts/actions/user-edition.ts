@@ -1,3 +1,10 @@
+import { ThunkAction } from 'redux-thunk';
+import { GlobalState } from '../state';
+import { patch, post } from '../http/fetch';
+import { NewUser, User } from '../state/user';
+import { fetchSingleUserFailure, fetchSingleUserSuccess } from './user';
+import { Action } from './index';
+
 export const EDIT_USER_START = 'EDIT_USER_START';
 export const EDIT_USER_SET_NAME = 'EDIT_USER_SET_NAME';
 export const EDIT_USER_ADD_EMAIL = 'EDIT_USER_ADD_EMAIL';
@@ -70,4 +77,18 @@ export function editUserSubmit (id: string | null): EditUserSubmitAction {
 
 export function editUserFinish (id: string | null): EditUserFinishAction {
   return {type: EDIT_USER_FINISH, id};
+}
+
+export function editUser (user: User, comment: string): ThunkAction<Promise<Action>, GlobalState, undefined, Action> {
+  return function (dispatch) {
+    dispatch (editUserSubmit (user.id));
+
+    return patch (`/users/${user.id}`, {
+      comment,
+      object: user
+    }).then (
+        json => dispatch (fetchSingleUserSuccess (json)),
+        () => dispatch (fetchSingleUserFailure (user.id))
+    );
+  }
 }
