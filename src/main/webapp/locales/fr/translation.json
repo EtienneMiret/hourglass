@@ -7,6 +7,14 @@
     "loading-failed": "Désolé, le chargement de cet utiliseur a échoué."
   },
   "reload": "Recharger",
+  "edit": {
+    "user": {
+      "new-email": "Ajouter une addresse email :"
+    },
+    "comment": "Commentaire :",
+    "cancel": "Annuler",
+    "save": "Enregistrer"
+  },
   "users": {
     "none": "Pas (encore) d’utilisateurs.",
     "loading-failed": "Désolé, le chargement des utilisateurs a échoué."

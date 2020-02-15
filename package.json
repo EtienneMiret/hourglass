@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "translate": "i18next 'src/main/ts/**/*.{ts,tsx}' -o 'src/main/webapp/locales/$LOCALE/$NAMESPACE.json' --write-old false"
+    "translate": "i18next 'src/main/ts/**/*.{ts,tsx}' -o 'src/main/webapp/locales/$LOCALE/$NAMESPACE.json' --write-old false -c /dev/null"
   },
   "jest": {
     "automock": false,

@@ -9,12 +9,7 @@ import {
   UserDetailsDispatchProps,
   UserDetailsStateProps
 } from '../components/UserDetails';
-import {
-  editUser,
-  editUserAddEmail, editUserFinish, editUserRemoveEmail,
-  editUserSetName,
-  editUserStart, editUserSubmit
-} from '../actions/user-edition';
+import { editUserStart } from '../actions/user-edition';
 
 export interface UserDetailsOwnProps {
   match: {
@@ -59,19 +54,16 @@ function mapDispatchToProps (
 ): UserDetailsDispatchProps {
   return {
     editUser: () => dispatch (editUserStart (userId)),
-    setName: (name) => dispatch (editUserSetName (userId, name)),
-    addEmail: (email) => dispatch (editUserAddEmail (userId, email)),
-    removeEmail: (email) => dispatch (editUserRemoveEmail (userId, email)),
-    submitEdits: (user, comment) => dispatch (editUser (user, comment)),
-    cancelEdits: () => dispatch (editUserFinish (userId)),
     fetchUser: () => dispatch (fetchUser (userId))
   }
 }
 
-export const UserDetailsContainer = connect<UserDetailsStateProps,
+export const UserDetailsContainer = connect<
+    UserDetailsStateProps,
     UserDetailsDispatchProps,
     UserDetailsOwnProps,
-    GlobalState> (
+    GlobalState
+> (
     mapStateToProps,
     mapDispatchToProps
 ) (UserDetails);

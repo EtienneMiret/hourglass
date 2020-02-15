@@ -7,6 +7,14 @@
     "loading-failed": "Sorry, user loading failed."
   },
   "reload": "Reload",
+  "edit": {
+    "user": {
+      "new-email": "Add email address:"
+    },
+    "comment": "Comment:",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
   "users": {
     "none": "No user (yet).",
     "loading-failed": "Sorry, user loading failed."

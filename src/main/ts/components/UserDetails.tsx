@@ -3,7 +3,7 @@ import { User } from '../state/user';
 import { HttpStatus } from '../state/status';
 import { useTranslation } from 'react-i18next';
 import { Loader } from './Loader';
-import { ChangeEvent, FormEvent } from 'react';
+import { UserEditContainer } from '../containers/user-edit';
 
 export interface UserDetailsStateProps {
   prefect: boolean;
@@ -14,11 +14,6 @@ export interface UserDetailsStateProps {
 
 export interface UserDetailsDispatchProps {
   editUser: () => {};
-  setName: (name: string) => {};
-  addEmail: (email: string) => {};
-  removeEmail: (email: string) => {};
-  submitEdits: (user: User, comment: string) => {};
-  cancelEdits: () => {};
   fetchUser: () => {};
 }
 
@@ -77,51 +72,7 @@ export const UserDetails = (props: UserDetailsProps) => {
       return <div/>;
     }
 
-    function submit (event: FormEvent<HTMLFormElement>) {
-      const comment =
-          event.currentTarget.elements.namedItem ('comment') as HTMLInputElement;
-      props.submitEdits (props.edition!, comment.value);
-      event.preventDefault ();
-    }
-
-    function rename (event: ChangeEvent<HTMLInputElement>) {
-      props.setName (event.target.value);
-    }
-
-    function addEmail () {
-      const input = document.getElementById ('new-email') as HTMLInputElement;
-      props.addEmail (input.value);
-    }
-
-    function emailEditList (emails: string[]) {
-      if (emails.length === 0) {
-        return <div/>;
-      } else {
-        const items = emails.sort ().map (e => <li key={e}>{e}
-          <button onClick={() => props.removeEmail (e)} type="button">X</button>
-        </li>);
-        return <ul>{items}</ul>
-      }
-    }
-
-    return <form onSubmit={submit}>
-      <div className="name">
-        <label>
-          {t ('user.name')}
-          <input value={props.edition.name} onChange={rename}/>
-        </label>
-      </div>
-      <div className="emails">
-        {emailEditList (props.edition.emails)}
-        <div className="new">
-          <label>{t ('user.edit.new-email')}<input id="new-email" type="email"/></label>
-          <button onClick={addEmail} type="button">+</button>
-        </div>
-      </div>
-      <label>{t ('edit.comment')} <input name="comment"/></label>
-      <button type="button" onClick={props.cancelEdits}>{t ('edit.cancel')}</button>
-      <button type="submit">{t ('edit.save')}</button>
-    </form>;
+    return <UserEditContainer user={props.edition}/>
   }
 
   return <div className="user-details">
