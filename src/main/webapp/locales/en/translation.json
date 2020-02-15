@@ -1,14 +1,18 @@
 {
   "hello": "Hello from {{compiler}} and {{framework}}!",
-  "team": {
-    "name": "Name",
-    "color": "Color",
-    "loading-failed": "Sorry, team loading failed."
+  "rules": {
+    "none": "No rule (yet).",
+    "loading-failed": "Sorry, rule loading failed."
   },
   "actions": {
     "reload": "Reload",
     "edit": "Edit",
     "add": "Add"
+  },
+  "team": {
+    "name": "Name",
+    "color": "Color",
+    "loading-failed": "Sorry, team loading failed."
   },
   "edit": {
     "comment": "Comment:",

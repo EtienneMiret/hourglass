@@ -1,14 +1,18 @@
 {
   "hello": "Bonjour de la part de {{compiler}} et {{framework}}!",
-  "team": {
-    "name": "Nom",
-    "color": "Couleur",
-    "loading-failed": "Désolé, le chargement de cette équipe a échoué."
+  "rules": {
+    "none": "Pas (encore) de règles.",
+    "loading-failed": "Désolé, le chargement des règles a échoué."
   },
   "actions": {
     "reload": "Recharger",
     "edit": "Modifier",
     "add": "Ajouter"
+  },
+  "team": {
+    "name": "Nom",
+    "color": "Couleur",
+    "loading-failed": "Désolé, le chargement de cette équipe a échoué."
   },
   "edit": {
     "comment": "Commentaire :",
