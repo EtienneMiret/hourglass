@@ -1,5 +1,9 @@
 {
   "hello": "Bonjour de la part de {{compiler}} et {{framework}}!",
+  "team": {
+    "name": "Nom",
+    "color": "Couleur"
+  },
   "teams": {
     "none": "Pas (encore) d’équipes.",
     "loading-failed": "Désolé, le chargement des équipes a échoué."

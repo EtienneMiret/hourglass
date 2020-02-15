@@ -9,6 +9,7 @@ import {
 } from '../components/TeamList';
 import { HttpStatus } from '../state/status';
 import { fetchTeams } from '../actions/teams';
+import { editTeamStart } from '../actions/team-edition';
 
 function mapStateToProps (state: GlobalState): TeamListStateProps {
   const teams = Object.values (state.teams.list)
@@ -26,6 +27,7 @@ function mapDispatchToProps (
     dispatch: ThunkDispatch<GlobalState, undefined, Action>
 ): TeamListDispatchProps {
   return {
+    startCreate: () => dispatch (editTeamStart (null)),
     fetchTeams: () => dispatch (fetchTeams ())
   }
 }

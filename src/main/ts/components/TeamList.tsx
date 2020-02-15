@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { NewTeam, Team } from '../state/team';
 import { HttpStatus } from '../state/status';
 import { Loader } from './Loader';
+import { TeamEditContainer } from '../containers/team-edit';
 
 export interface TeamListStateProps {
   prefect: boolean;
@@ -13,6 +14,7 @@ export interface TeamListStateProps {
 
 export interface TeamListDispatchProps {
   fetchTeams: () => {};
+  startCreate: () => {};
 }
 
 export type TeamListProps = TeamListStateProps & TeamListDispatchProps;
@@ -41,13 +43,26 @@ export const TeamList = (props: TeamListProps) => {
     const actions: JSX.Element[] = [];
     actions.push (<button onClick={props.fetchTeams} key="reload">{t ('actions.reload')}</button>);
 
+    if (props.prefect && props.status === HttpStatus.Success) {
+      actions.push (<button onClick={props.startCreate} key="create">{t ('actions.add')}</button>);
+    }
+
     return <div className="actions">
       {actions}
     </div>;
   }
 
+  function popup () {
+    if (props.prefect && props.creation) {
+      return <TeamEditContainer team={props.creation}/>;
+    }
+
+    return <div/>;
+  }
+
   return <div className="user-list">
     {list ()}
     {actions ()}
+    {popup ()}
   </div>;
 };

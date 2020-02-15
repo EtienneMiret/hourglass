@@ -1,5 +1,9 @@
 {
   "hello": "Hello from {{compiler}} and {{framework}}!",
+  "team": {
+    "name": "Name",
+    "color": "Color"
+  },
   "teams": {
     "none": "No team (yet).",
     "loading-failed": "Sorry, team loading failed."
