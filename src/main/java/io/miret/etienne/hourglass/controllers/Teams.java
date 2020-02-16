@@ -21,17 +21,22 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.Clock;
 import java.util.Set;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import static com.google.common.collect.Sets.union;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
 @RequestMapping ("/teams")
 @AllArgsConstructor (access = PRIVATE)
 public class Teams {
+
+  private static final Pattern COLOR_PATTERN =
+      Pattern.compile ("#[0-9a-f]{6}", Pattern.CASE_INSENSITIVE);
 
   private final Clock clock;
 
@@ -52,6 +57,13 @@ public class Teams {
 
   @PostMapping
   public Team create (@RequestBody Form<Team> form) {
+    var team = form.getObject ();
+    if (team.getColor () == null) {
+      throw new ResponseStatusException (BAD_REQUEST, "Missing color.");
+    }
+    if (!COLOR_PATTERN.matcher (team.getColor ()).matches ()) {
+      throw new ResponseStatusException (BAD_REQUEST, "Invalid color.");
+    }
     var ba = new BaseAction (clock, form.getComment ());
     var creation = new TeamCreation (ba, form.getObject ());
     repository.save (creation);
@@ -63,6 +75,11 @@ public class Teams {
     var actions = repository.findByTeamId (id);
     if (actions.isEmpty ()) {
       throw new ResponseStatusException (NOT_FOUND);
+    }
+
+    var team = form.getObject ();
+    if (team.getColor () != null && !COLOR_PATTERN.matcher (team.getColor ()).matches ()) {
+      throw new ResponseStatusException (BAD_REQUEST, "Invalid color.");
     }
 
     var ba = new BaseAction (clock, form.getComment ());
