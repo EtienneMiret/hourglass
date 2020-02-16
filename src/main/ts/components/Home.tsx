@@ -4,7 +4,8 @@ import { HttpStatus } from '../state/status';
 import { Loader } from './Loader';
 import { TeamPoints } from './TeamPoints';
 import { HomeEventItem } from './HomeEventItem';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { AppBar } from './AppBar';
 
 export interface User {
   id: string;
@@ -75,8 +76,8 @@ export const Home = (props: HomeProps) => {
     case HttpStatus.Progressing:
       return <Loader/>;
     case HttpStatus.Success:
-      return <div>
-        <section className="hello">{t ('home.hello', props.me)}</section>
+      return <Container>
+        <AppBar title={t ('home.hello', props.me)}/>
         <section className="my-points">
           <h1>{t ('home.my-points')}</h1>
           <p>{props.myPoints}</p>
@@ -99,7 +100,7 @@ export const Home = (props: HomeProps) => {
             </TableBody>
           </Table>
         </TableContainer>
-      </div>;
+      </Container>;
     case HttpStatus.Failure:
       return <div>{t ('home.loading-failed')}</div>;
   }

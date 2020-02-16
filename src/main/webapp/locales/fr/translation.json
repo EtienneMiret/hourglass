@@ -1,4 +1,11 @@
 {
+  "nav": {
+    "home": "Accueil",
+    "teams": "Équipes",
+    "users": "Utilisateurs",
+    "events": "Évènements",
+    "rules": "Barème"
+  },
   "event": {
     "rule-loading-failed": "Le chargement de la règle de cet évènement a échoué.",
     "no-users": "Aucun utilisateur pour cet évènement.",

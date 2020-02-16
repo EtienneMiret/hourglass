@@ -1,4 +1,11 @@
 {
+  "nav": {
+    "home": "Home",
+    "teams": "Teams",
+    "users": "Users",
+    "events": "Events",
+    "rules": "Rules"
+  },
   "event": {
     "rule-loading-failed": "Loading this event’s rule failed.",
     "no-users": "No user for this event.",
