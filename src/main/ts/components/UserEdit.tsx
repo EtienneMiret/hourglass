@@ -113,7 +113,7 @@ export const UserEdit = (props: UserEditProps) => {
     return <List>{items}</List>;
   }
 
-  return <Dialog open={true} onClose={props.cancelEdits}>
+  return <Dialog open={true} onClose={props.cancelEdits} className="edit-modal">
     <DialogTitle>{title ()}</DialogTitle>
     <DialogContent>
       <TextField variant="outlined" label={t ('user.name')} fullWidth={true}
