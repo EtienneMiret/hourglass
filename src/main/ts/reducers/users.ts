@@ -17,7 +17,7 @@ import {
   EDIT_USER_CREATION_SUCCESS,
   EDIT_USER_FINISH,
   EDIT_USER_REMOVE_EMAIL,
-  EDIT_USER_SET_NAME,
+  EDIT_USER_SET_NAME, EDIT_USER_SET_TEAM,
   EDIT_USER_START,
   EDIT_USER_SUBMIT
 } from '../actions/user-edition';
@@ -138,6 +138,34 @@ export function users (
             Object.assign ({}, state.list[action.id], {edition});
         const list: Users = Object.assign ({}, state.list, {
           [action.id]: userContainer
+        });
+        return Object.assign ({}, state, {list});
+      }
+    }
+    case EDIT_USER_SET_TEAM: {
+      if (action.id === null) {
+        if (state.creation === null) {
+          return state;
+        }
+        const user = Object.assign({}, state.creation.user, {
+          teamId: action.teamId
+        });
+        const creation = Object.assign ({}, state.creation, {user});
+        return Object.assign ({}, state, {creation});
+      } else {
+        if (!state.list[action.id]) {
+          return state;
+        }
+        const originalEdition = state.list[action.id].edition;
+        if (!originalEdition) {
+          return state;
+        }
+        const edition = Object.assign ({}, originalEdition, {
+          teamId: action.teamId
+        });
+        const container = Object.assign ({}, state.list[action.id], {edition});
+        const list = Object.assign ({}, state.list, {
+          [action.id]: container
         });
         return Object.assign ({}, state, {list});
       }

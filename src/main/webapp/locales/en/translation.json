@@ -27,6 +27,7 @@
     "cancel": "Cancel",
     "save": "Save",
     "user": {
+      "select-team": "Please select a team.",
       "new-email": "Add email address:"
     }
   },
@@ -57,6 +58,7 @@
     "no-emails": "This user has no known email.",
     "name": "Name",
     "emails": "Email addresses",
-    "loading-failed": "Sorry, user loading failed."
+    "loading-failed": "Sorry, user loading failed.",
+    "team": "Team"
   }
 }

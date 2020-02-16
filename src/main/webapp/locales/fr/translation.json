@@ -27,6 +27,7 @@
     "cancel": "Annuler",
     "save": "Enregistrer",
     "user": {
+      "select-team": "Veuillez sélectionner une équipe.",
       "new-email": "Ajouter une addresse email :"
     }
   },
@@ -57,6 +58,7 @@
     "no-emails": "Cet utilisateur n’a pas d’email connu.",
     "name": "Nom",
     "emails": "Adresses emails",
-    "loading-failed": "Désolé, le chargement de cet utiliseur a échoué."
+    "loading-failed": "Désolé, le chargement de cet utiliseur a échoué.",
+    "team": "Équipe"
   }
 }

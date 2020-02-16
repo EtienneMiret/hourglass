@@ -8,6 +8,7 @@ import { fetchUserFailure } from './users';
 
 export const EDIT_USER_START = 'EDIT_USER_START';
 export const EDIT_USER_SET_NAME = 'EDIT_USER_SET_NAME';
+export const EDIT_USER_SET_TEAM = 'EDIT_USER_SET_TEAM';
 export const EDIT_USER_ADD_EMAIL = 'EDIT_USER_ADD_EMAIL';
 export const EDIT_USER_REMOVE_EMAIL = 'EDIT_USER_REMOVE_EMAIL';
 export const EDIT_USER_SUBMIT = 'EDIT_USER_SUBMIT';
@@ -23,6 +24,12 @@ export interface EditUserSetNameAction {
   type: typeof EDIT_USER_SET_NAME,
   id: string | null,
   name: string
+}
+
+export interface EditUserSetTeamAction {
+  type: typeof EDIT_USER_SET_TEAM;
+  id: string | null;
+  teamId: string;
 }
 
 export interface EditUserAddEmailAction {
@@ -53,6 +60,7 @@ export interface EditUserFinishAction {
 
 export type EditUserAction = EditUserStartAction
     | EditUserSetNameAction
+    | EditUserSetTeamAction
     | EditUserAddEmailAction
     | EditUserRemoveEmailAction
     | EditUserSubmitAction
@@ -66,6 +74,11 @@ export function editUserStart (id: string | null): EditUserStartAction {
 export function editUserSetName (id: string | null, name: string)
     : EditUserSetNameAction {
   return {type: EDIT_USER_SET_NAME, id, name};
+}
+
+export function editUserSetTeam (id: string | null, teamId: string)
+    : EditUserSetTeamAction {
+  return {type: EDIT_USER_SET_TEAM, id, teamId};
 }
 
 export function editUserAddEmail (id: string | null, email: string)

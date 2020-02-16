@@ -13,8 +13,9 @@ import {
   editUser,
   editUserAddEmail, editUserFinish,
   editUserRemoveEmail,
-  editUserSetName
+  editUserSetName, editUserSetTeam
 } from '../actions/user-edition';
+import { fetchTeams } from '../actions/teams';
 
 export interface UserEditOwnProps {
   user: User | NewUser;
@@ -24,7 +25,12 @@ function mapStateToProps (
     state: GlobalState,
     {user}: UserEditOwnProps
 ): UserEditStateProps {
+  const teams = Object.values(state.teams.list)
+      .map (c => c.team);
+  teams.sort ((a, b) => a.name.localeCompare (b.name));
   return {
+    teamStatus: state.teams.status,
+    teams,
     user
   };
 }
@@ -37,6 +43,7 @@ function mapDispatchToProps (
 
   return {
     setName: name => dispatch (editUserSetName (id, name)),
+    setTeam: teamId => dispatch (editUserSetTeam (id, teamId)),
     addEmail: email => dispatch (editUserAddEmail (id, email)),
     removeEmail: email => dispatch (editUserRemoveEmail (id, email)),
     submitEdits: comment => {
@@ -46,6 +53,7 @@ function mapDispatchToProps (
         return dispatch (createUser (user as NewUser, comment));
       }
     },
+    fetchTeams: () => dispatch (fetchTeams ()),
     cancelEdits: () => dispatch (editUserFinish (id))
   }
 }

@@ -1,17 +1,24 @@
 import * as React from 'react';
 import { NewUser, User } from '../state/user';
 import { useTranslation } from 'react-i18next';
+import { Team } from '../state/team';
+import { HttpStatus } from '../state/status';
+import { Loader } from './Loader';
 
 export interface UserEditStateProps {
   user: User | NewUser;
+  teams: Team[];
+  teamStatus: HttpStatus;
 }
 
 export interface UserEditDispatchProps {
   setName: (name: string) => {};
+  setTeam: (teamId: string) => {};
   addEmail: (email: string) => {};
   removeEmail: (email: string) => {};
   submitEdits: (comment: string) => {};
   cancelEdits: () => {};
+  fetchTeams: () => {};
 }
 
 export type UserEditProps = UserEditStateProps & UserEditDispatchProps;
@@ -32,6 +39,10 @@ export const UserEdit = (props: UserEditProps) => {
     props.setName (event.target.value);
   }
 
+  function changeTeam (event: React.ChangeEvent<HTMLSelectElement>) {
+    props.setTeam (event.target.value);
+  }
+
   function addEmail (event: React.FormEvent<HTMLFormElement>) {
     const input = event
         .currentTarget
@@ -40,6 +51,27 @@ export const UserEdit = (props: UserEditProps) => {
     props.addEmail (input.value);
     event.currentTarget.reset ();
     event.preventDefault ();
+  }
+
+  function teamSelect () {
+    switch (props.teamStatus) {
+      case HttpStatus.None:
+        props.fetchTeams ();
+        return '';
+      case HttpStatus.Progressing:
+        return <Loader/>;
+      case HttpStatus.Success:
+        if (props.teams.length === 0) {
+          return t ('teams.none');
+        }
+        return <select value={props.user.teamId} onChange={changeTeam}>
+          <option value="">{t ('edit.user.select-team')}</option>
+          {props.teams.map (team =>
+              <option value={team.id} key={team.id}>{team.name}</option>)}
+        </select>;
+      case HttpStatus.Failure:
+        return t ('teams.loading-failed');
+    }
   }
 
   function emailEditList () {
@@ -53,6 +85,10 @@ export const UserEdit = (props: UserEditProps) => {
     <label className="name">
       {t ('user.name')}
       <input value={props.user.name} onChange={rename}/>
+    </label>
+    <label className="team">
+      {t ('user.team')}
+      {teamSelect ()}
     </label>
     {emailEditList ()}
     <form onSubmit={addEmail}>
