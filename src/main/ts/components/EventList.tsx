@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
-import { NewEvent, Event } from '../state/event';
+import { Event, NewEvent } from '../state/event';
 import { HttpStatus } from '../state/status';
 import { Loader } from './Loader';
+import { EventEditContainer } from '../containers/event-edit';
 
 export interface EventListStateProps {
   prefect: boolean;
@@ -13,6 +14,7 @@ export interface EventListStateProps {
 
 export interface EventListDispatchProps {
   fetch: () => void;
+  startCreate: () => void;
 }
 
 export type EventListProps = EventListStateProps & EventListDispatchProps;
@@ -54,11 +56,25 @@ export const EventList = (props: EventListProps) => {
       t ('actions.reload')
     }</button>);
 
+    if (props.prefect && props.status === HttpStatus.Success) {
+      actions.push (<button onClick={props.startCreate} key="create">{
+        t ('actions.add')
+      }</button>);
+    }
+
     return <div className="actions">{actions}</div>;
+  }
+
+  function popup () {
+    if (props.prefect && props.creation) {
+      return <EventEditContainer event={props.creation}/>;
+    }
+    return <div/>;
   }
 
   return <div className="rule-list">
     {list ()}
     {actions ()}
+    {popup ()}
   </div>;
 };

@@ -1,24 +1,13 @@
 {
-  "events": {
-    "none": "No events (yet).",
-    "loading-failed": "Sorry, event loading failed."
-  },
-  "event": {
-    "name": "Name",
-    "date": "Date"
-  },
-  "actions": {
-    "reload": "Reload",
-    "edit": "Edit",
-    "add": "Add"
-  },
-  "hello": "Hello from {{compiler}} and {{framework}}!",
-  "rule": {
-    "name": "Name",
-    "points": "Number of points",
+  "rules": {
+    "none": "No rule (yet).",
     "loading-failed": "Sorry, rule loading failed."
   },
   "edit": {
+    "event": {
+      "select-rule": "Please select a rule.",
+      "filter": "Filter available users."
+    },
     "comment": "Comment:",
     "cancel": "Cancel",
     "save": "Save",
@@ -26,8 +15,30 @@
       "new-email": "Add email address:"
     }
   },
-  "rules": {
-    "none": "No rule (yet).",
+  "event": {
+    "no-users": "No user for this event.",
+    "name": "Name",
+    "date": "Date",
+    "rule": "Linked rule",
+    "users": "Users"
+  },
+  "users": {
+    "loading-failed": "Sorry, user loading failed.",
+    "none": "No user (yet)."
+  },
+  "events": {
+    "none": "No events (yet).",
+    "loading-failed": "Sorry, event loading failed."
+  },
+  "actions": {
+    "reload": "Reload",
+    "add": "Add",
+    "edit": "Edit"
+  },
+  "hello": "Hello from {{compiler}} and {{framework}}!",
+  "rule": {
+    "name": "Name",
+    "points": "Number of points",
     "loading-failed": "Sorry, rule loading failed."
   },
   "team": {
@@ -43,10 +54,6 @@
     "no-emails": "This user has no known email.",
     "name": "Name",
     "emails": "Email addresses",
-    "loading-failed": "Sorry, user loading failed."
-  },
-  "users": {
-    "none": "No user (yet).",
     "loading-failed": "Sorry, user loading failed."
   }
 }

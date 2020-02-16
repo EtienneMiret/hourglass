@@ -10,6 +10,7 @@ import {
 } from '../components/EventList';
 import { HttpStatus } from '../state/status';
 import { fetchEvents } from '../actions/events';
+import { editEventStart } from '../actions/event-edition';
 
 function mapStateToProps (state: GlobalState): EventListStateProps {
   const events: Event[] = Object.values (state.events.list)
@@ -31,6 +32,7 @@ function mapDispatchToProps (
     dispatch: ThunkDispatch<GlobalState, undefined, Action>
 ): EventListDispatchProps {
   return {
+    startCreate: () => dispatch (editEventStart (null)),
     fetch: () => dispatch (fetchEvents ())
   }
 }
