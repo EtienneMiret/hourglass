@@ -1,14 +1,22 @@
 {
-  "hello": "Hello from {{compiler}} and {{framework}}!",
-  "rule": {
+  "events": {
+    "none": "No events (yet).",
+    "loading-failed": "Sorry, event loading failed."
+  },
+  "event": {
     "name": "Name",
-    "points": "Number of points",
-    "loading-failed": "Sorry, rule loading failed."
+    "date": "Date"
   },
   "actions": {
     "reload": "Reload",
     "edit": "Edit",
     "add": "Add"
+  },
+  "hello": "Hello from {{compiler}} and {{framework}}!",
+  "rule": {
+    "name": "Name",
+    "points": "Number of points",
+    "loading-failed": "Sorry, rule loading failed."
   },
   "edit": {
     "comment": "Comment:",
