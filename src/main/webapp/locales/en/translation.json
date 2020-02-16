@@ -1,4 +1,19 @@
 {
+  "event": {
+    "rule-loading-failed": "Loading this event’s rule failed.",
+    "no-users": "No user for this event.",
+    "user-loading-failed": "Loading this event’s users failed.",
+    "name": "Name",
+    "date": "Date",
+    "rule": "Linked rule",
+    "users": "Users",
+    "loading-failed": "Sorry, event loading failed."
+  },
+  "actions": {
+    "reload": "Reload",
+    "edit": "Edit",
+    "add": "Add"
+  },
   "rules": {
     "none": "No rule (yet).",
     "loading-failed": "Sorry, rule loading failed."
@@ -15,13 +30,6 @@
       "new-email": "Add email address:"
     }
   },
-  "event": {
-    "no-users": "No user for this event.",
-    "name": "Name",
-    "date": "Date",
-    "rule": "Linked rule",
-    "users": "Users"
-  },
   "users": {
     "loading-failed": "Sorry, user loading failed.",
     "none": "No user (yet)."
@@ -29,11 +37,6 @@
   "events": {
     "none": "No events (yet).",
     "loading-failed": "Sorry, event loading failed."
-  },
-  "actions": {
-    "reload": "Reload",
-    "add": "Add",
-    "edit": "Edit"
   },
   "hello": "Hello from {{compiler}} and {{framework}}!",
   "rule": {

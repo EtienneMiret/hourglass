@@ -4,6 +4,7 @@ import { Event, NewEvent } from '../state/event';
 import { HttpStatus } from '../state/status';
 import { Loader } from './Loader';
 import { EventEditContainer } from '../containers/event-edit';
+import { Link } from 'react-router-dom';
 
 export interface EventListStateProps {
   prefect: boolean;
@@ -39,10 +40,10 @@ export const EventList = (props: EventListProps) => {
             <th>{t ('event.date')}</th>
           </thead>
           <tbody>
-            {props.events.map(event => <tr>
+            {props.events.map(event => <tr><Link to={`/events/${event.id}`}>
               <td>{event.name}</td>
               <td>{event.date}</td>
-            </tr>)}
+            </Link></tr>)}
           </tbody>
         </table>;
       case HttpStatus.Failure:

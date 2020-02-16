@@ -13,6 +13,7 @@ import { TeamDetailsContainer } from '../containers/team-details';
 import { RuleListContainer } from '../containers/rule-list';
 import { RuleDetailsContainer } from '../containers/rule-details';
 import { EventListContainer } from '../containers/event-list';
+import { EventDetailsContainer } from '../containers/event-details';
 
 export const App = ({store}: {store: Store<GlobalState, AnyAction>}) => (
     <Provider store={store}>
@@ -21,6 +22,7 @@ export const App = ({store}: {store: Store<GlobalState, AnyAction>}) => (
           <Switch>
             <Route path="/rules/:ruleId" component={RuleDetailsContainer}/>
             <Route path="/rules" component={RuleListContainer}/>
+            <Route path="/events/:eventId" component={EventDetailsContainer}/>
             <Route path="/events" component={EventListContainer}/>
             <Route path="/users/:userId" component={UserDetailsContainer}/>
             <Route path="/users" component={UserListContainer}/>
