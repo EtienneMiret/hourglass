@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Dialog } from '@material-ui/core';
 import { NewUser, User } from '../state/user';
 import { useTranslation } from 'react-i18next';
 import { Team } from '../state/team';
@@ -81,7 +82,7 @@ export const UserEdit = (props: UserEditProps) => {
     return <ul className="emails">{items}</ul>
   }
 
-  return <div className="user-edit">
+  return <Dialog open={true} onClose={props.cancelEdits}><div className="user-edit">
     <label className="name">
       {t ('user.name')}
       <input value={props.user.name} onChange={rename}/>
@@ -100,5 +101,5 @@ export const UserEdit = (props: UserEditProps) => {
       <button type="button" onClick={props.cancelEdits}>{t ('edit.cancel')}</button>
       <button type="submit">{t ('edit.save')}</button>
     </form>
-  </div>;
+  </div></Dialog>;
 };
