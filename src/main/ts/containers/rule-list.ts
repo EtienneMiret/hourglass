@@ -9,6 +9,7 @@ import {
 } from '../components/RuleList';
 import { HttpStatus } from '../state/status';
 import { fetchRules } from '../actions/rules';
+import { editRuleStart } from '../actions/rule-edition';
 
 function mapStateToProps (state: GlobalState): RuleListStateProps {
   const rules = Object.values (state.rules.list)
@@ -27,6 +28,7 @@ function mapDispatchToProps (
     dispatch: ThunkDispatch<GlobalState, undefined, Action>
 ): RuleListDispatchProps {
   return {
+    startCreate: () => dispatch (editRuleStart (null)),
     fetch: () => dispatch (fetchRules ())
   }
 }

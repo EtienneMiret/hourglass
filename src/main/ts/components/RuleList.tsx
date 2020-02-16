@@ -3,6 +3,7 @@ import { NewRule, Rule } from '../state/rule';
 import { HttpStatus } from '../state/status';
 import { useTranslation } from 'react-i18next';
 import { Loader } from './Loader';
+import { RuleEditContainer } from '../containers/rule-edit';
 
 export interface RuleListStateProps {
   prefect: boolean;
@@ -13,6 +14,7 @@ export interface RuleListStateProps {
 
 export interface RuleListDispatchProps {
   fetch: () => {};
+  startCreate: () => {};
 }
 
 export type RuleListProps = RuleListStateProps & RuleListDispatchProps;
@@ -43,13 +45,27 @@ export const RuleList = (props: RuleListProps) => {
       t ('actions.reload')
     }</button>);
 
+    if (props.prefect && props.status === HttpStatus.Success) {
+      actions.push (<button onClick={props.startCreate} key="create">{
+        t ('actions.add')
+      }</button>);
+    }
+
     return <div className="actions">
       {actions}
     </div>;
   }
 
+  function popup () {
+    if (props.prefect && props.creation) {
+      return <RuleEditContainer rule={props.creation}/>
+    }
+    return <div/>
+  }
+
   return <div className="rule-list">
     {list ()}
     {actions ()}
+    {popup ()}
   </div>;
 };

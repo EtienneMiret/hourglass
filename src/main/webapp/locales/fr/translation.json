@@ -1,18 +1,8 @@
 {
   "hello": "Bonjour de la part de {{compiler}} et {{framework}}!",
-  "rules": {
-    "none": "Pas (encore) de règles.",
-    "loading-failed": "Désolé, le chargement des règles a échoué."
-  },
-  "actions": {
-    "reload": "Recharger",
-    "edit": "Modifier",
-    "add": "Ajouter"
-  },
-  "team": {
+  "rule": {
     "name": "Nom",
-    "color": "Couleur",
-    "loading-failed": "Désolé, le chargement de cette équipe a échoué."
+    "points": "Nombre de points"
   },
   "edit": {
     "comment": "Commentaire :",
@@ -21,6 +11,20 @@
     "user": {
       "new-email": "Ajouter une addresse email :"
     }
+  },
+  "rules": {
+    "none": "Pas (encore) de règles.",
+    "loading-failed": "Désolé, le chargement des règles a échoué."
+  },
+  "actions": {
+    "reload": "Recharger",
+    "add": "Ajouter",
+    "edit": "Modifier"
+  },
+  "team": {
+    "name": "Nom",
+    "color": "Couleur",
+    "loading-failed": "Désolé, le chargement de cette équipe a échoué."
   },
   "teams": {
     "none": "Pas (encore) d’équipes.",

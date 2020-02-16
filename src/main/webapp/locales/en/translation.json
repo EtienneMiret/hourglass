@@ -1,18 +1,8 @@
 {
   "hello": "Hello from {{compiler}} and {{framework}}!",
-  "rules": {
-    "none": "No rule (yet).",
-    "loading-failed": "Sorry, rule loading failed."
-  },
-  "actions": {
-    "reload": "Reload",
-    "edit": "Edit",
-    "add": "Add"
-  },
-  "team": {
+  "rule": {
     "name": "Name",
-    "color": "Color",
-    "loading-failed": "Sorry, team loading failed."
+    "points": "Number of points"
   },
   "edit": {
     "comment": "Comment:",
@@ -21,6 +11,20 @@
     "user": {
       "new-email": "Add email address:"
     }
+  },
+  "rules": {
+    "none": "No rule (yet).",
+    "loading-failed": "Sorry, rule loading failed."
+  },
+  "actions": {
+    "reload": "Reload",
+    "add": "Add",
+    "edit": "Edit"
+  },
+  "team": {
+    "name": "Name",
+    "color": "Color",
+    "loading-failed": "Sorry, team loading failed."
   },
   "teams": {
     "none": "No team (yet).",
