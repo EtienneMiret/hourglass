@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { NewRule, Rule } from '../state/rule';
 import { HttpStatus } from '../state/status';
 import { useTranslation } from 'react-i18next';
@@ -33,7 +34,9 @@ export const RuleList = (props: RuleListProps) => {
         if (props.rules.length === 0) {
           return <div>{t ('rules.none')}</div>;
         }
-        return <ol>{props.rules.map (rule => <li key={rule.id}>{rule.name}</li>)}</ol>;
+        return <ol>{props.rules.map (rule =>
+            <li key={rule.id}><Link to={`/rules/${rule.id}`}>{rule.name}</Link></li>)
+        }</ol>;
       case HttpStatus.Failure:
         return <div>{t ('rules.loading-failed')}</div>;
     }

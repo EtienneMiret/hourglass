@@ -2,7 +2,13 @@
   "hello": "Hello from {{compiler}} and {{framework}}!",
   "rule": {
     "name": "Name",
-    "points": "Number of points"
+    "points": "Number of points",
+    "loading-failed": "Sorry, rule loading failed."
+  },
+  "actions": {
+    "reload": "Reload",
+    "edit": "Edit",
+    "add": "Add"
   },
   "edit": {
     "comment": "Comment:",
@@ -15,11 +21,6 @@
   "rules": {
     "none": "No rule (yet).",
     "loading-failed": "Sorry, rule loading failed."
-  },
-  "actions": {
-    "reload": "Reload",
-    "add": "Add",
-    "edit": "Edit"
   },
   "team": {
     "name": "Name",
