@@ -10,6 +10,7 @@ import { FetchSingleEventAction } from './event';
 import { FetchRuleAction } from './rules';
 import { FetchSingleRuleAction } from './rule';
 import { EditRuleAction } from './rule-edition';
+import { EditEventAction } from './event-edition';
 
 export type Action = FetchSingleUserAction
     | EditUserAction
@@ -17,6 +18,7 @@ export type Action = FetchSingleUserAction
     | EditRuleAction
     | FetchRuleAction
     | FetchSingleEventAction
+    | EditEventAction
     | FetchEventAction
     | FetchSingleTeamAction
     | EditTeamAction

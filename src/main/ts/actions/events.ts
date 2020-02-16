@@ -24,20 +24,20 @@ export interface FetchEventFailureAction extends Action {
 export type FetchEventAction =
   FetchEventRequestAction | FetchEventSuccessAction | FetchEventFailureAction;
 
-function fetchEventRequest (): FetchEventRequestAction {
+export function fetchEventRequest (): FetchEventRequestAction {
   return {
     type: FETCH_EVENT_REQUEST
   };
 }
 
-function fetchEventSuccess (response: Event[]): FetchEventSuccessAction {
+export function fetchEventSuccess (response: Event[]): FetchEventSuccessAction {
   return {
     type: FETCH_EVENT_SUCCESS,
     response
   };
 }
 
-function fetchEventFailure (): FetchEventFailureAction {
+export function fetchEventFailure (): FetchEventFailureAction {
   return {
     type: FETCH_EVENT_FAILURE
   };
