@@ -4,6 +4,7 @@ import { HttpStatus } from '../state/status';
 import { Loader } from './Loader';
 import { TeamPoints } from './TeamPoints';
 import { HomeEventItem } from './HomeEventItem';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 
 export interface User {
   id: string;
@@ -83,21 +84,21 @@ export const Home = (props: HomeProps) => {
         <section className="team-points">
           {props.teams.map (team => <TeamPoints team={team} key={team.id}/>)}
         </section>
-        <section className="my-events">
-          <table>
-            <thead>
-              <tr>
-                <th>{t ('home.events.date')}</th>
-                <th>{t ('home.events.name')}</th>
-                <th>{t ('home.events.points')}</th>
-              </tr>
-            </thead>
-            <tbody>
+        <TableContainer className="my-events">
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>{t ('home.events.date')}</TableCell>
+                <TableCell>{t ('home.events.name')}</TableCell>
+                <TableCell>{t ('home.events.points')}</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
               { props.myEvents.sort(compareEvent)
                   .map(event => <HomeEventItem event={event} key={event.id}/>)}
-            </tbody>
-          </table>
-        </section>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>;
     case HttpStatus.Failure:
       return <div>{t ('home.loading-failed')}</div>;
