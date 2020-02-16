@@ -33,7 +33,7 @@ public class Main extends SpringBootServletInitializer {
   @Bean
   public AppConfiguration configuration () throws IOException {
     try (var app = Main.class.getResourceAsStream ("/application.yaml")) {
-      return yamlJackson ().readerFor (AppConfiguration.class)
+      return new ObjectMapper (new YAMLFactory ()).readerFor (AppConfiguration.class)
           .readValue (app);
     }
   }
@@ -41,11 +41,6 @@ public class Main extends SpringBootServletInitializer {
   @Bean
   public Clock clock () {
     return Clock.system (ZoneId.of ("Europe/Paris"));
-  }
-
-  @Bean
-  public ObjectMapper yamlJackson () {
-    return new ObjectMapper (new YAMLFactory ());
   }
 
   @Bean
