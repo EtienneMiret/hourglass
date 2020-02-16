@@ -27,6 +27,8 @@
     "cancel": "Cancel",
     "save": "Save",
     "user": {
+      "update": "Update {{name}}",
+      "create": "Create New User",
       "select-team": "Please select a team.",
       "new-email": "Add email address:"
     }

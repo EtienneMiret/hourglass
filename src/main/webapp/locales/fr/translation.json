@@ -27,6 +27,8 @@
     "cancel": "Annuler",
     "save": "Enregistrer",
     "user": {
+      "update": "Mettre à jour {{name}}",
+      "create": "Créer un nouvel utilisateur",
       "select-team": "Veuillez sélectionner une équipe.",
       "new-email": "Ajouter une addresse email :"
     }

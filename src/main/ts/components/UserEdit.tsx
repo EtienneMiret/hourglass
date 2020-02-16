@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Dialog } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, TextField } from '@material-ui/core';
 import { NewUser, User } from '../state/user';
 import { useTranslation } from 'react-i18next';
 import { Team } from '../state/team';
 import { HttpStatus } from '../state/status';
 import { Loader } from './Loader';
+import { useState } from 'react';
 
 export interface UserEditStateProps {
   user: User | NewUser;
@@ -26,14 +27,10 @@ export type UserEditProps = UserEditStateProps & UserEditDispatchProps;
 
 export const UserEdit = (props: UserEditProps) => {
   const {t} = useTranslation ();
+  const [comment, saveComment] = useState ('');
 
-  function submit (event: React.FormEvent<HTMLFormElement>) {
-    const comment = event
-        .currentTarget
-        .elements
-        .namedItem ('comment') as HTMLInputElement;
-    props.submitEdits (comment.value);
-    event.preventDefault ();
+  function submit () {
+    props.submitEdits (comment);
   }
 
   function rename (event: React.ChangeEvent<HTMLInputElement>) {
@@ -52,6 +49,18 @@ export const UserEdit = (props: UserEditProps) => {
     props.addEmail (input.value);
     event.currentTarget.reset ();
     event.preventDefault ();
+  }
+
+  function updateComment (event: React.ChangeEvent<HTMLInputElement>) {
+    saveComment (event.target.value);
+  }
+
+  function title () {
+    if ((props.user as User).id) {
+      return t ('edit.user.update', props.user);
+    } else {
+      return t ('edit.user.create');
+    }
   }
 
   function teamSelect () {
@@ -82,24 +91,26 @@ export const UserEdit = (props: UserEditProps) => {
     return <ul className="emails">{items}</ul>
   }
 
-  return <Dialog open={true} onClose={props.cancelEdits}><div className="user-edit">
-    <label className="name">
-      {t ('user.name')}
-      <input value={props.user.name} onChange={rename}/>
-    </label>
-    <label className="team">
-      {t ('user.team')}
-      {teamSelect ()}
-    </label>
-    {emailEditList ()}
-    <form onSubmit={addEmail}>
-      <label>{t ('edit.user.new-email')} <input name="email"/></label>
-      <button>+</button>
-    </form>
-    <form onSubmit={submit}>
-      <label>{t ('edit.comment')} <input name="comment"/></label>
-      <button type="button" onClick={props.cancelEdits}>{t ('edit.cancel')}</button>
-      <button type="submit">{t ('edit.save')}</button>
-    </form>
-  </div></Dialog>;
+  return <Dialog open={true} onClose={props.cancelEdits}>
+    <DialogTitle>{title ()}</DialogTitle>
+    <DialogContent>
+      <TextField variant="outlined" label={t ('user.name')} fullWidth={true}
+          inputProps={{value: props.user.name, onChange: rename}}/>
+      <label className="team">
+        {t ('user.team')}
+        {teamSelect ()}
+      </label>
+      {emailEditList ()}
+      <form onSubmit={addEmail}>
+        <label>{t ('edit.user.new-email')} <input name="email"/></label>
+        <button>+</button>
+      </form>
+      <TextField variant="outlined" label={t ('edit.comment')} fullWidth={true}
+        inputProps={{value: comment, onChange: updateComment}}/>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={props.cancelEdits}>{t ('edit.cancel')}</Button>
+      <Button onClick={submit}>{t ('edit.save')}</Button>
+    </DialogActions>
+  </Dialog>;
 };
