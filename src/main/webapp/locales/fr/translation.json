@@ -56,9 +56,10 @@
   },
   "user": {
     "no-emails": "Cet utilisateur n’a pas d’email connu.",
+    "team-loading-failed": "Le chargement de l’équipe de cet utilisateur a échoué.",
     "name": "Nom",
+    "team": "Équipe",
     "emails": "Adresses emails",
-    "loading-failed": "Désolé, le chargement de cet utiliseur a échoué.",
-    "team": "Équipe"
+    "loading-failed": "Désolé, le chargement de cet utiliseur a échoué."
   }
 }

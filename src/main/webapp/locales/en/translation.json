@@ -56,9 +56,10 @@
   },
   "user": {
     "no-emails": "This user has no known email.",
+    "team-loading-failed": "Loading this user’s team failed.",
     "name": "Name",
+    "team": "Team",
     "emails": "Email addresses",
-    "loading-failed": "Sorry, user loading failed.",
-    "team": "Team"
+    "loading-failed": "Sorry, user loading failed."
   }
 }

@@ -10,6 +10,7 @@ import {
   UserDetailsStateProps
 } from '../components/UserDetails';
 import { editUserStart } from '../actions/user-edition';
+import { fetchTeam } from '../actions/team';
 
 export interface UserDetailsOwnProps {
   match: {
@@ -17,6 +18,20 @@ export interface UserDetailsOwnProps {
       userId: string
     }
   }
+}
+
+function getTeam (state: GlobalState, teamId: string) {
+  if (!teamId) {
+    return {teamStatus: HttpStatus.None};
+  }
+  const container = state.teams.list[teamId];
+  if (!container) {
+    return {teamStatus: HttpStatus.None};
+  }
+  return {
+    teamStatus: container.status,
+    team: container.team
+  };
 }
 
 function mapStateToProps (
@@ -27,8 +42,13 @@ function mapStateToProps (
       state.whoami.status == HttpStatus.Success && state.whoami.whoami!.prefect;
   const userContainer = state.users.list[userId];
   if (userContainer) {
+    const teamId = userContainer.user && userContainer.user.teamId;
+    const {team, teamStatus} = getTeam (state, teamId);
+
     return {
       prefect,
+      team,
+      teamStatus,
       edition: userContainer.edition || undefined,
       user: userContainer.user,
       status: userContainer.status
@@ -53,6 +73,7 @@ function mapDispatchToProps (
     {match: {params: {userId}}}: UserDetailsOwnProps
 ): UserDetailsDispatchProps {
   return {
+    fetchTeam: teamId => dispatch (fetchTeam (teamId)),
     editUser: () => dispatch (editUserStart (userId)),
     fetchUser: () => dispatch (fetchUser (userId))
   }

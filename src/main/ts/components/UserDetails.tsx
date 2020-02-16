@@ -4,17 +4,21 @@ import { HttpStatus } from '../state/status';
 import { useTranslation } from 'react-i18next';
 import { Loader } from './Loader';
 import { UserEditContainer } from '../containers/user-edit';
+import { Team } from '../state/team';
 
 export interface UserDetailsStateProps {
   prefect: boolean;
   user?: User;
   edition?: User;
   status: HttpStatus;
+  team?: Team;
+  teamStatus?: HttpStatus;
 }
 
 export interface UserDetailsDispatchProps {
   editUser: () => {};
   fetchUser: () => {};
+  fetchTeam: (teamId: string) => {};
 }
 
 export type UserDetailsProps = UserDetailsStateProps & UserDetailsDispatchProps;
@@ -31,6 +35,20 @@ export const UserDetails = (props: UserDetailsProps) => {
     }
   }
 
+  function teamName () {
+    switch (props.teamStatus) {
+      case undefined:
+      case HttpStatus.None:
+        return '';
+      case HttpStatus.Progressing:
+        return <Loader/>;
+      case HttpStatus.Success:
+        return props.team!.name;
+      case HttpStatus.Failure:
+        return t ('user.team-loading-failed');
+    }
+  }
+
   function details () {
     switch (props.status) {
       case HttpStatus.None:
@@ -39,10 +57,17 @@ export const UserDetails = (props: UserDetailsProps) => {
       case HttpStatus.Progressing:
         return <Loader/>;
       case HttpStatus.Success:
+        if (props.teamStatus === HttpStatus.None) {
+          props.fetchTeam (props.user!.teamId);
+        }
         return <dl>
           <div className="name">
             <dt>{t ("user.name")}</dt>
             <dd>{props.user!.name}</dd>
+          </div>
+          <div className="team">
+            <dt>{t ('user.team')}</dt>
+            <dd>{teamName ()}</dd>
           </div>
           <div className="emails">
             <dt>{t ("user.emails")}</dt>
