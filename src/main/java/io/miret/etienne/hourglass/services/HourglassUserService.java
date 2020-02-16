@@ -36,6 +36,14 @@ import static java.util.stream.Collectors.toSet;
 public class HourglassUserService
     implements OAuth2UserService<OidcUserRequest, OidcUser> {
 
+  private static final AuthenticatedUser SYSTEM = new AuthenticatedUser (
+      new UUID (0, 0),
+      null,
+      "System",
+      emptySet (),
+      null
+  );
+
   private final Clock clock;
 
   private final OidcUserService delegate;
@@ -113,7 +121,7 @@ public class HourglassUserService
 
     var created = new User (null, null, UNKNOWN_PREFECT, emails);
     var creation = new UserCreation (
-        new BaseAction (clock, "Auto-creating prefect."),
+        new BaseAction (clock, "Auto-creating prefect.", SYSTEM),
         created
     );
     userActionRepository.save (creation);

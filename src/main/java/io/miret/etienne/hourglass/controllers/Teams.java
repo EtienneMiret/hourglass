@@ -1,5 +1,6 @@
 package io.miret.etienne.hourglass.controllers;
 
+import io.miret.etienne.hourglass.data.auth.AuthenticatedUser;
 import io.miret.etienne.hourglass.data.core.BaseAction;
 import io.miret.etienne.hourglass.data.core.Team;
 import io.miret.etienne.hourglass.data.mongo.TeamAction;
@@ -9,6 +10,7 @@ import io.miret.etienne.hourglass.data.rest.Form;
 import io.miret.etienne.hourglass.repositories.TeamActionRepository;
 import io.miret.etienne.hourglass.services.ActionComposer;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,7 +58,10 @@ public class Teams {
   }
 
   @PostMapping
-  public Team create (@RequestBody Form<Team> form) {
+  public Team create (
+      @RequestBody Form<Team> form,
+      @AuthenticationPrincipal AuthenticatedUser user
+  ) {
     var team = form.getObject ();
     if (team.getColor () == null) {
       throw new ResponseStatusException (BAD_REQUEST, "Missing color.");
@@ -64,14 +69,18 @@ public class Teams {
     if (!COLOR_PATTERN.matcher (team.getColor ()).matches ()) {
       throw new ResponseStatusException (BAD_REQUEST, "Invalid color.");
     }
-    var ba = new BaseAction (clock, form.getComment ());
+    var ba = new BaseAction (clock, form.getComment (), user);
     var creation = new TeamCreation (ba, form.getObject ());
     repository.save (creation);
     return creation.apply (null);
   }
 
   @PatchMapping ("/{id}")
-  public Team update (@PathVariable UUID id, @RequestBody Form<Team> form) {
+  public Team update (
+      @PathVariable UUID id,
+      @RequestBody Form<Team> form,
+      @AuthenticationPrincipal AuthenticatedUser user
+  ) {
     var actions = repository.findByTeamId (id);
     if (actions.isEmpty ()) {
       throw new ResponseStatusException (NOT_FOUND);
@@ -82,7 +91,7 @@ public class Teams {
       throw new ResponseStatusException (BAD_REQUEST, "Invalid color.");
     }
 
-    var ba = new BaseAction (clock, form.getComment ());
+    var ba = new BaseAction (clock, form.getComment (), user);
     var edition = new TeamEdition (ba, form.getObject ().withId (id));
     repository.save (edition);
     return composer.compose (union (actions, Set.of (edition)));

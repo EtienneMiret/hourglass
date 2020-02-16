@@ -1,5 +1,6 @@
 package io.miret.etienne.hourglass.services;
 
+import io.miret.etienne.hourglass.data.auth.AuthenticatedUser;
 import io.miret.etienne.hourglass.data.config.AppConfiguration;
 import io.miret.etienne.hourglass.data.config.SecurityConfiguration;
 import io.miret.etienne.hourglass.data.core.BaseAction;
@@ -82,6 +83,9 @@ class HourglassUserServiceTest {
   @Mock
   private OidcUser oidcUser;
 
+  @Mock
+  private AuthenticatedUser user;
+
   @Captor
   private ArgumentCaptor<UserAction> userAction;
 
@@ -107,15 +111,15 @@ class HourglassUserServiceTest {
         Set.of ("foo@miret.io")
     );
     var regularUserAction = new UserCreation (
-        new BaseAction (clock, ""),
+        new BaseAction (clock, "", user),
         regularUser
     );
     var adminUserAction = new UserCreation (
-        new BaseAction (clock, ""),
+        new BaseAction (clock, "", user),
         adminUser
     );
     var fooUserAction = new UserCreation (
-        new BaseAction (clock, ""),
+        new BaseAction (clock, "", user),
         fooUser
     );
 

@@ -1,6 +1,7 @@
 package io.miret.etienne.hourglass.controllers;
 
 import com.google.common.collect.Sets;
+import io.miret.etienne.hourglass.data.auth.AuthenticatedUser;
 import io.miret.etienne.hourglass.data.core.BaseAction;
 import io.miret.etienne.hourglass.data.core.Event;
 import io.miret.etienne.hourglass.data.core.ScaleRule;
@@ -13,6 +14,7 @@ import io.miret.etienne.hourglass.repositories.EventActionRepository;
 import io.miret.etienne.hourglass.repositories.ScaleRuleActionRepository;
 import io.miret.etienne.hourglass.services.ActionComposer;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,7 +73,10 @@ public class Events {
   }
 
   @PostMapping
-  public Event create (@RequestBody Form<Event> form) {
+  public Event create (
+      @RequestBody Form<Event> form,
+      @AuthenticationPrincipal AuthenticatedUser user
+  ) {
     UUID scaleRuleId = form.getObject ()
         .getScaleRuleId ();
     Set<ScaleRuleAction> ruleActions =
@@ -80,14 +85,18 @@ public class Events {
       throw new ResponseStatusException (BAD_REQUEST, "No such rule: " + scaleRuleId);
     }
 
-    BaseAction ba = new BaseAction (clock, form.getComment ());
+    BaseAction ba = new BaseAction (clock, form.getComment (), user);
     EventCreation creation = new EventCreation (ba, form.getObject ());
     repository.save (creation);
     return addPoints (composer.compose (Set.of (creation)));
   }
 
   @PatchMapping ("/{id}")
-  public Event update (@PathVariable UUID id, @RequestBody Form<Event> form) {
+  public Event update (
+      @PathVariable UUID id,
+      @RequestBody Form<Event> form,
+      @AuthenticationPrincipal AuthenticatedUser user
+  ) {
     Set<EventAction> actions = repository.findByEventId (id);
     if (actions.isEmpty ()) {
       throw new ResponseStatusException (NOT_FOUND);
@@ -103,7 +112,7 @@ public class Events {
       }
     }
 
-    BaseAction ba = new BaseAction (clock, form.getComment ());
+    BaseAction ba = new BaseAction (clock, form.getComment (), user);
     EventEdition edition = new EventEdition (ba, form.getObject ().withId (id));
     repository.save (edition);
     return addPoints (composer.compose (Sets.union (actions, Set.of (edition))));

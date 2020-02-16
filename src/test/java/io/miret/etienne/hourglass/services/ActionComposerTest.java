@@ -1,5 +1,6 @@
 package io.miret.etienne.hourglass.services;
 
+import io.miret.etienne.hourglass.data.auth.AuthenticatedUser;
 import io.miret.etienne.hourglass.data.core.BaseAction;
 import io.miret.etienne.hourglass.data.core.Event;
 import io.miret.etienne.hourglass.data.mongo.EventAction;
@@ -51,10 +52,18 @@ class ActionComposerTest {
 
   @TestFactory
   Stream<DynamicTest> should_compose_actions_in_any_order_to_create_event () {
+    var user = new AuthenticatedUser (
+        UUID.fromString ("C7D99B0C-F71E-44C8-BAC2-8A6348F8BEFD"),
+        null,
+        "Admin",
+        emptySet (),
+        null
+    );
     var creation = new EventCreation (
         new BaseAction (
             Clock.fixed (Instant.parse ("2019-11-01T11:15:18Z"), ZONE_ID),
-            "Create event for Hackathon."
+            "Create event for Hackathon.",
+            user
         ),
         new Event (
             null,
@@ -68,7 +77,8 @@ class ActionComposerTest {
     var edit1 = new EventEdition (
         new BaseAction (
             Clock.fixed (Instant.parse ("2019-11-01T18:20:31Z"), ZONE_ID),
-            "Add Christian/"
+            "Add Christian/",
+            user
         ),
         new Event (
             creation.getEventId (),
@@ -82,7 +92,8 @@ class ActionComposerTest {
     var edit2 = new EventEdition (
         new BaseAction (
             Clock.fixed (Instant.parse ("2019-11-01T18:32:24Z"), ZONE_ID),
-            "Add Christina."
+            "Add Christina.",
+            user
         ),
         new Event (
             creation.getEventId (),
@@ -96,7 +107,8 @@ class ActionComposerTest {
     var edit3 = new EventEdition (
         new BaseAction (
             Clock.fixed (Instant.parse ("2019-11-02T08:42:03Z"), ZONE_ID),
-            "Replace Christian with Steve."
+            "Replace Christian with Steve.",
+            user
         ),
         new Event (
             creation.getEventId (),
@@ -110,7 +122,8 @@ class ActionComposerTest {
     var edit4 = new EventEdition (
         new BaseAction (
             Clock.fixed (Instant.parse ("2019-11-04T16:31:22Z"), ZONE_ID),
-            "Rename to “2019 Hackathon”."
+            "Rename to “2019 Hackathon”.",
+            user
         ),
         new Event (
             creation.getEventId (),

@@ -1,5 +1,6 @@
 package io.miret.etienne.hourglass.controllers;
 
+import io.miret.etienne.hourglass.data.auth.AuthenticatedUser;
 import io.miret.etienne.hourglass.data.core.Event;
 import io.miret.etienne.hourglass.data.core.ScaleRule;
 import io.miret.etienne.hourglass.data.mongo.EventAction;
@@ -63,6 +64,9 @@ class EventsTest_create {
   @Mock
   private ScaleRule scaleRule;
 
+  @Mock
+  private AuthenticatedUser user;
+
   private UUID eventId;
   private UUID scaleRuleId;
   private UUID gregory;
@@ -94,7 +98,7 @@ class EventsTest_create {
 
   @Test
   void should_fail_when_rule_does_not_exist () {
-    assertThatThrownBy (() -> controller.create (form))
+    assertThatThrownBy (() -> controller.create (form, user))
         .isInstanceOf (ResponseStatusException.class)
         .hasMessage ("400 BAD_REQUEST \"No such rule: 60eae108-c9eb-435e-bcde-e69a5019b682\"");
   }
@@ -119,7 +123,7 @@ class EventsTest_create {
         .thenReturn (scaleRule);
     when (scaleRule.getPoints ()).thenReturn (2);
 
-    Event actual = controller.create (form);
+    Event actual = controller.create (form, user);
 
     verify (repository).save (eventCaptor.capture ());
     assertThat (eventCaptor.getValue ()).isInstanceOf (EventCreation.class);

@@ -1,5 +1,6 @@
 package io.miret.etienne.hourglass.controllers;
 
+import io.miret.etienne.hourglass.data.auth.AuthenticatedUser;
 import io.miret.etienne.hourglass.data.core.BaseAction;
 import io.miret.etienne.hourglass.data.core.Event;
 import io.miret.etienne.hourglass.data.mongo.EventAction;
@@ -45,6 +46,9 @@ class EventsTest_find {
   @Mock
   private ActionComposer composer;
 
+  @Mock
+  private AuthenticatedUser actor;
+
   private EventAction event0Edit0;
   private EventAction event0Edit1;
   private EventCreation event1Edit0;
@@ -58,27 +62,27 @@ class EventsTest_find {
   @BeforeEach
   void createTestData () {
     event0Edit0 = new EventCreation (
-        new BaseAction (clock, "foo"),
+        new BaseAction (clock, "foo", actor),
         new Event (null, null, null, null, null, emptySet ())
     );
     event0Edit1 = new EventEdition (
-        new BaseAction (clock, "bar"),
+        new BaseAction (clock, "bar", actor),
         new Event (event0Edit0.getEventId (), null, null, null, null, emptySet ())
     );
     event1Edit0 = new EventCreation (
-        new BaseAction (clock, "foo"),
+        new BaseAction (clock, "foo", actor),
         new Event (null, null, null, null, null, emptySet ())
     );
     event2Edit0 = new EventCreation (
-        new BaseAction (clock, "baz"),
+        new BaseAction (clock, "baz", actor),
         new Event (null, null, null, null, null, emptySet ())
     );
     event2Edit1 = new EventEdition (
-        new BaseAction (clock, "bar"),
+        new BaseAction (clock, "bar", actor),
         new Event (event2Edit0.getEventId (), null, null, null, null, emptySet ())
     );
     event2Edit2 = new EventEdition (
-        new BaseAction (clock, "foo"),
+        new BaseAction (clock, "foo", actor),
         new Event (event2Edit0.getEventId (), null, null, null, null, emptySet ())
     );
     event0 = new Event (event0Edit0.getEventId (), "Hello World!", null, null, null, emptySet ());

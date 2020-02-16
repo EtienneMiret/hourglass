@@ -1,6 +1,7 @@
 package io.miret.etienne.hourglass.controllers;
 
 import com.google.common.collect.Sets;
+import io.miret.etienne.hourglass.data.auth.AuthenticatedUser;
 import io.miret.etienne.hourglass.data.core.BaseAction;
 import io.miret.etienne.hourglass.data.core.ScaleRule;
 import io.miret.etienne.hourglass.data.mongo.ScaleRuleAction;
@@ -10,6 +11,7 @@ import io.miret.etienne.hourglass.data.rest.Form;
 import io.miret.etienne.hourglass.repositories.ScaleRuleActionRepository;
 import io.miret.etienne.hourglass.services.ActionComposer;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,21 +53,28 @@ public class ScaleRules {
   }
 
   @PostMapping
-  public ScaleRule create (@RequestBody Form<ScaleRule> form) {
-    BaseAction ba = new BaseAction (clock, form.getComment ());
+  public ScaleRule create (
+      @RequestBody Form<ScaleRule> form,
+      @AuthenticationPrincipal AuthenticatedUser user
+  ) {
+    BaseAction ba = new BaseAction (clock, form.getComment (), user);
     ScaleRuleCreation creation = new ScaleRuleCreation (ba, form.getObject ());
     repository.save (creation);
     return composer.compose (Set.of (creation));
   }
 
   @PatchMapping ("/{id}")
-  public ScaleRule update (@PathVariable UUID id, @RequestBody Form<ScaleRule> form) {
+  public ScaleRule update (
+      @PathVariable UUID id,
+      @RequestBody Form<ScaleRule> form,
+      @AuthenticationPrincipal AuthenticatedUser user
+  ) {
     Set<ScaleRuleAction> actions = repository.findByScaleRuleId (id);
     if (actions.isEmpty ()) {
       throw new ResponseStatusException (NOT_FOUND);
     }
 
-    BaseAction ba = new BaseAction (clock, form.getComment ());
+    BaseAction ba = new BaseAction (clock, form.getComment (), user);
     ScaleRuleEdition edition = new ScaleRuleEdition (ba, form.getObject ().withId (id));
     repository.save (edition);
     return composer.compose (Sets.union (actions, Set.of (edition)));

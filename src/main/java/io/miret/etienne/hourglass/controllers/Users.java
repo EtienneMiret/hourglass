@@ -1,6 +1,7 @@
 package io.miret.etienne.hourglass.controllers;
 
 import com.google.common.collect.Sets;
+import io.miret.etienne.hourglass.data.auth.AuthenticatedUser;
 import io.miret.etienne.hourglass.data.core.BaseAction;
 import io.miret.etienne.hourglass.data.core.User;
 import io.miret.etienne.hourglass.data.mongo.UserAction;
@@ -10,6 +11,7 @@ import io.miret.etienne.hourglass.data.rest.Form;
 import io.miret.etienne.hourglass.repositories.UserActionRepository;
 import io.miret.etienne.hourglass.services.ActionComposer;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,21 +69,28 @@ public class Users {
   }
 
   @PostMapping
-  public User create (@RequestBody Form<User> form) {
-    BaseAction ba = new BaseAction (clock, form.getComment ());
+  public User create (
+      @RequestBody Form<User> form,
+      @AuthenticationPrincipal AuthenticatedUser user
+  ) {
+    BaseAction ba = new BaseAction (clock, form.getComment (), user);
     UserCreation creation = new UserCreation (ba, form.getObject ());
     repository.save (creation);
     return composer.compose (Set.of (creation));
   }
 
   @PatchMapping ("/{id}")
-  public User update (@PathVariable UUID id, @RequestBody Form<User> form) {
+  public User update (
+      @PathVariable UUID id,
+      @RequestBody Form<User> form,
+      @AuthenticationPrincipal AuthenticatedUser user
+  ) {
     Set<UserAction> actions = repository.findByUserId (id);
     if (actions.isEmpty ()) {
       throw new ResponseStatusException (NOT_FOUND);
     }
 
-    BaseAction ba = new BaseAction (clock, form.getComment ());
+    BaseAction ba = new BaseAction (clock, form.getComment (), user);
     UserEdition edition = new UserEdition (ba, form.getObject ().withId (id));
     repository.save (edition);
     return composer.compose (Sets.union (actions, Set.of (edition)));

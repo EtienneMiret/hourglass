@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
+import java.util.UUID;
 import java.util.function.Function;
 
 import static lombok.AccessLevel.PROTECTED;
@@ -23,9 +24,12 @@ public abstract class Action<T> implements Comparable<Action>, Function<T, T> {
 
   private String comment;
 
+  private UUID actorId;
+
   public Action (BaseAction action) {
     this.timestamp = action.getTimestamp ();
     this.comment = action.getComment ();
+    this.actorId = action.getActorId ();
   }
 
   public abstract T apply (T t);
