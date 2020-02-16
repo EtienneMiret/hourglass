@@ -40,6 +40,16 @@
     "loading-failed": "Désolé, le chargement des évènements a échoué."
   },
   "hello": "Bonjour de la part de {{compiler}} et {{framework}}!",
+  "home": {
+    "hello": "Bonjour {{name}} !",
+    "my-points": "Mes points",
+    "events": {
+      "date": "Date",
+      "name": "Nom",
+      "points": "Points"
+    },
+    "loading-failed": "Erreur au chargement des données."
+  },
   "rule": {
     "name": "Nom",
     "points": "Nombre de points",

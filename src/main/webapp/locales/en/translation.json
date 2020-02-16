@@ -40,6 +40,16 @@
     "loading-failed": "Sorry, event loading failed."
   },
   "hello": "Hello from {{compiler}} and {{framework}}!",
+  "home": {
+    "hello": "Hello {{name}}!",
+    "my-points": "My points",
+    "events": {
+      "date": "Date",
+      "name": "Name",
+      "points": "Points"
+    },
+    "loading-failed": "Data loading error."
+  },
   "rule": {
     "name": "Name",
     "points": "Number of points",
