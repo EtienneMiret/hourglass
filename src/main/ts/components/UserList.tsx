@@ -1,4 +1,16 @@
 import * as React from 'react';
+import {
+  Container, IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Toolbar
+} from '@material-ui/core';
+import ReplayIcon from '@material-ui/icons/Replay';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { NewUser, User } from '../state/user';
 import { Event } from '../state/event';
 import { HttpStatus } from '../state/status';
@@ -8,6 +20,7 @@ import { UserEditContainer } from '../containers/user-edit';
 import { Team } from '../state/team';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AppBar } from './AppBar';
 
 interface UserDisplay {
   id: string;
@@ -125,26 +138,26 @@ export const UserList = (props: UserListProps) => {
         if (users.length === 0) {
           return <div>{t('users.none')}</div>
         }
-        return <table>
-          <thead>
-            <tr>
-              <th onClick={() => changeSort (OrderProp.name)}>{t ('user.name')}</th>
-              <th onClick={() => changeSort (OrderProp.team)}>{t ('user.team')}</th>
-              <th onClick={() => changeSort (OrderProp.points)}>{t ('user.points')}</th>
-            </tr>
-          </thead>
-          <tbody>
+        return <TableContainer><Table>
+          <TableHead>
+            <TableRow>
+              <TableCell onClick={() => changeSort (OrderProp.name)}>{t ('user.name')}</TableCell>
+              <TableCell onClick={() => changeSort (OrderProp.team)}>{t ('user.team')}</TableCell>
+              <TableCell onClick={() => changeSort (OrderProp.points)}>{t ('user.points')}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
           {users.map (user => {
             const style = {color: user.color};
 
-            return <tr key={user.id}><Link to={`/users/${user.id}`} style={style}>
-              <td>{user.name}</td>
-              <td>{user.team}</td>
-              <td>{user.points}</td>
-            </Link></tr>;
+            return <TableRow key={user.id}><Link to={`/users/${user.id}`} style={style}>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.team}</TableCell>
+              <TableCell>{user.points}</TableCell>
+            </Link></TableRow>;
           })}
-          </tbody>
-        </table>;
+          </TableBody>
+        </Table></TableContainer>;
       case HttpStatus.Failure:
         return <div>{t('users.loading-failed')}</div>
     }
@@ -152,15 +165,19 @@ export const UserList = (props: UserListProps) => {
 
   function actions () {
     const actions: JSX.Element[] = [];
-    actions.push (<button onClick={props.fetchUsers} key="reload">{t ('actions.reload')}</button>);
+    actions.push (<IconButton onClick={props.fetchUsers} key="reload">
+      <ReplayIcon/>
+    </IconButton>);
 
     if (props.prefect && props.status === HttpStatus.Success) {
-      actions.push (<button onClick={props.startCreate} key="create">{t ('actions.add')}</button>);
+      actions.push (<IconButton onClick={props.startCreate} key="create">
+        <AddCircleIcon/>
+      </IconButton>);
     }
 
-    return <div className="actions">
+    return <Toolbar className="actions" style={{top: 'auto', bottom: 0}}>
       {actions}
-    </div>;
+    </Toolbar>;
   }
 
   function popup () {
@@ -171,9 +188,11 @@ export const UserList = (props: UserListProps) => {
     return <div/>;
   }
 
-  return <div className="user-list">
+  return <Container className="user-list">
+    <AppBar title={t ('users.title')}/>
+    <div id="top"/>
     {list ()}
     {actions ()}
     {popup ()}
-  </div>;
+  </Container>;
 };

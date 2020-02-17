@@ -42,7 +42,8 @@
   },
   "users": {
     "loading-failed": "Sorry, user loading failed.",
-    "none": "No user (yet)."
+    "none": "No user (yet).",
+    "title": "Users"
   },
   "events": {
     "none": "No events (yet).",

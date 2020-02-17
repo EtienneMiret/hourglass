@@ -42,7 +42,8 @@
   },
   "users": {
     "loading-failed": "Désolé, le chargement des utilisateurs a échoué.",
-    "none": "Pas (encore) d’utilisateurs."
+    "none": "Pas (encore) d’utilisateurs.",
+    "title": "Utilisateurs"
   },
   "events": {
     "none": "Pas (encore) d’évènements.",

@@ -1,0 +1,19 @@
+.user-list {
+
+  .MuiTableCell-body {
+    color: inherit;
+  }
+
+  a {
+    display: contents;
+  }
+
+  .actions > :first-child {
+    margin-left: auto;
+  }
+
+  .actions >  :last-child {
+    margin-right: auto;
+  }
+
+}
