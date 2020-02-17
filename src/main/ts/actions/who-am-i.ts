@@ -2,7 +2,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { WhoAmI } from '../state/who-am-i';
 import { GlobalState } from '../state';
-import { get } from '../http/fetch';
+import { get } from '../lib/http';
 
 export const FETCH_WHOAMI_REQUEST = 'FETCH_WHOAMI_REQUEST';
 export const FETCH_WHOAMI_SUCCESS = 'FETCH_WHOAMI_SUCCESS';

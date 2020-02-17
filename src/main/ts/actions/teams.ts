@@ -2,7 +2,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { Team } from '../state/team';
 import { GlobalState } from '../state';
-import { get } from '../http/fetch';
+import { get } from '../lib/http';
 
 export const FETCH_TEAM_REQUEST = 'FETCH_TEAM_REQUEST';
 export const FETCH_TEAM_SUCCESS = 'FETCH_TEAM_SUCCESS';

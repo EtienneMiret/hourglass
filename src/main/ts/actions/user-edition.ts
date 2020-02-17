@@ -1,6 +1,6 @@
 import { ThunkAction } from 'redux-thunk';
 import { GlobalState } from '../state';
-import { patch, post } from '../http/fetch';
+import { patch, post } from '../lib/http';
 import { NewUser, User } from '../state/user';
 import { fetchSingleUserFailure, fetchSingleUserSuccess } from './user';
 import { Action } from './index';

@@ -2,7 +2,7 @@ import { NewTeam, Team } from '../state/team';
 import { ThunkAction } from 'redux-thunk';
 import { GlobalState } from '../state';
 import { Action } from './index';
-import { patch, post } from '../http/fetch';
+import { patch, post } from '../lib/http';
 import { fetchSingleTeamFailure, fetchSingleTeamSuccess } from './team';
 import { fetchTeamFailure } from './teams';
 

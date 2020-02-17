@@ -2,7 +2,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { Event } from '../state/event';
 import { GlobalState } from '../state';
-import { get } from '../http/fetch';
+import { get } from '../lib/http';
 
 export const FETCH_EVENT_REQUEST = 'FETCH_EVENT_REQUEST';
 export const FETCH_EVENT_SUCCESS = 'FETCH_EVENT_SUCCESS';

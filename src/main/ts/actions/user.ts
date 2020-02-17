@@ -1,7 +1,7 @@
 import { User } from '../state/user';
 import { ThunkAction } from 'redux-thunk';
 import { GlobalState } from '../state';
-import { get } from '../http/fetch';
+import { get } from '../lib/http';
 
 export const FETCH_SINGLE_USER_REQUEST = 'FETCH_SINGLE_USER_REQUEST';
 export const FETCH_SINGLE_USER_SUCCESS = 'FETCH_SINGLE_USER_SUCCESS';

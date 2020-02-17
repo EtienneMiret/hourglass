@@ -2,7 +2,7 @@ import { Rule } from '../state/rule';
 import { ThunkAction } from 'redux-thunk';
 import { GlobalState } from '../state';
 import { Action } from './index';
-import { get } from '../http/fetch';
+import { get } from '../lib/http';
 
 export const FETCH_SINGLE_RULE_REQUEST = 'FETCH_SINGLE_RULE_REQUEST';
 export const FETCH_SINGLE_RULE_SUCCESS = 'FETCH_SINGLE_RULE_SUCCESS';

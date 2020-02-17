@@ -1,7 +1,7 @@
 import { Team } from '../state/team';
 import { ThunkAction } from 'redux-thunk';
 import { GlobalState } from '../state';
-import { get } from '../http/fetch';
+import { get } from '../lib/http';
 
 export const FETCH_SINGLE_TEAM_REQUEST = 'FETCH_SINGLE_TEAM_REQUEST';
 export const FETCH_SINGLE_TEAM_SUCCESS = 'FETCH_SINGLE_TEAM_SUCCESS';

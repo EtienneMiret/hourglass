@@ -2,7 +2,7 @@ import { Event, NewEvent } from '../state/event';
 import { ThunkAction } from 'redux-thunk';
 import { GlobalState } from '../state';
 import { Action } from './index';
-import { patch, post } from '../http/fetch';
+import { patch, post } from '../lib/http';
 import { fetchEventFailure } from './events';
 import { fetchSingleEventFailure, fetchSingleEventSuccess } from './event';
 

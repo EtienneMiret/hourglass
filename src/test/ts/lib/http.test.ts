@@ -1,4 +1,4 @@
-import { ErrorCode, get, HttpError, patch, post } from '../../../main/ts/http/fetch';
+import { ErrorCode, get, HttpError, patch, post } from '../../../main/ts/lib/http';
 
 describe ('HTTP fetch', () => {
   beforeEach (() => {
