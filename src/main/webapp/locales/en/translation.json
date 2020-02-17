@@ -83,6 +83,7 @@
     "name": "Name",
     "team": "Team",
     "emails": "Email addresses",
-    "loading-failed": "Sorry, user loading failed."
+    "loading-failed": "Sorry, user loading failed.",
+    "points": "Points"
   }
 }

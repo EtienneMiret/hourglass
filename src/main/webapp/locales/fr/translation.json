@@ -83,6 +83,7 @@
     "name": "Nom",
     "team": "Équipe",
     "emails": "Adresses emails",
-    "loading-failed": "Désolé, le chargement de cet utiliseur a échoué."
+    "loading-failed": "Désolé, le chargement de cet utiliseur a échoué.",
+    "points": "Points"
   }
 }
