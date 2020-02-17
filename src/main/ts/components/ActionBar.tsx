@@ -1,10 +1,12 @@
 import * as React from 'react';
 import ReplayIcon from '@material-ui/icons/Replay';
+import EditIcon from '@material-ui/icons/Edit';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { IconButton, Toolbar } from '@material-ui/core';
 
 export interface ActionBarProps {
   reload?: () => void;
+  edit?: () => void;
   add?: () => void;
 }
 
@@ -14,6 +16,12 @@ export const ActionBar = (props: ActionBarProps) => {
   if (props.reload) {
     actions.push (<IconButton onClick={props.reload} key="reload">
       <ReplayIcon/>
+    </IconButton>);
+  }
+
+  if (props.edit) {
+    actions.push (<IconButton onClick={props.edit} key="edit">
+      <EditIcon/>
     </IconButton>);
   }
 

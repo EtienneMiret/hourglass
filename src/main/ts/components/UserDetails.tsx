@@ -5,6 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { Loader } from './Loader';
 import { UserEditContainer } from '../containers/user-edit';
 import { Team } from '../state/team';
+import { Container, List, ListItem, Typography } from '@material-ui/core';
+import { AppBar } from './AppBar';
+import { ActionBar } from './ActionBar';
 
 export interface UserDetailsStateProps {
   prefect: boolean;
@@ -28,10 +31,10 @@ export const UserDetails = (props: UserDetailsProps) => {
 
   function emailList (emails: string[]) {
     if (emails.length === 0) {
-      return <span>{t ("user.no-emails")}</span>
+      return <Typography variant="body1">{t ("user.no-emails")}</Typography>
     } else {
-      const items = emails.map (email => <li key={email}>{email}</li>);
-      return <ol>{items}</ol>
+      const items = emails.map (email => <ListItem key={email}>{email}</ListItem>);
+      return <List>{items}</List>
     }
   }
 
@@ -43,7 +46,7 @@ export const UserDetails = (props: UserDetailsProps) => {
       case HttpStatus.Progressing:
         return <Loader/>;
       case HttpStatus.Success:
-        return props.team!.name;
+        return <span style={{color: props.team!.color}}>{props.team!.name}</span>;
       case HttpStatus.Failure:
         return t ('user.team-loading-failed');
     }
@@ -60,20 +63,14 @@ export const UserDetails = (props: UserDetailsProps) => {
         if (props.teamStatus === HttpStatus.None) {
           props.fetchTeam (props.user!.teamId);
         }
-        return <dl>
-          <div className="name">
-            <dt>{t ("user.name")}</dt>
-            <dd>{props.user!.name}</dd>
-          </div>
-          <div className="team">
-            <dt>{t ('user.team')}</dt>
-            <dd>{teamName ()}</dd>
-          </div>
-          <div className="emails">
-            <dt>{t ("user.emails")}</dt>
-            <dd>{emailList (props.user!.emails)}</dd>
-          </div>
-        </dl>;
+        return <div>
+          <Typography variant="h6">{t ("user.name")}</Typography>
+          <Typography variant="body1">{props.user!.name}</Typography>
+          <Typography variant="h6">{t ('user.team')}</Typography>
+          <Typography variant="body1">{teamName ()}</Typography>
+          <Typography variant="h6">{t ("user.emails")}</Typography>
+          {emailList (props.user!.emails)}
+        </div>;
       case HttpStatus.Failure:
         return <div>{t ("user.loading-failed")}</div>
     }
@@ -92,6 +89,11 @@ export const UserDetails = (props: UserDetailsProps) => {
     </div>;
   }
 
+  let edit = undefined;
+  if (props.prefect && props.status === HttpStatus.Success) {
+    edit = props.editUser;
+  }
+
   function popup () {
     if (!props.prefect || !props.edition) {
       return <div/>;
@@ -100,9 +102,11 @@ export const UserDetails = (props: UserDetailsProps) => {
     return <UserEditContainer user={props.edition}/>
   }
 
-  return <div className="user-details">
+  return <Container className="user-details">
+    <AppBar title={props.user?.name || t ('loading')}/>
+    <div id="top"/>
     {details ()}
-    {actions ()}
+    <ActionBar reload={props.fetchUser} edit={edit}/>
     {popup ()}
-  </div>;
+  </Container>;
 };
