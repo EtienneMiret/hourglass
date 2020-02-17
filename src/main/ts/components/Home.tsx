@@ -4,7 +4,17 @@ import { HttpStatus } from '../state/status';
 import { Loader } from './Loader';
 import { TeamPoints } from './TeamPoints';
 import { HomeEventItem } from './HomeEventItem';
-import { Container, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import {
+  Container,
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography
+} from '@material-ui/core';
 import { AppBar } from './AppBar';
 
 export interface User {
@@ -76,30 +86,34 @@ export const Home = (props: HomeProps) => {
     case HttpStatus.Progressing:
       return <Loader/>;
     case HttpStatus.Success:
-      return <Container>
+      return <Container className="home">
         <AppBar title={t ('home.hello', props.me)}/>
-        <section className="my-points">
-          <h1>{t ('home.my-points')}</h1>
-          <p>{props.myPoints}</p>
+        <div id="top"/>
+        <section>
+          <Typography variant="h2">{t ('home.team-points')}</Typography>
+          <Grid container>
+            {props.teams.map (team => <TeamPoints team={team} key={team.id}/>)}
+          </Grid>
         </section>
-        <Grid container>
-          {props.teams.map (team => <TeamPoints team={team} key={team.id}/>)}
-        </Grid>
-        <TableContainer className="my-events">
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>{t ('home.events.date')}</TableCell>
-                <TableCell>{t ('home.events.name')}</TableCell>
-                <TableCell>{t ('home.events.points')}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              { props.myEvents.sort(compareEvent)
-                  .map(event => <HomeEventItem event={event} key={event.id}/>)}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <section>
+          <Typography variant="h2">{t ('home.my-points.title')}</Typography>
+          <Typography variant="h3">{t ('home.my-points.value', props)}</Typography>
+          <TableContainer className="my-events">
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>{t ('home.events.date')}</TableCell>
+                  <TableCell>{t ('home.events.name')}</TableCell>
+                  <TableCell>{t ('home.events.points')}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {props.myEvents.sort (compareEvent)
+                    .map (event => <HomeEventItem event={event} key={event.id}/>)}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </section>
       </Container>;
     case HttpStatus.Failure:
       return <div>{t ('home.loading-failed')}</div>;

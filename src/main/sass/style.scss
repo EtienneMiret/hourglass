@@ -1,8 +1,13 @@
 @import "loader";
 @import "edit-modal";
 @import "team-points";
+@import "home";
 
 a {
   color: inherit;
   text-decoration: inherit;
+}
+
+#top {
+  margin-top: 74px;
 }

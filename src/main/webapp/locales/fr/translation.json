@@ -51,7 +51,11 @@
   "hello": "Bonjour de la part de {{compiler}} et {{framework}}!",
   "home": {
     "hello": "Bonjour {{name}} !",
-    "my-points": "Mes points",
+    "team-points": "Points des équipes",
+    "my-points": {
+      "title": "Vos points",
+      "value": "Vous avez {{myPoints}} points."
+    },
     "events": {
       "date": "Date",
       "name": "Nom",
