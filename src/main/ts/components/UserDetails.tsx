@@ -60,7 +60,7 @@ export const UserDetails = (props: UserDetailsProps) => {
       case HttpStatus.Progressing:
         return <Loader/>;
       case HttpStatus.Success:
-        if (props.teamStatus === HttpStatus.None) {
+        if (props.teamStatus === HttpStatus.None && props.user!.teamId) {
           props.fetchTeam (props.user!.teamId);
         }
         return <div>
