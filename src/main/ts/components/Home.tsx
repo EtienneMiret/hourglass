@@ -16,6 +16,7 @@ import {
   Typography
 } from '@material-ui/core';
 import { AppBar } from './AppBar';
+import { combine } from '../lib/utils';
 
 export interface User {
   id: string;
@@ -126,19 +127,4 @@ function compareEvent (a: Event, b: Event): number {
     return a.name.localeCompare (b.name);
   }
   return dateComparison;
-}
-
-function combine (...statuses: HttpStatus[]): HttpStatus {
-  const ordered = [
-    HttpStatus.Failure,
-    HttpStatus.None,
-    HttpStatus.Progressing,
-    HttpStatus.Success
-  ];
-  for (const status of ordered) {
-    if (statuses.includes (status)) {
-      return status;
-    }
-  }
-  return HttpStatus.None;
 }
