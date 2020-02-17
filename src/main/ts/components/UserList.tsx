@@ -21,6 +21,7 @@ import { Team } from '../state/team';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppBar } from './AppBar';
+import { ActionBar } from './ActionBar';
 
 interface UserDisplay {
   id: string;
@@ -90,6 +91,12 @@ export const UserList = (props: UserListProps) => {
       setOrder (order);
       setAsc (true);
     }
+  }
+
+  function reload () {
+    props.fetchUsers ();
+    props.fetchEvents ();
+    props.fetchTeams ();
   }
 
   if (props.status === HttpStatus.None) {
@@ -163,21 +170,9 @@ export const UserList = (props: UserListProps) => {
     }
   }
 
-  function actions () {
-    const actions: JSX.Element[] = [];
-    actions.push (<IconButton onClick={props.fetchUsers} key="reload">
-      <ReplayIcon/>
-    </IconButton>);
-
-    if (props.prefect && props.status === HttpStatus.Success) {
-      actions.push (<IconButton onClick={props.startCreate} key="create">
-        <AddCircleIcon/>
-      </IconButton>);
-    }
-
-    return <Toolbar className="actions" style={{top: 'auto', bottom: 0}}>
-      {actions}
-    </Toolbar>;
+  let add = undefined;
+  if (props.prefect && props.status === HttpStatus.Success) {
+    add = props.startCreate;
   }
 
   function popup () {
@@ -192,7 +187,7 @@ export const UserList = (props: UserListProps) => {
     <AppBar title={t ('users.title')}/>
     <div id="top"/>
     {list ()}
-    {actions ()}
+    <ActionBar reload={reload} add={add}/>
     {popup ()}
   </Container>;
 };
