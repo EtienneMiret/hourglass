@@ -4,7 +4,7 @@ import { HttpStatus } from '../state/status';
 import { Loader } from './Loader';
 import { TeamPoints } from './TeamPoints';
 import { HomeEventItem } from './HomeEventItem';
-import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { Container, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { AppBar } from './AppBar';
 
 export interface User {
@@ -82,9 +82,9 @@ export const Home = (props: HomeProps) => {
           <h1>{t ('home.my-points')}</h1>
           <p>{props.myPoints}</p>
         </section>
-        <section className="team-points">
+        <Grid container>
           {props.teams.map (team => <TeamPoints team={team} key={team.id}/>)}
-        </section>
+        </Grid>
         <TableContainer className="my-events">
           <Table>
             <TableHead>
