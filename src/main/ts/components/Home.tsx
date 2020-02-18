@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { HttpStatus } from '../state/status';
+import { Event } from '../state/event';
 import { Loader } from './Loader';
 import { TeamPoints } from './TeamPoints';
 import { HomeEventItem } from './HomeEventItem';
@@ -16,7 +17,7 @@ import {
   Typography
 } from '@material-ui/core';
 import { AppBar } from './AppBar';
-import { combine } from '../lib/utils';
+import { combine, compareEvent } from '../lib/utils';
 
 export interface User {
   id: string;
@@ -29,13 +30,6 @@ export interface Team {
   id: string;
   name: string;
   color: string;
-  points: number;
-}
-
-export interface Event {
-  id: string;
-  name: string;
-  date: string;
   points: number;
 }
 
@@ -120,11 +114,3 @@ export const Home = (props: HomeProps) => {
       return <div>{t ('home.loading-failed')}</div>;
   }
 };
-
-function compareEvent (a: Event, b: Event): number {
-  const dateComparison = a.date.localeCompare (b.date);
-  if (dateComparison == 0) {
-    return a.name.localeCompare (b.name);
-  }
-  return dateComparison;
-}

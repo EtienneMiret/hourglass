@@ -11,11 +11,12 @@ import {
 import { HttpStatus } from '../state/status';
 import { fetchEvents } from '../actions/events';
 import { editEventStart } from '../actions/event-edition';
+import { compareEvent } from '../lib/utils';
 
 function mapStateToProps (state: GlobalState): EventListStateProps {
   const events: Event[] = Object.values (state.events.list)
       .map (e => e.event);
-  events.sort ((a, b) => a.date.localeCompare (b.date));
+  events.sort (compareEvent);
   const prefect = state.whoami.status === HttpStatus.Success
       && state.whoami.whoami!.prefect;
   const creation =

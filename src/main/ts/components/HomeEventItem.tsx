@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Event} from './Home';
+import { Event } from '../state/event';
 import { TableCell, TableRow } from '@material-ui/core';
 
 export interface HomeEventItemProps {
