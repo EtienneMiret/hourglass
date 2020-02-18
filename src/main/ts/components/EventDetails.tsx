@@ -6,6 +6,10 @@ import { Rule } from '../state/rule';
 import { User } from '../state/user';
 import { Loader } from './Loader';
 import { EventEditContainer } from '../containers/event-edit';
+import { Container, List, ListItem, Typography } from '@material-ui/core';
+import { AppBar } from './AppBar';
+import { ActionBar } from './ActionBar';
+import { Details, DetailsItem } from './Details';
 
 export interface EventDetailsStateProps {
   prefect: boolean;
@@ -56,13 +60,13 @@ export const EventDetails = (props: EventDetailsProps) => {
       case HttpStatus.Progressing:
         return <Loader/>;
       case HttpStatus.Success:
-        return <ol>
+        return <List>
           {props
               .users
               .filter (user => event.userIds.includes (user.id))
-              .map (user => <li key={user.id}>{user.name}</li>)
+              .map (user => <ListItem key={user.id}>{user.name}</ListItem>)
           }
-        </ol>;
+        </List>;
       case HttpStatus.Failure:
         return t ('event.user-loading-failed');
     }
@@ -83,42 +87,37 @@ export const EventDetails = (props: EventDetailsProps) => {
         if (event.userIds.length > 0 && props.userStatus === HttpStatus.None) {
           props.fetchUsers ();
         }
-        return <dl>
-          <div className="name">
-            <dt>{t ('event.name')}</dt>
-            <dd>{event.name}</dd>
-          </div>
-          <div className="date">
-            <dt>{t ('event.date')}</dt>
-            <dd><time dateTime={event.date}>{event.date}</time></dd>
-          </div>
-          <div className="rule">
-            <dt>{t ('event.rule')}</dt>
-            <dd>{ruleName ()}</dd>
-          </div>
-          <div className="users">
-            <dt>{t ('event.users')}</dt>
-            <dd>{users (event)}</dd>
-          </div>
-        </dl>;
+        const items: DetailsItem[] = [
+          {
+            id: 'name',
+            title: t ('event.name'),
+            value: event.name
+          },
+          {
+            id: 'date',
+            title: t ('event.date'),
+            value: <time dateTime={event.date}>{event.date}</time>
+          },
+          {
+            id: 'rule',
+            title: t ('event.rule'),
+            value: ruleName ()
+          },
+          {
+            id: 'users',
+            title: t ('event.users'),
+            value: users (event)
+          }
+        ];
+        return <Details items={items}/>;
       case HttpStatus.Failure:
         return t ('event.loading-failed');
     }
   }
 
-  function actions () {
-    const actions: any[] = [];
-    actions.push (<button onClick={props.fetch} key="reload">{
-      t ('actions.reload')
-    }</button>);
-
-    if (props.prefect && props.status === HttpStatus.Success) {
-      actions.push (<button onClick={props.edit} key="edit">{
-        t ('actions.edit')
-      }</button>);
-    }
-
-    return <div className="actions">{actions}</div>;
+  let edit = undefined;
+  if (props.prefect && props.status === HttpStatus.Success) {
+    edit = props.edit;
   }
 
   function popup () {
@@ -129,9 +128,11 @@ export const EventDetails = (props: EventDetailsProps) => {
     return '';
   }
 
-  return <div className="event-details">
+  return <Container className="event-details">
+    <AppBar title={props.event?.name || ('loading')}/>
+    <div id="top"/>
     {details ()}
-    {actions ()}
+    <ActionBar reload={props.fetch} edit={edit}/>
     {popup ()}
-  </div>;
+  </Container>;
 };
