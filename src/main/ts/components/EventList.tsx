@@ -1,10 +1,21 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
+import {
+  Container,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow
+} from '@material-ui/core';
+import { ActionBar } from './ActionBar';
 import { useTranslation } from 'react-i18next';
 import { Event, NewEvent } from '../state/event';
 import { HttpStatus } from '../state/status';
 import { Loader } from './Loader';
 import { EventEditContainer } from '../containers/event-edit';
-import { Link } from 'react-router-dom';
+import { AppBar } from './AppBar';
 
 export interface EventListStateProps {
   prefect: boolean;
@@ -34,36 +45,32 @@ export const EventList = (props: EventListProps) => {
         if (props.events.length === 0) {
           return <div>{t ('events.none')}</div>;
         }
-        return <table>
-          <thead>
-            <th>{t ('event.name')}</th>
-            <th>{t ('event.date')}</th>
-          </thead>
-          <tbody>
-            {props.events.map(event => <tr><Link to={`/events/${event.id}`}>
-              <td>{event.name}</td>
-              <td>{event.date}</td>
-            </Link></tr>)}
-          </tbody>
-        </table>;
+        return <TableContainer><Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>{t ('event.name')}</TableCell>
+              <TableCell>{t ('event.date')}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {props.events.map (event =>
+                <TableRow key={event.id}>
+                  <Link to={`/events/${event.id}`}>
+                    <TableCell>{event.name}</TableCell>
+                    <TableCell>{event.date}</TableCell>
+                  </Link>
+                </TableRow>
+            )}
+          </TableBody>
+        </Table></TableContainer>;
       case HttpStatus.Failure:
         return <div>{t ('events.loading-failed')}</div>
     }
   }
 
-  function actions () {
-    const actions: JSX.Element[] = [];
-    actions.push (<button onClick={props.fetch} key="reload">{
-      t ('actions.reload')
-    }</button>);
-
-    if (props.prefect && props.status === HttpStatus.Success) {
-      actions.push (<button onClick={props.startCreate} key="create">{
-        t ('actions.add')
-      }</button>);
-    }
-
-    return <div className="actions">{actions}</div>;
+  let add = undefined;
+  if (props.prefect && props.status === HttpStatus.Success) {
+    add = props.startCreate;
   }
 
   function popup () {
@@ -73,9 +80,11 @@ export const EventList = (props: EventListProps) => {
     return <div/>;
   }
 
-  return <div className="rule-list">
+  return <Container className="rule-list">
+    <AppBar title={t ('events.title')}/>
+    <div id="top"/>
     {list ()}
-    {actions ()}
+    <ActionBar reload={props.fetch} add={add}/>
     {popup ()}
-  </div>;
+  </Container>;
 };

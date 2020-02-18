@@ -47,7 +47,8 @@
   },
   "events": {
     "none": "Pas (encore) d’évènements.",
-    "loading-failed": "Désolé, le chargement des évènements a échoué."
+    "loading-failed": "Désolé, le chargement des évènements a échoué.",
+    "title": "Évènements"
   },
   "hello": "Bonjour de la part de {{compiler}} et {{framework}}!",
   "home": {
@@ -86,5 +87,6 @@
     "emails": "Adresses emails",
     "loading-failed": "Désolé, le chargement de cet utiliseur a échoué.",
     "points": "Points"
-  }
+  },
+  "loading": ""
 }
