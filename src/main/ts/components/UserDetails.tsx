@@ -8,6 +8,7 @@ import { Team } from '../state/team';
 import { Container, List, ListItem, Typography } from '@material-ui/core';
 import { AppBar } from './AppBar';
 import { ActionBar } from './ActionBar';
+import { Details, DetailsItem } from './Details';
 
 export interface UserDetailsStateProps {
   prefect: boolean;
@@ -63,14 +64,24 @@ export const UserDetails = (props: UserDetailsProps) => {
         if (props.teamStatus === HttpStatus.None && props.user!.teamId) {
           props.fetchTeam (props.user!.teamId);
         }
-        return <div>
-          <Typography variant="h6">{t ("user.name")}</Typography>
-          <Typography variant="body1">{props.user!.name}</Typography>
-          <Typography variant="h6">{t ('user.team')}</Typography>
-          <Typography variant="body1">{teamName ()}</Typography>
-          <Typography variant="h6">{t ("user.emails")}</Typography>
-          {emailList (props.user!.emails)}
-        </div>;
+        const items: DetailsItem[] = [
+          {
+            id: 'name',
+            title: t ('user.name'),
+            value: props.user!.name
+          },
+          {
+            id: 'tema',
+            title: t ('user.team'),
+            value: teamName ()
+          },
+          {
+            id: 'emails',
+            title: t ('user.emails'),
+            value: emailList (props.user!.emails)
+          }
+        ];
+        return <Details items={items}/>;
       case HttpStatus.Failure:
         return <div>{t ("user.loading-failed")}</div>
     }
