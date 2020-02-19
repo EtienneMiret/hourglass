@@ -8,6 +8,7 @@ import io.miret.etienne.hourglass.data.mongo.UserAction;
 import io.miret.etienne.hourglass.data.mongo.UserCreation;
 import io.miret.etienne.hourglass.data.mongo.UserEdition;
 import io.miret.etienne.hourglass.data.rest.Form;
+import io.miret.etienne.hourglass.repositories.TeamActionRepository;
 import io.miret.etienne.hourglass.repositories.UserActionRepository;
 import io.miret.etienne.hourglass.services.ActionComposer;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,7 @@ import java.util.UUID;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
@@ -39,6 +41,8 @@ public class Users {
   private final Clock clock;
 
   private final UserActionRepository repository;
+
+  private final TeamActionRepository teamActionRepository;
 
   private final ActionComposer composer;
 
@@ -73,6 +77,8 @@ public class Users {
       @RequestBody Form<User> form,
       @AuthenticationPrincipal AuthenticatedUser user
   ) {
+    validateCreation (form);
+
     BaseAction ba = new BaseAction (clock, form.getComment (), user);
     UserCreation creation = new UserCreation (ba, form.getObject ());
     repository.save (creation);
@@ -90,6 +96,8 @@ public class Users {
       throw new ResponseStatusException (NOT_FOUND);
     }
 
+    validateUpdate (form);
+
     BaseAction ba = new BaseAction (clock, form.getComment (), user);
     UserEdition edition = new UserEdition (ba, form.getObject ().withId (id));
     repository.save (edition);
@@ -103,6 +111,47 @@ public class Users {
       throw new ResponseStatusException (NOT_FOUND);
     }
     return composer.compose (actions);
+  }
+
+  private void validateCreation (Form<User> form) {
+    if (form == null || form.getObject () == null) {
+      throw new ResponseStatusException (BAD_REQUEST, "Nothing to create.");
+    }
+
+    var user = form.getObject ();
+
+    if (user.getName () == null
+        || user.getName ().isBlank ()
+        || user.getEmails () == null
+        || user.getTeamId () == null) {
+      throw new ResponseStatusException (BAD_REQUEST, "Missing mandatory field.");
+    }
+
+    var teamId = user.getTeamId ();
+    var teamActions = teamActionRepository.findByTeamId (teamId);
+    if (teamActions.isEmpty ()) {
+      throw new ResponseStatusException (BAD_REQUEST, "No such team: " + teamId);
+    }
+  }
+
+  private void validateUpdate (Form<User> form) {
+    if (form == null || form.getObject () == null) {
+      throw new ResponseStatusException (BAD_REQUEST, "No update to apply.");
+    }
+
+    var user = form.getObject ();
+
+    if (user.getTeamId () != null) {
+      var teamId = user.getTeamId ();
+      var teamActions = teamActionRepository.findByTeamId (teamId);
+      if (teamActions.isEmpty ()) {
+        throw new ResponseStatusException (BAD_REQUEST, "No such team: " + teamId);
+      }
+    }
+
+    if (user.getName () != null && user.getName ().isBlank ()) {
+      throw new ResponseStatusException (BAD_REQUEST, "Missing name.");
+    }
   }
 
 }
