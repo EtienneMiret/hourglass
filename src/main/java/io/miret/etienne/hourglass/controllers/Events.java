@@ -77,13 +77,7 @@ public class Events {
       @RequestBody Form<Event> form,
       @AuthenticationPrincipal AuthenticatedUser user
   ) {
-    UUID scaleRuleId = form.getObject ()
-        .getScaleRuleId ();
-    Set<ScaleRuleAction> ruleActions =
-        scaleRuleActionRepository.findByScaleRuleId (scaleRuleId);
-    if (ruleActions.isEmpty ()) {
-      throw new ResponseStatusException (BAD_REQUEST, "No such rule: " + scaleRuleId);
-    }
+    validateCreation (form);
 
     BaseAction ba = new BaseAction (clock, form.getComment (), user);
     EventCreation creation = new EventCreation (ba, form.getObject ());
@@ -102,15 +96,7 @@ public class Events {
       throw new ResponseStatusException (NOT_FOUND);
     }
 
-    UUID scaleRuleId = form.getObject ()
-        .getScaleRuleId ();
-    if (scaleRuleId != null) {
-      Set<ScaleRuleAction> ruleActions =
-          scaleRuleActionRepository.findByScaleRuleId (scaleRuleId);
-      if (ruleActions.isEmpty ()) {
-        throw new ResponseStatusException (BAD_REQUEST, "No such rule: " + scaleRuleId);
-      }
-    }
+    validateUpdate (form);
 
     BaseAction ba = new BaseAction (clock, form.getComment (), user);
     EventEdition edition = new EventEdition (ba, form.getObject ().withId (id));
@@ -146,6 +132,50 @@ public class Events {
     Set<ScaleRuleAction> actions = scaleRuleActionRepository.findByScaleRuleId (event.getScaleRuleId ());
     ScaleRule rule = composer.compose (actions);
     return event.withPoints (rule.getPoints ());
+  }
+
+  private void validateCreation (Form<Event> form) {
+    if (form == null || form.getObject () == null) {
+      throw new ResponseStatusException (BAD_REQUEST, "Nothing to create.");
+    }
+
+    var event = form.getObject ();
+
+    if (event.getDate () == null
+        || event.getName () == null
+        || event.getName ().isBlank ()
+        || event.getScaleRuleId () == null
+        || event.getUserIds () == null) {
+      throw new ResponseStatusException (BAD_REQUEST, "Missing mandatory field.");
+    }
+
+    var scaleRuleId = event.getScaleRuleId ();
+    var ruleActions = scaleRuleActionRepository.findByScaleRuleId (scaleRuleId);
+    if (ruleActions.isEmpty ()) {
+      throw new ResponseStatusException (BAD_REQUEST, "No such rule: " + scaleRuleId);
+    }
+  }
+
+  private void validateUpdate (Form<Event> form) {
+    if (form == null || form.getObject () == null) {
+      throw new ResponseStatusException (BAD_REQUEST, "No update to apply.");
+    }
+
+    var event = form.getObject ();
+
+    if (event.getScaleRuleId () != null) {
+      var scaleRuleId = event.getScaleRuleId ();
+      var ruleActions = scaleRuleActionRepository.findByScaleRuleId (scaleRuleId);
+      if (ruleActions.isEmpty ()) {
+        throw new ResponseStatusException (BAD_REQUEST, "No such rule: " + scaleRuleId);
+      }
+    }
+
+    if (event.getName () != null) {
+      if (event.getName ().isBlank ()) {
+        throw new ResponseStatusException (BAD_REQUEST, "Missing name.");
+      }
+    }
   }
 
 }
