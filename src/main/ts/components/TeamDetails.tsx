@@ -4,6 +4,10 @@ import { Team } from '../state/team';
 import { HttpStatus } from '../state/status';
 import { Loader } from './Loader';
 import { TeamEditContainer } from '../containers/team-edit';
+import { Container } from '@material-ui/core';
+import { AppBar } from './AppBar';
+import { ActionBar } from './ActionBar';
+import { Details, DetailsItem } from './Details';
 
 export interface TeamDetailsStateProps {
   prefect: boolean;
@@ -31,36 +35,27 @@ export const TeamDetails = (props: TeamDetailsProps) => {
         return <Loader/>;
       case HttpStatus.Success:
         const style = {color: props.team!.color};
-        return <dl>
-          <div className="name">
-            <dt>{t ('team.name')}</dt>
-            <dd>{props.team!.name}</dd>
-          </div>
-          <div className="color">
-            <dt>{t ('team.color')}</dt>
-            <dd style={style}>{props.team!.color}</dd>
-          </div>
-        </dl>;
+        const items: DetailsItem[] = [
+          {
+            id: 'name',
+            title: t ('team.name'),
+            value: props.team!.name
+          },
+          {
+            id: 'color',
+            title: t ('team.color'),
+            value: <span style={style}>{props.team!.color}</span>
+          }
+        ];
+        return <Details items={items}/>
       case HttpStatus.Failure:
         return <div>{t ('team.loading-failed')}</div>;
     }
   }
 
-  function actions () {
-    const actions: JSX.Element[] = [];
-    actions.push (<button onClick={props.fetch} key="reload">{
-      t ('actions.reload')
-    }</button>);
-
-    if (props.prefect && props.status === HttpStatus.Success) {
-      actions.push (<button onClick={props.edit} key="edit">{
-        t ('actions.edit')
-      }</button>);
-    }
-
-    return <div className="actions">
-      {actions}
-    </div>;
+  let edit;
+  if (props.prefect && props.status === HttpStatus.Success) {
+    edit = props.edit;
   }
 
   function poupup () {
@@ -71,9 +66,11 @@ export const TeamDetails = (props: TeamDetailsProps) => {
     return <div/>;
   }
 
-  return <div className="team-details">
+  return <Container className="team-details">
+    <AppBar title={props.team?.name || t ('loading')}/>
+    <div id="top"/>
     {details ()}
-    {actions ()}
+    <ActionBar reload={props.fetch} edit={edit}/>
     {poupup ()}
-  </div>;
+  </Container>;
 };
