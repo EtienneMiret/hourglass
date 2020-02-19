@@ -71,7 +71,7 @@ export const UserDetails = (props: UserDetailsProps) => {
             value: props.user!.name
           },
           {
-            id: 'tema',
+            id: 'team',
             title: t ('user.team'),
             value: teamName ()
           },
