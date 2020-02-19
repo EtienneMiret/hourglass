@@ -28,6 +28,7 @@ import java.util.UUID;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toSet;
 import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestController
@@ -57,6 +58,8 @@ public class ScaleRules {
       @RequestBody Form<ScaleRule> form,
       @AuthenticationPrincipal AuthenticatedUser user
   ) {
+    validateCreation (form);
+
     BaseAction ba = new BaseAction (clock, form.getComment (), user);
     ScaleRuleCreation creation = new ScaleRuleCreation (ba, form.getObject ());
     repository.save (creation);
@@ -74,6 +77,8 @@ public class ScaleRules {
       throw new ResponseStatusException (NOT_FOUND);
     }
 
+    validateUpdate (form);
+
     BaseAction ba = new BaseAction (clock, form.getComment (), user);
     ScaleRuleEdition edition = new ScaleRuleEdition (ba, form.getObject ().withId (id));
     repository.save (edition);
@@ -87,6 +92,33 @@ public class ScaleRules {
       throw new ResponseStatusException (NOT_FOUND);
     }
     return composer.compose (actions);
+  }
+
+  private void validateCreation (Form<ScaleRule> form) {
+    if (form == null || form.getObject () == null) {
+      throw new ResponseStatusException (BAD_REQUEST, "Nothing to create.");
+    }
+
+    var scaleRule = form.getObject ();
+    if (scaleRule.getName () == null
+        || scaleRule.getName ().isBlank ()
+        || scaleRule.getPoints () == null) {
+      throw new ResponseStatusException (BAD_REQUEST, "Missing mandatory field.");
+    }
+  }
+
+  private void validateUpdate (Form<ScaleRule> form) {
+    if (form == null || form.getObject () == null) {
+      throw new ResponseStatusException (BAD_REQUEST, "No update to apply.");
+    }
+
+    var scaleRule = form.getObject ();
+
+    if (scaleRule.getName () != null) {
+      if (scaleRule.getName ().isBlank ()) {
+        throw new ResponseStatusException (BAD_REQUEST, "Missing name.");
+      }
+    }
   }
 
 }
