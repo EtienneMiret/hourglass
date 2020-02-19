@@ -114,7 +114,7 @@ export const UserDetails = (props: UserDetailsProps) => {
   }
 
   return <Container className="user-details">
-    <AppBar title={props.user?.name || t ('loading')}/>
+    <AppBar title={t ('users.title') + ' / ' + (props.user?.name || t ('loading'))}/>
     <div id="top"/>
     {details ()}
     <ActionBar reload={props.fetchUser} edit={edit}/>

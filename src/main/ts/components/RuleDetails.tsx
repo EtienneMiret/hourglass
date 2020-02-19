@@ -66,7 +66,7 @@ export const RuleDetails = (props: RuleDetailsProps) => {
   }
 
   return <Container className="rule-details">
-    <AppBar title={props.rule?.name || t ('loading')}/>
+    <AppBar title={t ('rules.title') + ' / ' + (props.rule?.name || t ('loading'))}/>
     <div id="top"/>
     {details ()}
     <ActionBar reload={props.fetch} edit={edit}/>

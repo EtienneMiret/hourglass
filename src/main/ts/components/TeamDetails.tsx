@@ -67,7 +67,7 @@ export const TeamDetails = (props: TeamDetailsProps) => {
   }
 
   return <Container className="team-details">
-    <AppBar title={props.team?.name || t ('loading')}/>
+    <AppBar title={t ('teams.title') + ' / ' + (props.team?.name || t ('loading'))}/>
     <div id="top"/>
     {details ()}
     <ActionBar reload={props.fetch} edit={edit}/>

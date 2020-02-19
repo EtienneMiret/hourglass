@@ -129,7 +129,7 @@ export const EventDetails = (props: EventDetailsProps) => {
   }
 
   return <Container className="event-details">
-    <AppBar title={props.event?.name || ('loading')}/>
+    <AppBar title={t ('events.title') + ' / ' + props.event?.name || ('loading')}/>
     <div id="top"/>
     {details ()}
     <ActionBar reload={props.fetch} edit={edit}/>
