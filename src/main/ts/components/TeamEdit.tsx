@@ -1,5 +1,8 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { TextField } from '@material-ui/core';
+import { EditModal } from './EditModal';
 import { NewTeam, Team } from '../state/team';
 
 export interface TeamEditStateProps {
@@ -17,14 +20,10 @@ export type TeamEditProps = TeamEditStateProps & TeamEditDispatchProps;
 
 export const TeamEdit = (props: TeamEditProps) => {
   const {t} = useTranslation ();
+  const [comment, saveComment] = useState ('');
 
-  function submit (event: React.FormEvent<HTMLFormElement>) {
-    const comment = event
-        .currentTarget
-        .elements
-        .namedItem ('comment') as HTMLInputElement;
-    props.submitEdits (comment.value);
-    event.preventDefault ();
+  function submit () {
+    props.submitEdits (comment);
   }
 
   function rename (event: React.ChangeEvent<HTMLInputElement>) {
@@ -35,19 +34,24 @@ export const TeamEdit = (props: TeamEditProps) => {
     props.setColor (event.target.value);
   }
 
-  return <div className="team-edit">
-    <label className="name">
-      {t ('team.name')}
-      <input value={props.team.name} onChange={rename}/>
-    </label>
-    <label className="color">
-      {t ('team.color')}
-      <input type="color" value={props.team.color} onChange={changeColor}/>
-    </label>
-    <form onSubmit={submit}>
-      <label>{t ('edit.comment')} <input name="comment"/></label>
-      <button type="button" onClick={props.cancelEdits}>{t ('edit.cancel')}</button>
-      <button type="submit">{t ('edit.save')}</button>
-    </form>
-  </div>;
+  function updateComment (event: React.ChangeEvent<{value: string}>) {
+    saveComment (event.target.value);
+  }
+
+  function title () {
+    if ((props.team as Team).id) {
+      return t ('edit.team.update', props.team);
+    } else {
+      return t ('edit.team.create');
+    }
+  }
+
+  return <EditModal title={title ()} cancel={props.cancelEdits} save={submit}>
+    <TextField variant="outlined" label={t ('team.name')} fullWidth={true}
+        value={props.team.name} onChange={rename}/>
+    <TextField variant="outlined" label={t ('team.color')} fullWidth={true}
+        value={props.team.color} onChange={changeColor} type="color"/>
+    <TextField variant="outlined" label={t ('edit.comment')} fullWidth={true}
+        value={comment} onChange={updateComment}/>
+  </EditModal>;
 };

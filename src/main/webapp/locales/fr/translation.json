@@ -20,6 +20,10 @@
       "update": "Mettre à jour {{name}}",
       "create": "Créer une nouvelle règle"
     },
+    "team": {
+      "update": "Mettre à jour {{name}}",
+      "create": "Créer une nouvelle règle"
+    },
     "user": {
       "update": "Mettre à jour {{name}}",
       "create": "Créer un nouvel utilisateur",
@@ -78,10 +82,6 @@
     "color": "Couleur",
     "loading-failed": "Désolé, le chargement de cette équipe a échoué."
   },
-  "actions": {
-    "reload": "Recharger",
-    "edit": "Modifier"
-  },
   "teams": {
     "none": "Pas (encore) d’équipes.",
     "loading-failed": "Désolé, le chargement des équipes a échoué.",
@@ -95,5 +95,9 @@
     "emails": "Adresses emails",
     "loading-failed": "Désolé, le chargement de cet utiliseur a échoué.",
     "points": "Points"
+  },
+  "actions": {
+    "reload": "Recharger",
+    "edit": "Modifier"
   }
 }

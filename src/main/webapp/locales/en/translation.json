@@ -20,6 +20,10 @@
       "update": "Update {{name}}",
       "create": "Create New Rule"
     },
+    "team": {
+      "update": "Update {{name}}",
+      "create": "Create New Rule"
+    },
     "user": {
       "update": "Update {{name}}",
       "create": "Create New User",
@@ -78,10 +82,6 @@
     "color": "Color",
     "loading-failed": "Sorry, team loading failed."
   },
-  "actions": {
-    "reload": "Reload",
-    "edit": "Edit"
-  },
   "teams": {
     "none": "No team (yet).",
     "loading-failed": "Sorry, team loading failed.",
@@ -95,5 +95,9 @@
     "emails": "Email addresses",
     "loading-failed": "Sorry, user loading failed.",
     "points": "Points"
+  },
+  "actions": {
+    "reload": "Reload",
+    "edit": "Edit"
   }
 }
