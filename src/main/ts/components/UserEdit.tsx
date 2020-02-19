@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { useState } from 'react';
 import {
-  Button, Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControl, IconButton, InputAdornment,
-  InputLabel, List, ListItem, ListItemSecondaryAction, ListItemText,
-  MenuItem, OutlinedInput,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  MenuItem,
+  OutlinedInput,
   Select,
   TextField
 } from '@material-ui/core';
@@ -19,6 +21,7 @@ import { useTranslation } from 'react-i18next';
 import { Team } from '../state/team';
 import { HttpStatus } from '../state/status';
 import { Loader } from './Loader';
+import { EditModal } from './EditModal';
 
 export interface UserEditStateProps {
   user: User | NewUser;
@@ -113,36 +116,29 @@ export const UserEdit = (props: UserEditProps) => {
     return <List>{items}</List>;
   }
 
-  return <Dialog open={true} onClose={props.cancelEdits} className="edit-modal">
-    <DialogTitle>{title ()}</DialogTitle>
-    <DialogContent>
-      <TextField variant="outlined" label={t ('user.name')} fullWidth={true}
-          inputProps={{value: props.user.name, onChange: rename}}/>
-      <FormControl fullWidth={true}>
-        <InputLabel id="team-label">{t ('user.team')}</InputLabel>
-        {teamSelect ()}
-      </FormControl>
-      {emailEditList ()}
-      <FormControl variant="outlined" fullWidth={true}>
-        <InputLabel htmlFor="new-email">{t ('edit.user.new-email')}</InputLabel>
-        <OutlinedInput id="new-email"
-            value={newEmail}
-            onChange={updateNewEmail}
-            type="email" endAdornment={
-              <InputAdornment position="end">
-                <IconButton edge="end" onClick={addEmail}>
-                  <Add/>
-                </IconButton>
-              </InputAdornment>
-            }
-        />
-      </FormControl>
-      <TextField variant="outlined" label={t ('edit.comment')} fullWidth={true}
-          inputProps={{value: comment, onChange: updateComment}}/>
-    </DialogContent>
-    <DialogActions>
-      <Button onClick={props.cancelEdits}>{t ('edit.cancel')}</Button>
-      <Button onClick={submit}>{t ('edit.save')}</Button>
-    </DialogActions>
-  </Dialog>;
+  return <EditModal title={title ()} cancel={props.cancelEdits} save={submit}>
+    <TextField variant="outlined" label={t ('user.name')} fullWidth={true}
+        inputProps={{value: props.user.name, onChange: rename}}/>
+    <FormControl fullWidth={true}>
+      <InputLabel id="team-label">{t ('user.team')}</InputLabel>
+      {teamSelect ()}
+    </FormControl>
+    {emailEditList ()}
+    <FormControl variant="outlined" fullWidth={true}>
+      <InputLabel htmlFor="new-email">{t ('edit.user.new-email')}</InputLabel>
+      <OutlinedInput id="new-email"
+          value={newEmail}
+          onChange={updateNewEmail}
+          type="email" endAdornment={
+        <InputAdornment position="end">
+          <IconButton edge="end" onClick={addEmail}>
+            <Add/>
+          </IconButton>
+        </InputAdornment>
+      }
+      />
+    </FormControl>
+    <TextField variant="outlined" label={t ('edit.comment')} fullWidth={true}
+        inputProps={{value: comment, onChange: updateComment}}/>
+  </EditModal>;
 };
