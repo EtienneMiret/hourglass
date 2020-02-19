@@ -7,4 +7,6 @@ public class AppConfiguration {
 
   private SecurityConfiguration security;
 
+  private String mongo;
+
 }

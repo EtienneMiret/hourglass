@@ -1,8 +1,11 @@
 package io.miret.etienne.hourglass.config;
 
+import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import io.miret.etienne.hourglass.data.config.AppConfiguration;
+import lombok.AllArgsConstructor;
 import org.bson.codecs.UuidCodec;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +20,11 @@ import java.util.Set;
 import static org.bson.UuidRepresentation.STANDARD;
 
 @Configuration
+@AllArgsConstructor
 @EnableMongoRepositories ("io.miret.etienne.hourglass.repositories")
 public class Mongo extends AbstractMongoClientConfiguration {
+
+  private final AppConfiguration configuration;
 
   @Bean
   @Nonnull
@@ -29,6 +35,7 @@ public class Mongo extends AbstractMongoClientConfiguration {
             CodecRegistries.fromCodecs (new UuidCodec (STANDARD)),
             MongoClientSettings.getDefaultCodecRegistry ()
         ))
+        .applyConnectionString (new ConnectionString (configuration.getMongo ()))
         .build ();
     return MongoClients.create (settings);
   }
