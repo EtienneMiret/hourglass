@@ -5,6 +5,9 @@ import { HttpStatus } from '../state/status';
 import { Loader } from './Loader';
 import { TeamEditContainer } from '../containers/team-edit';
 import { Link } from 'react-router-dom';
+import { Container, List, ListItem, Typography } from '@material-ui/core';
+import { AppBar } from './AppBar';
+import { ActionBar } from './ActionBar';
 
 export interface TeamListStateProps {
   prefect: boolean;
@@ -32,26 +35,18 @@ export const TeamList = (props: TeamListProps) => {
         return <Loader/>;
       case HttpStatus.Success:
         if (props.teams.length === 0) {
-          return <div>{t ('teams.none')}</div>;
+          return <Typography variant="body1">{t ('teams.none')}</Typography>;
         }
-        return <ol>{props.teams.map (team =>
-            <li key={team.id}><Link to={`/teams/${team.id}`}>{team.name}</Link></li>)}</ol>
+        return <List>{props.teams.map (team =>
+            <ListItem key={team.id}><Link to={`/teams/${team.id}`}>{team.name}</Link></ListItem>)}</List>
       case HttpStatus.Failure:
         return <div>{t ('teams.loading-failed')}</div>;
     }
   }
 
-  function actions () {
-    const actions: JSX.Element[] = [];
-    actions.push (<button onClick={props.fetchTeams} key="reload">{t ('actions.reload')}</button>);
-
-    if (props.prefect && props.status === HttpStatus.Success) {
-      actions.push (<button onClick={props.startCreate} key="create">{t ('actions.add')}</button>);
-    }
-
-    return <div className="actions">
-      {actions}
-    </div>;
+  let add;
+  if (props.prefect && props.status === HttpStatus.Success) {
+    add = props.startCreate;
   }
 
   function popup () {
@@ -62,9 +57,11 @@ export const TeamList = (props: TeamListProps) => {
     return <div/>;
   }
 
-  return <div className="user-list">
+  return <Container className="user-list">
+    <AppBar title={t ('teams.title')}/>
+    <div id="top"/>
     {list ()}
-    {actions ()}
+    <ActionBar reload={props.fetchTeams} add={add}/>
     {popup ()}
-  </div>;
+  </Container>;
 };

@@ -80,12 +80,12 @@
   },
   "actions": {
     "reload": "Reload",
-    "edit": "Edit",
-    "add": "Add"
+    "edit": "Edit"
   },
   "teams": {
     "none": "No team (yet).",
-    "loading-failed": "Sorry, team loading failed."
+    "loading-failed": "Sorry, team loading failed.",
+    "title": "Teams"
   },
   "user": {
     "no-emails": "This user has no known email.",

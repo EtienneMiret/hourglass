@@ -80,12 +80,12 @@
   },
   "actions": {
     "reload": "Recharger",
-    "edit": "Modifier",
-    "add": "Ajouter"
+    "edit": "Modifier"
   },
   "teams": {
     "none": "Pas (encore) d’équipes.",
-    "loading-failed": "Désolé, le chargement des équipes a échoué."
+    "loading-failed": "Désolé, le chargement des équipes a échoué.",
+    "title": "Équipes"
   },
   "user": {
     "no-emails": "Cet utilisateur n’a pas d’email connu.",
