@@ -62,13 +62,8 @@ public class Teams {
       @RequestBody Form<Team> form,
       @AuthenticationPrincipal AuthenticatedUser user
   ) {
-    var team = form.getObject ();
-    if (team.getColor () == null) {
-      throw new ResponseStatusException (BAD_REQUEST, "Missing color.");
-    }
-    if (!COLOR_PATTERN.matcher (team.getColor ()).matches ()) {
-      throw new ResponseStatusException (BAD_REQUEST, "Invalid color.");
-    }
+    validateCreation (form);
+
     var ba = new BaseAction (clock, form.getComment (), user);
     var creation = new TeamCreation (ba, form.getObject ());
     repository.save (creation);
@@ -86,10 +81,7 @@ public class Teams {
       throw new ResponseStatusException (NOT_FOUND);
     }
 
-    var team = form.getObject ();
-    if (team.getColor () != null && !COLOR_PATTERN.matcher (team.getColor ()).matches ()) {
-      throw new ResponseStatusException (BAD_REQUEST, "Invalid color.");
-    }
+    validateUpdate (form);
 
     var ba = new BaseAction (clock, form.getComment (), user);
     var edition = new TeamEdition (ba, form.getObject ().withId (id));
@@ -104,6 +96,40 @@ public class Teams {
       throw new ResponseStatusException (NOT_FOUND);
     }
     return composer.compose (actions);
+  }
+
+  private void validateCreation (Form<Team> form) {
+    if (form == null || form.getObject () == null) {
+      throw new ResponseStatusException (BAD_REQUEST, "Nothing to create.");
+    }
+
+    var team = form.getObject ();
+
+    if (team.getColor () == null
+        || team.getName () == null
+        || team.getName ().isBlank ()) {
+      throw new ResponseStatusException (BAD_REQUEST, "Missing mandatory field.");
+    }
+
+    if (!COLOR_PATTERN.matcher (team.getColor ()).matches ()) {
+      throw new ResponseStatusException (BAD_REQUEST, "Invalid color.");
+    }
+  }
+
+  private void validateUpdate (Form<Team> form) {
+    if (form == null || form.getObject () == null) {
+      throw new ResponseStatusException (BAD_REQUEST, "No update to apply.");
+    }
+
+    var team = form.getObject ();
+
+    if (team.getColor () != null && !COLOR_PATTERN.matcher (team.getColor ()).matches ()) {
+      throw new ResponseStatusException (BAD_REQUEST, "Invalid color.");
+    }
+
+    if (team.getName () != null && team.getName ().isBlank ()) {
+      throw new ResponseStatusException (BAD_REQUEST, "Missing name.");
+    }
   }
 
 }
