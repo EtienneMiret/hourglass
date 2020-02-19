@@ -35,7 +35,8 @@
   },
   "rules": {
     "none": "No rule (yet).",
-    "loading-failed": "Sorry, rule loading failed."
+    "loading-failed": "Sorry, rule loading failed.",
+    "title": "Scale"
   },
   "users": {
     "loading-failed": "Sorry, user loading failed.",

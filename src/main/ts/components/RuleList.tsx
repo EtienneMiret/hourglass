@@ -1,10 +1,21 @@
 import * as React from 'react';
+import {
+  Container,
+  Table,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography
+} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { NewRule, Rule } from '../state/rule';
 import { HttpStatus } from '../state/status';
 import { useTranslation } from 'react-i18next';
 import { Loader } from './Loader';
 import { RuleEditContainer } from '../containers/rule-edit';
+import { AppBar } from './AppBar';
+import { ActionBar } from './ActionBar';
 
 export interface RuleListStateProps {
   prefect: boolean;
@@ -32,31 +43,32 @@ export const RuleList = (props: RuleListProps) => {
         return <Loader/>;
       case HttpStatus.Success:
         if (props.rules.length === 0) {
-          return <div>{t ('rules.none')}</div>;
+          return <Typography variant="body1">{t ('rules.none')}</Typography>;
         }
-        return <ol>{props.rules.map (rule =>
-            <li key={rule.id}><Link to={`/rules/${rule.id}`}>{rule.name}</Link></li>)
-        }</ol>;
+        return <TableContainer><Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>{t ('rule.name')}</TableCell>
+              <TableCell>{t ('rule.points')}</TableCell>
+            </TableRow>
+          </TableHead>
+          {props.rules.map (rule =>
+              <TableRow key={rule.id}>
+                <Link to={`/rules/${rule.id}`}>
+                  <TableCell>{rule.name}</TableCell>
+                  <TableCell>{rule.points}</TableCell>
+                </Link>
+              </TableRow>
+          )}
+        </Table></TableContainer>;
       case HttpStatus.Failure:
         return <div>{t ('rules.loading-failed')}</div>;
     }
   }
 
-  function actions () {
-    const actions: JSX.Element[] = [];
-    actions.push (<button onClick={props.fetch} key="reload">{
-      t ('actions.reload')
-    }</button>);
-
-    if (props.prefect && props.status === HttpStatus.Success) {
-      actions.push (<button onClick={props.startCreate} key="create">{
-        t ('actions.add')
-      }</button>);
-    }
-
-    return <div className="actions">
-      {actions}
-    </div>;
+  let add = undefined;
+  if (props.prefect && props.status === HttpStatus.Success) {
+    add = props.startCreate;
   }
 
   function popup () {
@@ -66,9 +78,11 @@ export const RuleList = (props: RuleListProps) => {
     return <div/>
   }
 
-  return <div className="rule-list">
+  return <Container className="rule-list">
+    <AppBar title={t ('rules.title')}/>
+    <div id="top"/>
     {list ()}
-    {actions ()}
+    <ActionBar reload={props.fetch} add={add}/>
     {popup ()}
-  </div>;
+  </Container>;
 };
