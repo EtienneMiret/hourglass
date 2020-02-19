@@ -4,6 +4,10 @@ import { HttpStatus } from '../state/status';
 import { useTranslation } from 'react-i18next';
 import { Loader } from './Loader';
 import { RuleEditContainer } from '../containers/rule-edit';
+import { Container } from '@material-ui/core';
+import { AppBar } from './AppBar';
+import { ActionBar } from './ActionBar';
+import { Details, DetailsItem } from './Details';
 
 export interface RuleDetailsStateProps {
   prefect: boolean;
@@ -30,34 +34,27 @@ export const RuleDetails = (props: RuleDetailsProps) => {
       case HttpStatus.Progressing:
         return <Loader/>;
       case HttpStatus.Success:
-        return <dl>
-          <div className="name">
-            <dt>{t ('rule.name')}</dt>
-            <dd>{props.rule!.name}</dd>
-          </div>
-          <div className="points">
-            <dt>{t ('rule.points')}</dt>
-            <dd>{props.rule!.points}</dd>
-          </div>
-        </dl>;
+        const items: DetailsItem[] = [
+          {
+            id: 'name',
+            title: t ('rule.name'),
+            value: props.rule!.name
+          },
+          {
+            id: 'points',
+            title: t ('rule.points'),
+            value: props.rule!.points.toString ()
+          }
+        ];
+        return <Details items={items}/>;
       case HttpStatus.Failure:
         return <div>{t ('rule.loading-failed')}</div>;
     }
   }
 
-  function actions () {
-    const actions: JSX.Element[] = [];
-    actions.push (<button onClick={props.fetch} key="reload">{
-      t ('actions.reload')
-    }</button>);
-
-    if (props.prefect && props.status === HttpStatus.Success) {
-      actions.push (<button onClick={props.edit} key="edit">{
-        t ('actions.edit')
-      }</button>);
-    }
-
-    return <div className="actions">{actions}</div>;
+  let edit;
+  if (props.prefect && props.status === HttpStatus.Success) {
+    edit = props.edit;
   }
 
   function popup () {
@@ -68,9 +65,11 @@ export const RuleDetails = (props: RuleDetailsProps) => {
     return <div/>;
   }
 
-  return <div className="rule-details">
+  return <Container className="rule-details">
+    <AppBar title={props.rule?.name || t ('loading')}/>
+    <div id="top"/>
     {details ()}
-    {actions ()}
+    <ActionBar reload={props.fetch} edit={edit}/>
     {popup ()}
-  </div>;
+  </Container>;
 };
