@@ -179,6 +179,7 @@ export const EventEdit = (props: EventEditProps) => {
         fullWidth={true} value={props.event.name} onChange={rename}/>
     <FormControl variant="outlined" fullWidth={true}>
       <KeyboardDatePicker value={date ()} onChange={changeDate} fullWidth={true}
+          disableToolbar
           variant="inline" format="YYYY-MM-DD" label={t ('event.date')}/>
     </FormControl>
     <FormControl variant="outlined" fullWidth={true}>
