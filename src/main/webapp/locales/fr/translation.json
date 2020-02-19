@@ -6,6 +6,23 @@
     "events": "Évènements",
     "rules": "Barème"
   },
+  "edit": {
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "event": {
+      "update": "Mettre à jour {{name}}",
+      "create": "Créer un nouvel évènement",
+      "select-rule": "Veuillez sélectionner une règle.",
+      "filter": "Filtrer la liste des utilisateurs disponibles."
+    },
+    "comment": "Commentaire :",
+    "user": {
+      "update": "Mettre à jour {{name}}",
+      "create": "Créer un nouvel utilisateur",
+      "select-team": "Veuillez sélectionner une équipe.",
+      "new-email": "Ajouter une addresse email :"
+    }
+  },
   "event": {
     "rule-loading-failed": "Le chargement de la règle de cet évènement a échoué.",
     "no-users": "Aucun utilisateur pour cet évènement.",
@@ -16,29 +33,9 @@
     "users": "Utilisateurs",
     "loading-failed": "Désolé, le chargement de cet évènement a échoué."
   },
-  "actions": {
-    "reload": "Recharger",
-    "edit": "Modifier",
-    "add": "Ajouter"
-  },
   "rules": {
     "none": "Pas (encore) de règles.",
     "loading-failed": "Désolé, le chargement des règles a échoué."
-  },
-  "edit": {
-    "event": {
-      "select-rule": "Veuillez sélectionner une règle.",
-      "filter": "Filtrer la liste des utilisateurs disponibles."
-    },
-    "comment": "Commentaire :",
-    "cancel": "Annuler",
-    "save": "Enregistrer",
-    "user": {
-      "update": "Mettre à jour {{name}}",
-      "create": "Créer un nouvel utilisateur",
-      "select-team": "Veuillez sélectionner une équipe.",
-      "new-email": "Ajouter une addresse email :"
-    }
   },
   "users": {
     "loading-failed": "Désolé, le chargement des utilisateurs a échoué.",
@@ -69,6 +66,11 @@
     "name": "Nom",
     "points": "Nombre de points",
     "loading-failed": "Désolé, le chargement de cette règle a échoué."
+  },
+  "actions": {
+    "reload": "Recharger",
+    "edit": "Modifier",
+    "add": "Ajouter"
   },
   "team": {
     "name": "Nom",

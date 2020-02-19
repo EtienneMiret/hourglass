@@ -1,11 +1,28 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import {
+  FormControl, IconButton,
+  InputLabel,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  MenuItem,
+  Select,
+  TextField, Typography
+} from '@material-ui/core';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { Event, NewEvent } from '../state/event';
 import { Rule } from '../state/rule';
 import { HttpStatus } from '../state/status';
 import { Loader } from './Loader';
 import { User } from '../state/user';
+import { EditModal } from './EditModal';
+import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
+import moment = require('moment');
 
 export interface EventEditStateProps {
   event: Event | NewEvent;
@@ -31,31 +48,47 @@ export type EventEditProps = EventEditStateProps & EventEditDispatchProps;
 
 export const EventEdit = (props: EventEditProps) => {
   const {t} = useTranslation ();
+  const [comment, saveComment] = useState ('');
   const [userFilter, setUserFilter] = useState ('');
 
-  function submit (event: React.FormEvent<HTMLFormElement>) {
-    const comment = event
-        .currentTarget
-        .elements
-        .namedItem ('comment') as HTMLInputElement;
-    props.submitEdits (comment.value);
-    event.preventDefault ();
+  function submit () {
+    props.submitEdits (comment);
   }
 
   function rename (event: React.ChangeEvent<HTMLInputElement>) {
     props.setName (event.target.value);
   }
 
-  function changeDate (event: React.ChangeEvent<HTMLInputElement>) {
-    props.setDate (event.target.value);
+  function changeDate (date: MaterialUiPickersDate) {
+    props.setDate (date?.format ('YYYY-MM-DD') || '');
   }
 
-  function changeRule (event: React.ChangeEvent<HTMLSelectElement>) {
-    props.setRule (event.target.value);
+  function changeRule (event: React.ChangeEvent<{value: unknown}>) {
+    props.setRule (event.target.value as string);
+  }
+
+  function updateComment (event: React.ChangeEvent<{value: unknown}>) {
+    saveComment (event.target.value as string);
   }
 
   function filter (event: React.ChangeEvent<HTMLInputElement>) {
     setUserFilter (event.target.value.toLocaleLowerCase ());
+  }
+
+  function title () {
+    if ((props.event as Event).id) {
+      return t ('edit.event.update', props.event);
+    } else {
+      return t ('edit.event.create');
+    }
+  }
+
+  function date () {
+    if (props.event.date) {
+      return moment (props.event.date);
+    } else {
+      return moment ();
+    }
   }
 
   function ruleSelect () {
@@ -69,11 +102,15 @@ export const EventEdit = (props: EventEditProps) => {
         if (props.rules.length === 0) {
           return <div>{t ('rules.none')}</div>;
         }
-        return <select value={props.event.scaleRuleId} onChange={changeRule}>
-          <option value="">{t ('edit.event.select-rule')}</option>
-          {props.rules.map (rule => <option
-              value={rule.id}>{rule.name}</option>)}
-        </select>;
+        return <Select
+            variant="outlined"
+            labelId="team-label"
+            value={props.event.scaleRuleId}
+            onChange={changeRule}>
+          <MenuItem value="" disabled>{t ('edit.event.select-rule')}</MenuItem>
+          {props.rules.map (rule =>
+              <MenuItem value={rule.id} key={rule.id}>{rule.name}</MenuItem>)}
+        </Select>;
       case HttpStatus.Failure:
         return <div>{t ('rules.loading-failed')}</div>
     }
@@ -88,17 +125,21 @@ export const EventEdit = (props: EventEditProps) => {
         return <Loader/>;
       case HttpStatus.Success:
         if (props.event.userIds.length === 0) {
-          return <div>{t ('event.no-users')}</div>;
+          return <Typography variant="body1">{t ('event.no-users')}</Typography>;
         }
-        return <ol className="event-users">
+        return <List className="event-users">
           {props.users
               .filter (user => props.event.userIds.includes (user.id))
-              .map (user => <li key={user.id}>
-                {user.name}
-                <button onClick={() => props.removeUser (user.id)}>X</button>
-              </li>)
+              .map (user => <ListItem key={user.id}>
+                <ListItemText primary={user.name}/>
+                <ListItemSecondaryAction onClick={() => props.removeUser (user.id)}>
+                  <IconButton edge="end">
+                    <DeleteIcon/>
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>)
           }
-        </ol>;
+        </List>;
       case HttpStatus.Failure:
         return <div>{t ('users.loading-failed')}</div>
     }
@@ -116,43 +157,40 @@ export const EventEdit = (props: EventEditProps) => {
         .slice (0, 10);
 
     return <div className="add">
-      <input
-          placeholder={t ('edit.event.filter')}
+      <TextField label={t ('edit.event.filter')}
+          fullWidth={true}
           value={userFilter}
           onChange={filter}/>
-      <ol>
-        {users.map(user => <li key={user.id}>
-          {user.name}
-          <button onClick={() => props.addUser (user.id)}>+</button>
-        </li>)}
-      </ol>
+      <List>
+        {users.map (user => <ListItem key={user.id}>
+          <ListItemText primary={user.name}/>
+          <ListItemSecondaryAction onClick={() => props.addUser (user.id)}>
+            <IconButton edge="end">
+              <AddIcon/>
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>)}
+      </List>
     </div>;
   }
 
-  return <div className="event-edit">
-    <label className="name">
-      {t ('event.name')}
-      <input value={props.event.name} onChange={rename}/>
-    </label>
-    <label className="date">
-      {t ('event.date')}
-      <input type="date" value={props.event.date} onChange={changeDate}/>
-    </label>
-    <label className="rule">
-      {t ('event.rule')}
+  return <EditModal title={title ()} cancel={props.cancelEdits} save={submit}>
+    <TextField variant="outlined" label={t ('event.name')}
+        fullWidth={true} value={props.event.name} onChange={rename}/>
+    <FormControl variant="outlined" fullWidth={true}>
+      <KeyboardDatePicker value={date ()} onChange={changeDate} fullWidth={true}
+          variant="inline" format="YYYY-MM-DD" label={t ('event.date')}/>
+    </FormControl>
+    <FormControl variant="outlined" fullWidth={true}>
+      <InputLabel id="rule-label">{t ('event.rule')}</InputLabel>
       {ruleSelect ()}
-    </label>
-    <label className="users">
-      {t ('event.users')}
+    </FormControl>
+    <FormControl variant="outlined" fullWidth={true}>
+      <Typography variant="caption">{t ('event.users')}</Typography>
       {eventUsers ()}
       {availableUsers ()}
-    </label>
-    <form onSubmit={submit}>
-      <label>{t ('edit.comment')} <input name="comment"/></label>
-      <button type="button" onClick={props.cancelEdits}>{
-        t ('edit.cancel')
-      }</button>
-      <button type="submit">{t ('edit.save')}</button>
-    </form>
-  </div>;
+    </FormControl>
+    <TextField variant="outlined" label={t ('edit.comment')} fullWidth={true}
+        value={comment} onChange={updateComment}/>
+  </EditModal>;
 };

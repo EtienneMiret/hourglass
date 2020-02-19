@@ -6,6 +6,23 @@
     "events": "Events",
     "rules": "Rules"
   },
+  "edit": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "event": {
+      "update": "Update {{name}}",
+      "create": "Create New Event",
+      "select-rule": "Please select a rule.",
+      "filter": "Filter available users."
+    },
+    "comment": "Comment:",
+    "user": {
+      "update": "Update {{name}}",
+      "create": "Create New User",
+      "select-team": "Please select a team.",
+      "new-email": "Add email address:"
+    }
+  },
   "event": {
     "rule-loading-failed": "Loading this event’s rule failed.",
     "no-users": "No user for this event.",
@@ -16,29 +33,9 @@
     "users": "Users",
     "loading-failed": "Sorry, event loading failed."
   },
-  "actions": {
-    "reload": "Reload",
-    "edit": "Edit",
-    "add": "Add"
-  },
   "rules": {
     "none": "No rule (yet).",
     "loading-failed": "Sorry, rule loading failed."
-  },
-  "edit": {
-    "event": {
-      "select-rule": "Please select a rule.",
-      "filter": "Filter available users."
-    },
-    "comment": "Comment:",
-    "cancel": "Cancel",
-    "save": "Save",
-    "user": {
-      "update": "Update {{name}}",
-      "create": "Create New User",
-      "select-team": "Please select a team.",
-      "new-email": "Add email address:"
-    }
   },
   "users": {
     "loading-failed": "Sorry, user loading failed.",
@@ -69,6 +66,11 @@
     "name": "Name",
     "points": "Number of points",
     "loading-failed": "Sorry, rule loading failed."
+  },
+  "actions": {
+    "reload": "Reload",
+    "edit": "Edit",
+    "add": "Add"
   },
   "team": {
     "name": "Name",

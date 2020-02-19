@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import * as React from 'react';
 import { Suspense } from 'react';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 import { GlobalState } from '../state';
 import { AnyAction, Store } from 'redux';
 import { UserListContainer } from '../containers/user-list';
@@ -17,6 +19,7 @@ import { HomeContainer } from '../containers/home';
 
 export const App = ({store}: {store: Store<GlobalState, AnyAction>}) => (
     <Provider store={store}>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
       <Suspense fallback={<Loader/>}>
         <Router>
           <Switch>
@@ -34,5 +37,6 @@ export const App = ({store}: {store: Store<GlobalState, AnyAction>}) => (
           </Switch>
         </Router>
       </Suspense>
+      </MuiPickersUtilsProvider>
     </Provider>
 );
