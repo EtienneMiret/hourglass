@@ -60,7 +60,12 @@ function mapStateToProps (state: GlobalState): HomeStateProps {
       }
     });
   });
-  const teams = Array.from (teamMap.values ());
+  const teamSet = new Set<Team> ();
+  Object.values (state.users.list)
+      .map (c => c.user)
+      .filter (user => teamMap.has (user.teamId))
+      .forEach (user => teamSet.add (teamMap.get (user.teamId)!));
+  const teams: Team[] = Array.from (teamSet);
 
   return {
     myPoints,
