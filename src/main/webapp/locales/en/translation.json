@@ -16,6 +16,10 @@
       "filter": "Filter available users."
     },
     "comment": "Comment:",
+    "rule": {
+      "update": "Update {{name}}",
+      "create": "Create New Rule"
+    },
     "user": {
       "update": "Update {{name}}",
       "create": "Create New User",
@@ -68,15 +72,16 @@
     "points": "Number of points",
     "loading-failed": "Sorry, rule loading failed."
   },
-  "actions": {
-    "reload": "Reload",
-    "edit": "Edit",
-    "add": "Add"
-  },
+  "loading": "Loading…",
   "team": {
     "name": "Name",
     "color": "Color",
     "loading-failed": "Sorry, team loading failed."
+  },
+  "actions": {
+    "reload": "Reload",
+    "edit": "Edit",
+    "add": "Add"
   },
   "teams": {
     "none": "No team (yet).",
@@ -90,6 +95,5 @@
     "emails": "Email addresses",
     "loading-failed": "Sorry, user loading failed.",
     "points": "Points"
-  },
-  "loading": "Loading…"
+  }
 }

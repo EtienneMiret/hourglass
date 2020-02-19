@@ -16,6 +16,10 @@
       "filter": "Filtrer la liste des utilisateurs disponibles."
     },
     "comment": "Commentaire :",
+    "rule": {
+      "update": "Mettre à jour {{name}}",
+      "create": "Créer une nouvelle règle"
+    },
     "user": {
       "update": "Mettre à jour {{name}}",
       "create": "Créer un nouvel utilisateur",
@@ -68,15 +72,16 @@
     "points": "Nombre de points",
     "loading-failed": "Désolé, le chargement de cette règle a échoué."
   },
-  "actions": {
-    "reload": "Recharger",
-    "edit": "Modifier",
-    "add": "Ajouter"
-  },
+  "loading": "Chargement…",
   "team": {
     "name": "Nom",
     "color": "Couleur",
     "loading-failed": "Désolé, le chargement de cette équipe a échoué."
+  },
+  "actions": {
+    "reload": "Recharger",
+    "edit": "Modifier",
+    "add": "Ajouter"
   },
   "teams": {
     "none": "Pas (encore) d’équipes.",
@@ -90,6 +95,5 @@
     "emails": "Adresses emails",
     "loading-failed": "Désolé, le chargement de cet utiliseur a échoué.",
     "points": "Points"
-  },
-  "loading": "Chargement…"
+  }
 }

@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NewRule, Rule } from '../state/rule';
+import { EditModal } from './EditModal';
+import { TextField } from '@material-ui/core';
+import { useState } from 'react';
 
 export interface RuleEditStateProps {
   rule: Rule | NewRule;
@@ -17,37 +20,38 @@ export type RuleEditProps = RuleEditStateProps & RuleEditDispatchProps;
 
 export const RuleEdit = (props: RuleEditProps) => {
   const {t} = useTranslation ();
+  const [comment, saveComment] = useState ('');
 
-  function submit (event: React.FormEvent<HTMLFormElement>) {
-    const comment = event
-        .currentTarget
-        .elements
-        .namedItem ('comment') as HTMLInputElement;
-    props.submitEdits (comment.value);
-    event.preventDefault ();
+  function submit () {
+    props.submitEdits (comment);
   }
 
-  function rename (event: React.ChangeEvent<HTMLInputElement>) {
-    props.setName (event.target.value);
+  function rename (event: React.ChangeEvent<{value: unknown}>) {
+    props.setName (event.target.value as string);
   }
 
-  function changePoints (event: React.ChangeEvent<HTMLInputElement>) {
-    props.setPoints (Number.parseInt (event.target.value));
+  function changePoints (event: React.ChangeEvent<{value: unknown}>) {
+    props.setPoints (Number.parseInt (event.target.value as string));
   }
 
-  return <div className="rule-edit">
-    <label className="name">
-      {t ('rule.name')}
-      <input value={props.rule.name} onChange={rename}/>
-    </label>
-    <label className="points">
-      {t ('rule.points')}
-      <input value={props.rule.points} type="number" onChange={changePoints}/>
-    </label>
-    <form onSubmit={submit}>
-      <label>{t ('edit.comment')} <input name="comment"/></label>
-      <button type="button" onClick={props.cancelEdits}>{t ('edit.cancel')}</button>
-      <button type="submit">{t ('edit.save')}</button>
-    </form>
-  </div>;
+  function updateComment (event: React.ChangeEvent<{value: unknown}>) {
+    saveComment (event.target.value as string);
+  }
+
+  function title () {
+    if ((props.rule as Rule).id) {
+      return t ('edit.rule.update', props.rule);
+    } else {
+      return t ('edit.rule.create');
+    }
+  }
+
+  return <EditModal title={title ()} cancel={props.cancelEdits} save={submit}>
+    <TextField variant="outlined" label={t ('rule.name')} fullWidth={true}
+        value={props.rule.name} onChange={rename}/>
+    <TextField variant="outlined" label={t ('rule.points')} fullWidth={true}
+        value={props.rule.points} onChange={changePoints}/>
+    <TextField variant="outlined" label={t ('edit.comment')} fullWidth={true}
+      value={comment} onChange={updateComment}/>
+  </EditModal>;
 };
