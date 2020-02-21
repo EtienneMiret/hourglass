@@ -32,7 +32,7 @@ public class Main extends SpringBootServletInitializer {
 
   @Bean
   public AppConfiguration configuration () throws IOException {
-    try (var app = Main.class.getResourceAsStream ("/application.yaml")) {
+    try (var app = Main.class.getResourceAsStream ("/hourglass.yaml")) {
       return new ObjectMapper (new YAMLFactory ()).readerFor (AppConfiguration.class)
           .readValue (app);
     }
