@@ -1,6 +1,6 @@
 {
   "name": "hourglass",
-  "version": "1.1.0",
+  "version": "1.1.1-SNAPSHOT",
   "repository": "git@github.com:EtienneMiret/hourglass",
   "author": "Etienne Miret <etienne.miret@ens-lyon.org>",
   "license": "MIT",
